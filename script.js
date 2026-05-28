@@ -43,100 +43,72 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ══════════════════════════════════════════
-     GSAP REVEALS — Replaces IntersectionObserver
+     GSAP REVEALS
      ══════════════════════════════════════════ */
+
+  // Helper: reveal with GSAP (adds .visible class as CSS fallback)
+  function revealElements(els, triggerEl, opts = {}) {
+    const defaults = { y: 24, duration: 0.6, stagger: 0, ease: 'power2.out', start: 'top 80%' };
+    const o = { ...defaults, ...opts };
+    gsap.to(els, {
+      scrollTrigger: {
+        trigger: triggerEl,
+        start: o.start,
+        once: true,
+      },
+      opacity: 1,
+      y: 0,
+      scale: o.scale || 1,
+      duration: o.duration,
+      stagger: o.stagger,
+      ease: o.ease,
+    });
+  }
 
   // Hero entrance (immediate, no scroll trigger)
   const heroContent = document.querySelector('.hero-content');
   if (heroContent) {
-    gsap.from(heroContent, {
-      opacity: 0,
-      y: 40,
+    gsap.to(heroContent, {
+      opacity: 1,
+      y: 0,
       duration: 1,
       ease: 'power3.out',
-      onStart: () => { heroContent.style.visibility = 'visible'; }
+      delay: 0.2,
     });
   }
 
   // Staggered reveals per grid section
   const grids = [
-    '.negocios-grid .card',
-    '.agentes-grid .card',
-    '.proyectos-grid .card',
-    '.cursos-grid .card',
+    { selector: '.negocios-grid .card', parent: '.negocios-grid' },
+    { selector: '.agentes-grid .card', parent: '.agentes-grid' },
+    { selector: '.proyectos-grid .card', parent: '.proyectos-grid' },
+    { selector: '.cursos-grid .card', parent: '.cursos-grid' },
   ];
 
-  grids.forEach(selector => {
+  grids.forEach(({ selector, parent }) => {
     const els = document.querySelectorAll(selector);
-    if (els.length === 0) return;
-    gsap.from(els, {
-      scrollTrigger: {
-        trigger: els[0].closest('.negocios-grid, .agentes-grid, .proyectos-grid, .cursos-grid'),
-        start: 'top 80%',
-        once: true,
-      },
-      opacity: 0,
-      y: 30,
-      duration: 0.6,
-      stagger: 0.15,
-      ease: 'power2.out',
-      onStart: function() {
-        els.forEach(el => { el.style.visibility = 'visible'; });
-      }
-    });
+    const trigger = document.querySelector(parent);
+    if (els.length === 0 || !trigger) return;
+    revealElements(els, trigger, { stagger: 0.15, y: 30 });
   });
 
   // General reveals (non-card elements with .reveal)
   document.querySelectorAll('.reveal').forEach(el => {
-    // Skip cards in grids (handled above with stagger)
     if (el.closest('.negocios-grid, .agentes-grid, .proyectos-grid, .cursos-grid') && el.classList.contains('card')) return;
-
-    gsap.from(el, {
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-      },
-      opacity: 0,
-      y: 24,
-      duration: 0.6,
-      ease: 'power2.out',
-      onStart: () => { el.style.visibility = 'visible'; }
-    });
+    revealElements(el, el, { start: 'top 85%' });
   });
 
   // Timeline items staggered
   const timelineItems = document.querySelectorAll('.timeline-item');
   if (timelineItems.length > 0) {
-    gsap.from(timelineItems, {
-      scrollTrigger: {
-        trigger: '.timeline',
-        start: 'top 80%',
-        once: true,
-      },
-      opacity: 0,
-      y: 20,
-      duration: 0.5,
-      stagger: 0.2,
-      ease: 'power2.out',
-    });
+    revealElements(timelineItems, '.timeline', { stagger: 0.2, y: 20, duration: 0.5 });
   }
 
   // Pricing box special entrance
   const pricingBox = document.querySelector('.pricing-box');
   if (pricingBox) {
-    gsap.from(pricingBox, {
-      scrollTrigger: {
-        trigger: pricingBox,
-        start: 'top 80%',
-        once: true,
-      },
-      opacity: 0,
-      scale: 0.95,
-      duration: 0.7,
-      ease: 'power2.out',
-      onStart: () => { pricingBox.style.visibility = 'visible'; }
-    });
+    gsap.set(pricingBox, { scale: 0.95 });
+    revealElements(pricingBox, pricingBox, { scale: 1, duration: 0.7 });
   }
 
   /* ══════════════════════════════════════════
@@ -172,21 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
      ══════════════════════════════════════════ */
   const statItems = document.querySelectorAll('.stat-item');
   if (statItems.length > 0) {
-    gsap.from(statItems, {
-      scrollTrigger: {
-        trigger: '.stats-grid',
-        start: 'top 80%',
-        once: true,
-      },
-      opacity: 0,
-      y: 20,
-      duration: 0.5,
-      stagger: 0.1,
-      ease: 'power2.out',
-      onStart: function() {
-        statItems.forEach(el => { el.style.visibility = 'visible'; });
-      }
-    });
+    revealElements(statItems, '.stats-grid', { stagger: 0.1, y: 20, duration: 0.5 });
   }
 
   /* ══════════════════════════════════════════
