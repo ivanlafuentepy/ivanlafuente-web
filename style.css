@@ -227,15 +227,9 @@ a:hover {
   margin: 2px;
 }
 
-/* ── Reveal animation ── */
+/* ── Reveal animation (GSAP handles these now) ── */
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+  visibility: hidden;
 }
 
 /* ════════════════════════════════════════════
@@ -328,16 +322,7 @@ a:hover {
   overflow: hidden;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(rgba(255, 107, 43, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 107, 43, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
+/* hero background handled by WebGL shader canvas */
 
 .hero::after {
   content: '';
@@ -554,16 +539,12 @@ a:hover {
 }
 
 .agente-details {
-  max-height: 0;
+  height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.4s ease;
   border-top: 1px solid transparent;
 }
 
 .agente-card.open .agente-details {
-  max-height: 400px;
-  padding-top: 16px;
-  margin-top: 16px;
   border-top-color: var(--border);
 }
 
@@ -933,6 +914,190 @@ a:hover {
   max-height: 90vh;
   border-radius: 8px;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+}
+
+/* ════════════════════════════════════════════
+   PREMIUM EFFECTS
+   ════════════════════════════════════════════ */
+
+/* ── Scroll progress bar ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  z-index: 1001;
+  transition: none;
+}
+
+/* ── Cursor glow (desktop only) ── */
+.cursor-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 43, 0.06), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.cursor-glow.active {
+  opacity: 1;
+}
+
+/* ── Hero shader canvas ── */
+.hero-shader {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* ── Hero avatar float + glow pulse ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 40px var(--glow), 0 0 80px rgba(255, 107, 43, 0.08); }
+  50% { box-shadow: 0 0 60px var(--glow), 0 0 120px rgba(255, 107, 43, 0.15); }
+}
+.hero-avatar {
+  animation: float 4s ease-in-out infinite, glowPulse 3s ease-in-out infinite;
+}
+
+/* ── Hero h1 shimmer gradient ── */
+@keyframes shimmerText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.hero h1 {
+  background: linear-gradient(90deg, var(--text), var(--accent), var(--accent-light), var(--text));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerText 6s ease-in-out infinite;
+}
+
+/* ── Card shine on hover ── */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+  transform: skewX(-15deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.card:hover::after {
+  left: 150%;
+}
+
+/* ── Noise/grain overlay ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── WhatsApp button pulse ── */
+@keyframes whatsappPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); }
+  50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.5), 0 0 60px rgba(37, 211, 102, 0.2); }
+}
+.btn-whatsapp {
+  animation: whatsappPulse 2.5s ease-in-out infinite;
+}
+
+/* ── Pricing box shimmer border ── */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes rotateBorder {
+  to { --border-angle: 360deg; }
+}
+.pricing-box {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--bg3), var(--bg-card)) padding-box,
+    conic-gradient(from var(--border-angle), var(--accent), transparent 30%, transparent 70%, var(--accent)) border-box;
+  animation: rotateBorder 4s linear infinite;
+}
+
+/* ── Active nav link ── */
+.nav-links a.active {
+  color: var(--accent);
+}
+.nav-links a {
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+/* ── Footer link underline animation ── */
+.footer-links a {
+  position: relative;
+}
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.footer-links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-avatar { animation: none; }
+  .hero h1 { animation: none; background: none; -webkit-text-fill-color: var(--text); }
+  .btn-whatsapp { animation: none; }
+  .pricing-box { animation: none; border: 2px solid var(--accent); }
+  .cursor-glow { display: none; }
+  .hero-shader { display: none; }
+  .scroll-progress { display: none; }
+  .card::after { display: none; }
+  body::after { display: none; }
+  .reveal { visibility: visible; }
 }
 
 /* ════════════════════════════════════════════
