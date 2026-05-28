@@ -46,69 +46,55 @@ document.addEventListener('DOMContentLoaded', () => {
      GSAP REVEALS
      ══════════════════════════════════════════ */
 
-  // Helper: reveal with GSAP (adds .visible class as CSS fallback)
-  function revealElements(els, triggerEl, opts = {}) {
-    const defaults = { y: 24, duration: 0.6, stagger: 0, ease: 'power2.out', start: 'top 80%' };
-    const o = { ...defaults, ...opts };
-    gsap.to(els, {
-      scrollTrigger: {
-        trigger: triggerEl,
-        start: o.start,
-        once: true,
-      },
-      opacity: 1,
-      y: 0,
-      scale: o.scale || 1,
-      duration: o.duration,
-      stagger: o.stagger,
-      ease: o.ease,
-    });
-  }
+  // Set initial hidden state via JS (not CSS — avoids invisible content if GSAP fails)
+  gsap.set('.reveal', { opacity: 0, y: 24 });
+  gsap.set('.hero-content', { opacity: 0, y: 40 });
 
-  // Hero entrance (immediate, no scroll trigger)
-  const heroContent = document.querySelector('.hero-content');
-  if (heroContent) {
-    gsap.to(heroContent, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.2,
-    });
-  }
+  // Hero entrance (immediate)
+  gsap.to('.hero-content', {
+    opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.2,
+  });
 
   // Staggered reveals per grid section
-  const grids = [
-    { selector: '.negocios-grid .card', parent: '.negocios-grid' },
-    { selector: '.agentes-grid .card', parent: '.agentes-grid' },
-    { selector: '.proyectos-grid .card', parent: '.proyectos-grid' },
-    { selector: '.cursos-grid .card', parent: '.cursos-grid' },
-  ];
-
-  grids.forEach(({ selector, parent }) => {
-    const els = document.querySelectorAll(selector);
-    const trigger = document.querySelector(parent);
-    if (els.length === 0 || !trigger) return;
-    revealElements(els, trigger, { stagger: 0.15, y: 30 });
+  ['.negocios-grid', '.agentes-grid', '.proyectos-grid', '.cursos-grid'].forEach(grid => {
+    const cards = document.querySelectorAll(grid + ' .card');
+    if (cards.length === 0) return;
+    ScrollTrigger.batch(cards, {
+      start: 'top 85%',
+      once: true,
+      onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, duration: 0.6, ease: 'power2.out' }),
+    });
   });
 
-  // General reveals (non-card elements with .reveal)
-  document.querySelectorAll('.reveal').forEach(el => {
-    if (el.closest('.negocios-grid, .agentes-grid, .proyectos-grid, .cursos-grid') && el.classList.contains('card')) return;
-    revealElements(el, el, { start: 'top 85%' });
+  // General reveals (non-card .reveal elements)
+  ScrollTrigger.batch('.reveal', {
+    start: 'top 85%',
+    once: true,
+    onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' }),
   });
 
-  // Timeline items staggered
+  // Timeline items
   const timelineItems = document.querySelectorAll('.timeline-item');
   if (timelineItems.length > 0) {
-    revealElements(timelineItems, '.timeline', { stagger: 0.2, y: 20, duration: 0.5 });
+    gsap.set(timelineItems, { opacity: 0, y: 20 });
+    ScrollTrigger.create({
+      trigger: '.timeline',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => gsap.to(timelineItems, { opacity: 1, y: 0, stagger: 0.2, duration: 0.5, ease: 'power2.out' }),
+    });
   }
 
-  // Pricing box special entrance
+  // Pricing box
   const pricingBox = document.querySelector('.pricing-box');
   if (pricingBox) {
-    gsap.set(pricingBox, { scale: 0.95 });
-    revealElements(pricingBox, pricingBox, { scale: 1, duration: 0.7 });
+    gsap.set(pricingBox, { opacity: 0, y: 24, scale: 0.95 });
+    ScrollTrigger.create({
+      trigger: pricingBox,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => gsap.to(pricingBox, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power2.out' }),
+    });
   }
 
   /* ══════════════════════════════════════════
@@ -144,7 +130,13 @@ document.addEventListener('DOMContentLoaded', () => {
      ══════════════════════════════════════════ */
   const statItems = document.querySelectorAll('.stat-item');
   if (statItems.length > 0) {
-    revealElements(statItems, '.stats-grid', { stagger: 0.1, y: 20, duration: 0.5 });
+    gsap.set(statItems, { opacity: 0, y: 20 });
+    ScrollTrigger.create({
+      trigger: '.stats-grid',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => gsap.to(statItems, { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' }),
+    });
   }
 
   /* ══════════════════════════════════════════
