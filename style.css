@@ -499,29 +499,13 @@ a:hover {
   margin-bottom: 12px;
 }
 
-/* ════════════════════════════════════════════
-   P&Aacute;GINAS WEB
-   ════════════════════════════════════════════ */
-.webs-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-}
-
-.web-logo {
-  width: 72px;
+.negocio-cowork-logo {
+  width: 100%;
+  max-width: 220px;
   height: auto;
   border-radius: 8px;
-  margin-bottom: 14px;
-}
-
-.web-card .card-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  margin-bottom: 12px;
+  background: #000;
 }
 
 /* ════════════════════════════════════════════
@@ -1182,10 +1166,6 @@ body::after {
   }
 
   .agentes-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .webs-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
