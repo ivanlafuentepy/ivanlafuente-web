@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Staggered reveals per grid section
-  ['.negocios-grid', '.agentes-grid', '.proyectos-grid', '.cursos-grid'].forEach(grid => {
+  ['.negocios-grid', '.agentes-grid', '.webs-grid', '.proyectos-grid', '.cursos-grid'].forEach(grid => {
     const cards = document.querySelectorAll(grid + ' .card');
     if (cards.length === 0) return;
     ScrollTrigger.batch(cards, {

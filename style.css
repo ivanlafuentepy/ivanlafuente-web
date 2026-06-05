@@ -476,6 +476,54 @@ a:hover {
   font-size: 0.9rem;
 }
 
+.negocio-agente {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text2);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+.negocio-agente strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.negocio-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+/* ════════════════════════════════════════════
+   P&Aacute;GINAS WEB
+   ════════════════════════════════════════════ */
+.webs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.web-logo {
+  width: 72px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+
+.web-card .card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
 /* ════════════════════════════════════════════
    AGENTES IA
    ════════════════════════════════════════════ */
@@ -557,6 +605,30 @@ a:hover {
   color: var(--text3);
   text-align: right;
   margin-top: 8px;
+}
+
+.agente-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.agente-footer .agente-expand-hint {
+  margin-top: 0;
+}
+
+.agente-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+.agente-cta:hover {
+  color: var(--accent-light);
 }
 
 /* ════════════════════════════════════════════
@@ -1113,8 +1185,12 @@ body::after {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .webs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .proyectos-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .cursos-grid {
