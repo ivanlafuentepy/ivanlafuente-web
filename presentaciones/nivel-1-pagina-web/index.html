@@ -31,11 +31,15 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .slide-inner{width:100%;max-width:1280px;margin:0 auto}
 /* branding Lafuente AI Cowork — logo centrado arriba, visible, en todas las slides menos portada */
 .brandmark{position:absolute;top:clamp(14px,2.4vh,30px);left:50%;transform:translateX(-50%);z-index:6;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.brandmark .bm-logo{height:clamp(78px,12vh,138px);width:auto;object-fit:contain;opacity:1;filter:drop-shadow(0 6px 20px rgba(0,0,0,.6))}
-@media (max-width:780px){.brandmark .bm-logo{height:58px}}
+.brandmark .bm-logo{height:clamp(160px,23vh,270px);width:auto;object-fit:contain;opacity:1;filter:drop-shadow(0 6px 22px rgba(0,0,0,.6))}
+@media (max-width:780px){.brandmark .bm-logo{height:96px}}
 /* botón volver a la web (fijo, todas las slides) */
 .back-web{position:fixed;top:clamp(12px,2.2vh,24px);left:clamp(14px,3vw,38px);z-index:30;display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);font-size:clamp(.76rem,1.15vw,.92rem);font-weight:600;text-decoration:none;transition:.2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .back-web:hover{background:rgba(255,107,43,.15);color:var(--accent-light);border-color:rgba(255,107,43,.4)}
+/* cierre: foto de perfil + logo AI Cowork lado a lado */
+.final-brand{display:flex;align-items:center;justify-content:center;gap:clamp(24px,5vw,72px);margin-bottom:clamp(20px,3.5vh,40px);flex-wrap:wrap}
+.final-foto{width:clamp(110px,15vh,184px);height:clamp(110px,15vh,184px);border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 0 0 6px rgba(255,107,43,.12),0 14px 50px rgba(0,0,0,.6)}
+.final-logo{height:clamp(120px,21vh,250px);width:auto;object-fit:contain;filter:drop-shadow(0 6px 22px rgba(0,0,0,.6))}
 
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:clamp(.85rem,1.4vw,1.1rem);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-light);margin-bottom:clamp(14px,2.2vh,28px)}
 .eyebrow::before{content:"";width:34px;height:2px;background:var(--accent);border-radius:2px}
@@ -277,7 +281,6 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
 
   <!-- 5 — INSTRUCCIONES DEL PROYECTO (Parte 1) -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">Paso 1 · La plantilla que pegás en Instrucciones</div>
       <h2 class="anim">Completá con <span class="grad">tus datos reales</span></h2>
@@ -314,7 +317,6 @@ Email: <span class="ph">[EMAIL]</span>   Dirección exacta: <span class="ph">[pa
 
   <!-- 6 — PASO 2: PEDIR LA WEB (Parte 2) -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">Paso 2 · El primer chat dentro del Proyecto</div>
       <h2 class="anim">Ahora le pedís <span class="grad">la página web</span></h2>
@@ -367,7 +369,6 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
 
   <!-- 7 — FLUJO DE LA CLASE (Parte 4) -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">El flujo completo de la clase</div>
       <h2 class="anim">De cero a publicada <span class="grad">en 15 min</span></h2>
@@ -385,7 +386,6 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
 
   <!-- 8 — AMATEUR VS PRO (Parte 5) -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">Lo que hace la diferencia</div>
       <h2 class="anim">Amateur <span style="color:var(--text3)">vs</span> <span class="grad">Profesional</span></h2>
@@ -406,9 +406,11 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
 
   <!-- 9 — CIERRE -->
   <section class="slide final">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
-      <img class="cover-badge anim" src="assets/icono.png" alt="Ivan Lafuente">
+      <div class="final-brand anim">
+        <img class="final-foto" src="assets/icono.png" alt="Ivan Lafuente — Curso IA">
+        <img class="final-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork">
+      </div>
       <div class="big anim"><span class="grad">Tu web ya está online.</span></div>
       <p class="lead anim" style="margin:18px auto 0;text-align:center">Y el Proyecto queda guardado: la próxima que necesites un cambio,<br>Claude ya sabe todo de tu negocio.</p>
       <div class="credit anim"><b>Ivan Lafuente</b></div>
