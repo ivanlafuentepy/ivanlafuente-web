@@ -42,6 +42,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ── Dropdown "Cursos" (click + teclado) ── */
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (dropdown) {
+    const dropToggle = dropdown.querySelector('.nav-drop-toggle');
+    dropToggle.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const open = dropdown.classList.toggle('open');
+      dropToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    dropToggle.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dropToggle.click(); }
+    });
+    // Cerrar al hacer click afuera
+    document.addEventListener('click', e => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        dropToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    // "Ver todos los cursos" cierra el menú mobile al navegar a #cursos
+    const allLink = dropdown.querySelector('.nav-submenu-all');
+    if (allLink) {
+      allLink.addEventListener('click', () => {
+        dropdown.classList.remove('open');
+        if (navLinks) navLinks.classList.remove('open');
+        if (hamburger) hamburger.classList.remove('open');
+      });
+    }
+  }
+
   /* ══════════════════════════════════════════
      GSAP REVEALS
      ══════════════════════════════════════════ */

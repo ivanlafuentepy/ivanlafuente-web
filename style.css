@@ -305,6 +305,101 @@ a:hover {
   border-radius: 2px;
 }
 
+/* ── Dropdown Cursos ── */
+.nav-dropdown { position: relative; }
+.nav-drop-toggle {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text2);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-drop-toggle:hover { color: var(--accent); }
+.nav-drop-toggle .caret { font-size: 0.65rem; transition: transform 0.3s; }
+.nav-dropdown:hover .nav-drop-toggle .caret,
+.nav-dropdown.open .nav-drop-toggle .caret { transform: rotate(180deg); }
+
+.nav-submenu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  margin-top: 10px;
+  background: rgba(15, 15, 22, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 220px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+/* puente invisible para que el hover no se corte */
+.nav-submenu::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+.nav-dropdown:hover .nav-submenu,
+.nav-dropdown.open .nav-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-submenu li { width: 100%; }
+.nav-submenu a {
+  display: block;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text2);
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-submenu a:hover { background: rgba(255, 107, 43, 0.12); color: var(--accent); }
+.nav-submenu-all {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  font-size: 0.78rem !important;
+  color: var(--text3) !important;
+}
+.nav-submenu-all:hover { color: var(--accent) !important; }
+
+/* ── Botón "Ver la clase" en cards de curso ── */
+.curso-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+}
+.curso-cta:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255, 107, 43, 0.3);
+}
+
 /* ════════════════════════════════════════════
    HERO
    ════════════════════════════════════════════ */
@@ -1274,6 +1369,31 @@ body::after {
     font-size: 1rem;
     padding: 8px 0;
   }
+
+  /* Dropdown Cursos en mobile: acordeón dentro del menú */
+  .nav-drop-toggle {
+    font-size: 1rem;
+    padding: 8px 0;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .nav-submenu {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    margin: 4px 0 4px 14px;
+    padding: 4px 0;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    display: none;
+  }
+  .nav-submenu::before { display: none; }
+  .nav-dropdown.open .nav-submenu { display: flex; }
+  .nav-submenu a { font-size: 0.95rem; padding: 9px 0; }
 
   .hero h1 {
     font-size: 2.2rem;
