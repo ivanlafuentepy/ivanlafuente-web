@@ -29,11 +29,13 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:clamp(28px,5vw,90px);opacity:0}
 .slide.active{display:flex}
 .slide-inner{width:100%;max-width:1280px;margin:0 auto}
-/* branding Lafuente AI Cowork + Neo (esquina sup. der., todas las slides menos portada) */
-.brandmark{position:absolute;top:clamp(14px,3vh,32px);right:clamp(16px,3.2vw,46px);z-index:6;display:flex;align-items:center;gap:clamp(8px,1.1vw,16px);pointer-events:none}
-.brandmark .bm-logo{height:clamp(24px,3vh,40px);width:auto;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,.55))}
-.brandmark .bm-neo{height:clamp(38px,5vh,60px);aspect-ratio:1;object-fit:cover;border-radius:11px;border:1px solid var(--border);box-shadow:0 6px 16px rgba(0,0,0,.45)}
-@media (max-width:780px){.brandmark .bm-logo{height:20px}.brandmark .bm-neo{height:32px}}
+/* branding Lafuente AI Cowork — logo centrado arriba, visible, en todas las slides menos portada */
+.brandmark{position:absolute;top:clamp(14px,2.4vh,30px);left:50%;transform:translateX(-50%);z-index:6;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.brandmark .bm-logo{height:clamp(44px,6vh,72px);width:auto;object-fit:contain;opacity:.96;filter:drop-shadow(0 4px 16px rgba(0,0,0,.55))}
+@media (max-width:780px){.brandmark .bm-logo{height:34px}}
+/* botón volver a la web (fijo, todas las slides) */
+.back-web{position:fixed;top:clamp(12px,2.2vh,24px);left:clamp(14px,3vw,38px);z-index:30;display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);font-size:clamp(.76rem,1.15vw,.92rem);font-weight:600;text-decoration:none;transition:.2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.back-web:hover{background:rgba(255,107,43,.15);color:var(--accent-light);border-color:rgba(255,107,43,.4)}
 
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:clamp(.85rem,1.4vw,1.1rem);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-light);margin-bottom:clamp(14px,2.2vh,28px)}
 .eyebrow::before{content:"";width:34px;height:2px;background:var(--accent);border-radius:2px}
@@ -200,7 +202,7 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
 
   <!-- 2 — QUÉ VAMOS A LOGRAR -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"><img class="bm-neo" src="assets/agente-neo.png" alt="Neo"></div>
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">¿Qué vamos a lograr hoy?</div>
       <h2 class="anim">Una página web <span class="grad">real, en internet</span></h2>
@@ -240,7 +242,7 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
 
   <!-- 4 — PASO 1: CREAR PROYECTO + INSTRUCCIONES -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-neo" src="assets/agente-neo.png" alt="Neo"></div>
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">Paso 1 · Crear el Proyecto</div>
       <h2 class="anim">El negocio entra <span class="grad">una sola vez</span></h2>
@@ -312,7 +314,7 @@ Email: <span class="ph">[EMAIL]</span>   Dirección exacta: <span class="ph">[pa
 
   <!-- 6 — PASO 2: PEDIR LA WEB (Parte 2) -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-neo" src="assets/agente-neo.png" alt="Neo"></div>
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">Paso 2 · El primer chat dentro del Proyecto</div>
       <h2 class="anim">Ahora le pedís <span class="grad">la página web</span></h2>
@@ -365,7 +367,7 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
 
   <!-- 7 — FLUJO DE LA CLASE (Parte 4) -->
   <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"><img class="bm-neo" src="assets/agente-neo.png" alt="Neo"></div>
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <div class="eyebrow anim">El flujo completo de la clase</div>
       <h2 class="anim">De cero a publicada <span class="grad">en 15 min</span></h2>
@@ -404,7 +406,7 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
 
   <!-- 9 — CIERRE -->
   <section class="slide final">
-    <div class="brandmark"><img class="bm-neo" src="assets/agente-neo.png" alt="Neo"></div>
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
     <div class="slide-inner">
       <img class="cover-badge anim" src="assets/icono.png" alt="Ivan Lafuente">
       <div class="big anim"><span class="grad">Tu web ya está online.</span></div>
@@ -416,6 +418,7 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
 
 </div>
 
+<a class="back-web" href="../../index.html">&larr; Volver a la web</a>
 <div id="counter"><b id="cur">1</b> / <span id="tot">9</span></div>
 <div id="hint"><span class="key">←</span><span class="key">→</span> navegar · <span class="key">F</span> pantalla completa</div>
 <div id="dots"></div>

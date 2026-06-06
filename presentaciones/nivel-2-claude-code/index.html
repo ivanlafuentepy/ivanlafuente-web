@@ -64,6 +64,9 @@ body::before{
 }
 .slide.active{display:flex}
 .slide-inner{width:100%;max-width:1280px;margin:0 auto}
+/* botón volver a la web (fijo, todas las slides) */
+.back-web{position:fixed;top:clamp(12px,2.2vh,24px);left:clamp(14px,3vw,38px);z-index:30;display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);font-size:clamp(.76rem,1.15vw,.92rem);font-weight:600;text-decoration:none;transition:.2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.back-web:hover{background:rgba(255,107,43,.15);color:var(--accent-light);border-color:rgba(255,107,43,.4)}
 
 /* ---------- TYPOGRAPHY ---------- */
 .eyebrow{
@@ -509,6 +512,7 @@ marketing/     <span class="ph">← afiches, reels, carruseles, historias, copy/
 
 </div>
 
+<a class="back-web" href="../../index.html">&larr; Volver a la web</a>
 <div id="counter"><b id="cur">1</b> / <span id="tot">8</span></div>
 <div id="hint"><span class="key">←</span><span class="key">→</span> navegar · <span class="key">F</span> pantalla completa</div>
 <div id="dots"></div>
