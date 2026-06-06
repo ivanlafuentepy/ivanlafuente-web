@@ -287,7 +287,9 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
   .grid2,.grid3,.grid4,.vs,.levels{grid-template-columns:1fr}
   .brands{gap:24px}
   #hint{display:none}
-  .slide{padding:60px 22px 80px}
+  /* mobile: cada slide scrollea su contenido en vez de cortarlo */
+  .slide{padding:64px 22px 84px;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .slide-inner{margin:auto}
   .prompt-box{max-height:54vh}
 }
 @media (max-height:560px){

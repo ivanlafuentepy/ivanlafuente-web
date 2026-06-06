@@ -32,7 +32,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 /* branding Lafuente AI Cowork — logo centrado arriba, visible, en todas las slides menos portada */
 .brandmark{position:absolute;top:clamp(14px,2.4vh,30px);left:50%;transform:translateX(-50%);z-index:6;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .brandmark .bm-logo{height:clamp(160px,23vh,270px);width:auto;object-fit:contain;opacity:1;filter:drop-shadow(0 6px 22px rgba(0,0,0,.6))}
-@media (max-width:780px){.brandmark .bm-logo{height:96px}}
+@media (max-width:780px){.brandmark .bm-logo{height:70px}.brandmark{top:10px}}
 /* botón volver a la web (fijo, todas las slides) */
 .back-web{position:fixed;top:clamp(12px,2.2vh,24px);left:clamp(14px,3vw,38px);z-index:30;display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);font-size:clamp(.76rem,1.15vw,.92rem);font-weight:600;text-decoration:none;transition:.2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .back-web:hover{background:rgba(255,107,43,.15);color:var(--accent-light);border-color:rgba(255,107,43,.4)}
@@ -176,7 +176,10 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
 
 @media (max-width:780px){
   .grid2,.grid4,.checkgrid{grid-template-columns:1fr}
-  .brands{gap:24px}#hint{display:none}.slide{padding:56px 20px 78px}
+  .brands{gap:24px}#hint{display:none}
+  /* mobile: cada slide scrollea su contenido en vez de cortarlo */
+  .slide{padding:90px 20px 86px;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .slide-inner{margin:auto}
   .ui{flex-direction:column}.ui-side{width:100%;flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--border)}
   .prompt-box{max-height:52vh}
   .cmp th{font-size:.95rem}.cmp td{font-size:.92rem;padding:9px 12px}
