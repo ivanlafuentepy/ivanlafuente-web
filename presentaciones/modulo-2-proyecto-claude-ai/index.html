@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Módulo 2 — Crear un Proyecto en Claude AI · Ivan Lafuente</title>
+<meta name="description" content="Cómo crear un Proyecto en la interfaz de Claude AI (claude.ai) — instrucciones, prompt base del negocio y la analogía del empleado nuevo. Curso de IA de Ivan Lafuente, Nivel 1.">
+<link rel="icon" href="assets/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;
+  --bg2:#10101a;
+  --bg-card:#181826;
+  --bg-card2:#1f1f30;
+  --accent:#ff6b2b;
+  --accent-light:#ff8f5a;
+  --accent-dark:#cc4a10;
+  --accent-glow:rgba(255,107,43,0.30);
+  --gold:#c9a84c;
+  --green:#3ddc84;
+  --red:#ff5c5c;
+  --text:#f0f0f5;
+  --text2:#a8a8c0;
+  --text3:#5c5c78;
+  --border:rgba(255,255,255,0.09);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60vw 60vw at 80% -10%, rgba(255,107,43,0.10), transparent 60%),
+    radial-gradient(50vw 50vw at -10% 110%, rgba(201,168,76,0.07), transparent 60%);
+}
+
+#progress{
+  position:fixed;top:0;left:0;height:4px;width:0%;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--gold));
+  box-shadow:0 0 12px var(--accent-glow);
+  transition:width .45s cubic-bezier(.6,.05,.3,1);
+}
+
+#deck{position:fixed;inset:0;z-index:1}
+.slide{
+  position:absolute;inset:0;display:none;
+  flex-direction:column;justify-content:center;
+  padding:clamp(28px,5vw,90px);opacity:0;
+}
+.slide.active{display:flex}
+.slide-inner{width:100%;max-width:1280px;margin:0 auto}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:clamp(.85rem,1.4vw,1.1rem);font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent-light);margin-bottom:clamp(16px,2.5vh,30px);
+}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--accent);border-radius:2px}
+h1{font-size:clamp(2.4rem,6.5vw,5.4rem);font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:clamp(16px,2.5vh,28px)}
+h2{font-size:clamp(1.9rem,4.6vw,3.6rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:clamp(18px,3vh,34px)}
+h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
+.grad{
+  background:linear-gradient(100deg,var(--accent) 10%,var(--gold) 60%,var(--accent-light) 95%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.lead{font-size:clamp(1.15rem,2.3vw,1.9rem);line-height:1.5;color:var(--text2);max-width:62ch;font-weight:400}
+.lead strong{color:var(--text);font-weight:700}
+.mono{font-family:var(--mono)}
+
+/* PORTADA */
+.cover{align-items:center;text-align:center}
+.cover-badge{
+  width:clamp(96px,13vw,150px);height:clamp(96px,13vw,150px);border-radius:50%;
+  object-fit:cover;border:3px solid var(--accent);
+  box-shadow:0 0 0 6px rgba(255,107,43,.12),0 14px 50px rgba(0,0,0,.6);
+  margin-bottom:clamp(20px,3vh,34px);
+}
+.cover h1{font-size:clamp(2.3rem,7vw,5.8rem)}
+.cover .sub{font-size:clamp(1.05rem,2.2vw,1.6rem);color:var(--text2);margin-top:8px;font-weight:500}
+.brands{display:flex;justify-content:center;align-items:flex-end;gap:clamp(20px,5vw,72px);margin-top:clamp(30px,5vh,60px);flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;align-items:center;gap:10px;position:relative}
+.brand-pair{display:flex;align-items:flex-end;gap:clamp(4px,1vw,14px);height:clamp(80px,12vw,140px)}
+.brand-logo{height:clamp(70px,10vw,118px);width:auto;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(0,0,0,.55))}
+.brand-robot{height:clamp(54px,7.5vw,92px);width:auto;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(255,107,43,.35));animation:float 3.5s ease-in-out infinite}
+.brand:nth-child(2) .brand-robot{animation-delay:.6s}
+.brand:nth-child(3) .brand-robot{animation-delay:1.2s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.brand-name{font-size:clamp(.75rem,1.2vw,.95rem);font-weight:700;color:var(--text2);letter-spacing:.03em}
+.brand-name b{color:var(--accent-light)}
+
+/* GRIDS / CARDS */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,30px)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:clamp(20px,2.6vw,34px);position:relative;overflow:hidden}
+.tag{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.tag.bad{background:rgba(255,92,92,.13);color:var(--red);border:1px solid rgba(255,92,92,.3)}
+.tag.good{background:rgba(61,220,132,.13);color:var(--green);border:1px solid rgba(61,220,132,.3)}
+
+/* VS */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,30px);align-items:stretch}
+.vs-col{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:clamp(22px,2.8vw,38px)}
+.vs-col.bad{border-color:rgba(255,92,92,.25)}
+.vs-col.good{border-color:rgba(61,220,132,.35);box-shadow:0 0 40px rgba(61,220,132,.07)}
+.vs-list{list-style:none;margin-top:18px;display:flex;flex-direction:column;gap:14px}
+.vs-list li{display:flex;gap:12px;align-items:flex-start;font-size:clamp(.95rem,1.5vw,1.25rem);line-height:1.4;color:var(--text2)}
+.vs-list li b{color:var(--text)}
+.ic{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.95rem;margin-top:2px}
+.ic.x{background:rgba(255,92,92,.15);color:var(--red)}
+.ic.v{background:rgba(61,220,132,.15);color:var(--green)}
+
+/* MOCKUP ventana claude.ai */
+.win{background:#0d0d16;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.win-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:#15151f;border-bottom:1px solid var(--border)}
+.win-bar .dot{width:12px;height:12px;border-radius:50%}
+.dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+.win-bar .title{margin-left:10px;font-family:var(--mono);font-size:.85rem;color:var(--text3)}
+.ui{display:flex;min-height:clamp(180px,30vh,300px)}
+.ui-side{
+  width:clamp(140px,22%,230px);background:#12121c;border-right:1px solid var(--border);
+  padding:16px 12px;display:flex;flex-direction:column;gap:8px;
+}
+.ui-side .logo{font-weight:800;font-size:1rem;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:8px}
+.ui-side .logo span{width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:inline-block}
+.ui-item{padding:9px 12px;border-radius:9px;font-size:clamp(.82rem,1.3vw,1rem);color:var(--text2);display:flex;align-items:center;gap:8px}
+.ui-item.hot{background:rgba(255,107,43,.14);color:var(--accent-light);font-weight:700;border:1px solid rgba(255,107,43,.3)}
+.ui-main{flex:1;padding:clamp(16px,2.2vw,28px);display:flex;flex-direction:column;gap:14px;justify-content:center}
+.ui-field{background:#141420;border:1px solid var(--border);border-radius:10px;padding:13px 16px}
+.ui-field.hot{border-color:rgba(255,107,43,.45);box-shadow:0 0 26px rgba(255,107,43,.10)}
+.ui-field .lbl{font-size:.78rem;color:var(--text3);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.ui-field .val{font-size:clamp(.9rem,1.4vw,1.1rem);color:var(--text)}
+.ui-field .val.ph{color:var(--text3);font-style:italic}
+.ui-btn{align-self:flex-start;background:var(--accent);color:#fff;padding:9px 22px;border-radius:9px;font-weight:700;font-size:clamp(.85rem,1.3vw,1rem)}
+.mark{
+  display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:7px;
+  background:var(--accent);color:#fff;font-weight:900;font-size:.82rem;font-family:var(--mono);margin-right:8px;flex-shrink:0;
+}
+
+/* STEPS list (paso 2 lateral) */
+.steplist{display:flex;flex-direction:column;gap:clamp(12px,1.8vh,20px)}
+.steprow{display:flex;gap:14px;align-items:flex-start;font-size:clamp(.98rem,1.6vw,1.35rem);line-height:1.35;color:var(--text2)}
+.steprow b{color:var(--text)}
+.steprow code{font-family:var(--mono);color:var(--accent-light);background:rgba(255,107,43,.1);padding:2px 8px;border-radius:6px;font-size:.9em}
+
+/* QUOTE / pregunta */
+.quote{
+  border-left:4px solid var(--accent);padding:clamp(16px,2vw,26px) clamp(20px,3vw,38px);
+  background:rgba(255,107,43,.05);border-radius:0 16px 16px 0;
+  font-size:clamp(1.2rem,2.6vw,2.1rem);line-height:1.4;font-weight:600;font-style:italic;
+}
+.quote span{color:var(--accent-light)}
+
+/* PROMPT BOX */
+.prompt-box{
+  background:#0d0d16;border:1px dashed rgba(255,107,43,.4);border-radius:16px;
+  padding:clamp(18px,2.4vw,32px);font-family:var(--mono);
+  font-size:clamp(.9rem,1.5vw,1.25rem);line-height:1.9;color:var(--text);
+  white-space:pre-wrap;position:relative;max-height:60vh;overflow:auto;
+}
+.prompt-box .ph{color:var(--accent-light);font-weight:700}
+.prompt-box::-webkit-scrollbar{width:8px}
+.prompt-box::-webkit-scrollbar-thumb{background:rgba(255,107,43,.3);border-radius:8px}
+.copy-btn{position:absolute;top:14px;right:14px;background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.copy-btn:hover{background:var(--accent-light)}
+.note{margin-top:clamp(14px,2vh,22px);font-size:clamp(.92rem,1.5vw,1.2rem);color:var(--text2);line-height:1.45}
+.note b{color:var(--accent-light)}
+
+/* EJERCICIO */
+.task{display:flex;gap:14px;align-items:flex-start;font-size:clamp(1rem,1.7vw,1.4rem);line-height:1.4;color:var(--text);padding:clamp(12px,1.6vw,18px) 0;border-bottom:1px solid var(--border)}
+.task:last-child{border-bottom:none}
+.task .chk{flex-shrink:0;width:clamp(28px,3vw,38px);height:clamp(28px,3vw,38px);border-radius:9px;border:2px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:900;margin-top:2px}
+.task b{color:var(--accent-light)}
+.task small{display:block;color:var(--text2);font-size:.75em;font-weight:400;margin-top:3px}
+.callout{
+  margin-top:clamp(16px,2.5vh,28px);background:rgba(255,107,43,.07);border:1px solid rgba(255,107,43,.25);
+  border-radius:14px;padding:clamp(14px,2vw,22px);font-size:clamp(1rem,1.7vw,1.4rem);color:var(--text);line-height:1.4;
+}
+.callout b{color:var(--accent-light)}
+
+/* FINAL */
+.final{align-items:center;text-align:center}
+.final .big{font-size:clamp(2.6rem,8vw,6rem);font-weight:900;line-height:1;letter-spacing:-.02em}
+.final .credit{margin-top:clamp(26px,4vh,46px);font-size:clamp(1rem,1.7vw,1.4rem);color:var(--text2);font-weight:600}
+.final .credit b{color:var(--accent-light)}
+.final .url{color:var(--text3);font-size:clamp(.85rem,1.3vw,1.05rem);margin-top:6px}
+
+/* HUD */
+#counter{position:fixed;bottom:22px;right:26px;z-index:40;font-family:var(--mono);font-size:.95rem;color:var(--text3);font-weight:500}
+#counter b{color:var(--accent-light)}
+#hint{position:fixed;bottom:22px;left:26px;z-index:40;font-size:.85rem;color:var(--text3);display:flex;align-items:center;gap:8px}
+.key{font-family:var(--mono);font-size:.78rem;border:1px solid var(--border);border-radius:6px;padding:2px 8px;background:rgba(255,255,255,.03);color:var(--text2)}
+#dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:40;display:flex;gap:9px}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--text3);opacity:.4;transition:.3s;cursor:pointer}
+.pdot.on{background:var(--accent);opacity:1;width:24px;border-radius:5px}
+
+@media (max-width:780px){
+  .grid2,.vs{grid-template-columns:1fr}
+  .brands{gap:24px}
+  #hint{display:none}
+  .slide{padding:58px 22px 80px}
+  .ui{flex-direction:column}
+  .ui-side{width:100%;flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--border)}
+  .prompt-box{max-height:52vh}
+}
+@media (max-height:560px){.cover-badge{display:none}.brands{margin-top:18px}}
+.anim{will-change:transform,opacity}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck">
+
+  <!-- SLIDE 1 — PORTADA -->
+  <section class="slide cover">
+    <div class="slide-inner">
+      <img class="cover-badge anim" src="assets/icono.png" alt="Curso IA — Ivan Lafuente">
+      <div class="eyebrow anim">Curso de IA · Nivel 1 · IA desde cero</div>
+      <h1 class="anim">Módulo 2<br><span class="grad">Crear un Proyecto en Claude AI</span></h1>
+      <p class="sub anim">Que Claude conozca tu negocio y te responda pensando en vos — cada vez.</p>
+
+      <div class="brands">
+        <div class="brand anim">
+          <div class="brand-pair">
+            <img class="brand-logo" src="assets/logo-sss.png" alt="Salsa Soul Studio">
+            <img class="brand-robot" src="assets/dorita.png" alt="Dorita">
+          </div>
+          <div class="brand-name"><b>Dorita</b> · Salsa Soul</div>
+        </div>
+        <div class="brand anim">
+          <div class="brand-pair">
+            <img class="brand-logo" src="assets/logo-fka.png" alt="Fenix Kids Academy">
+            <img class="brand-robot" src="assets/phoenix.png" alt="Phoenix">
+          </div>
+          <div class="brand-name"><b>Phoenix</b> · Fenix Kids</div>
+        </div>
+        <div class="brand anim">
+          <div class="brand-pair">
+            <img class="brand-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork">
+            <img class="brand-robot" src="assets/neo.png" alt="Neo">
+          </div>
+          <div class="brand-name"><b>Neo</b> · AI Cowork</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — PASO 1: ¿PARA QUÉ SIRVE? -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow anim">Paso 1 · ¿Para qué sirve un Proyecto?</div>
+      <h2 class="anim">Claude, como un <span class="grad">empleado nuevo</span></h2>
+      <div class="vs">
+        <div class="vs-col bad anim">
+          <span class="tag bad">Sin Proyecto</span>
+          <h3 style="margin-top:14px">Empleado nuevo, cada vez</h3>
+          <ul class="vs-list">
+            <li><span class="ic x">✕</span><span>No sabe <b>nada de tu negocio</b></span></li>
+            <li><span class="ic x">✕</span><span>Le explicás <b>todo de nuevo</b> en cada chat</span></li>
+            <li><span class="ic x">✕</span><span>Respuestas <b>genéricas</b></span></li>
+          </ul>
+        </div>
+        <div class="vs-col good anim">
+          <span class="tag good">Con Proyecto</span>
+          <h3 style="margin-top:14px">Empleado que ya te conoce</h3>
+          <ul class="vs-list">
+            <li><span class="ic v">✓</span><span>Ya sabe <b>quién sos y qué vendés</b></span></li>
+            <li><span class="ic v">✓</span><span>Sabe <b>cómo querés</b> que te responda</span></li>
+            <li><span class="ic v">✓</span><span>Respuestas <b>pensadas en tu negocio</b></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="quote anim" style="margin-top:clamp(18px,3vh,32px)">¿Cuánto tardarías en explicarle tu negocio a un <span>empleado nuevo</span>?<br>Eso es lo que el Proyecto te ahorra cada vez que abrís Claude.</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — PASO 2: CREAR EL PROYECTO -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow anim">Paso 2 · Crear el Proyecto (demo en vivo)</div>
+      <h2 class="anim">4 clicks en la <span class="grad">interfaz de Claude</span></h2>
+      <div class="grid2" style="align-items:center">
+        <div class="anim">
+          <div class="steplist">
+            <div class="steprow"><span class="mark">1</span><span>Barra lateral izquierda → <b>Proyectos</b> → <b>Nuevo Proyecto</b></span></div>
+            <div class="steprow"><span class="mark">2</span><span>Nombre del proyecto = <b>el nombre de tu negocio</b></span></div>
+            <div class="steprow"><span class="mark">3</span><span>Click en <b>Instrucciones del proyecto</b> → acá va el contexto</span></div>
+            <div class="steprow"><span class="mark">4</span><span>Pegar el <b>prompt base</b> → <b>Guardar</b> <i>(próximo slide)</i></span></div>
+          </div>
+        </div>
+        <div class="win anim">
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">claude.ai</span></div>
+          <div class="ui">
+            <div class="ui-side">
+              <div class="logo"><span></span> Claude</div>
+              <div class="ui-item">Chats</div>
+              <div class="ui-item hot"><span class="mark">1</span> Proyectos</div>
+              <div class="ui-item">Artefactos</div>
+            </div>
+            <div class="ui-main">
+              <div class="ui-field hot">
+                <div class="lbl"><span class="mark">2</span> Nombre del proyecto</div>
+                <div class="val">Fenix Kids Academy</div>
+              </div>
+              <div class="ui-field hot">
+                <div class="lbl"><span class="mark">3</span> Instrucciones del proyecto</div>
+                <div class="val ph">Pegá acá el prompt base de tu negocio…</div>
+              </div>
+              <div class="ui-btn"><span class="mark" style="background:rgba(255,255,255,.25)">4</span> Guardar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — PASO 3: PROMPT BASE -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow anim">Paso 3 · El prompt base del negocio</div>
+      <h2 class="anim">Completá la plantilla con <span class="grad">tus datos reales</span></h2>
+      <div class="prompt-box anim">
+<button class="copy-btn" onclick="copyPrompt(this)">Copiar</button><span id="promptText">Mi negocio se llama <span class="ph">[NOMBRE]</span>.
+Vendo <span class="ph">[QUÉ]</span> a <span class="ph">[QUIÉN]</span>.
+Mis clientes principales son <span class="ph">[DESCRIPCIÓN]</span>.
+El tono que quiero que uses es <span class="ph">[formal / amigable / profesional]</span>.
+Mi mayor problema hoy es <span class="ph">[PROBLEMA]</span>.
+
+Cuando te haga preguntas, respondeme siempre pensando en mi negocio.</span></div>
+      <div class="note anim"><b>Tip del profe:</b> mostralo primero con tu propio negocio (Fenix Kids o Salsa Soul) para que vean el resultado antes de hacerlo ellos.</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — PASO 4: EJERCICIO -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow anim">Paso 4 · Ejercicio — cada uno crea el suyo</div>
+      <h2 class="anim">Tu turno: <span class="grad">10 minutos</span></h2>
+      <div class="anim">
+        <div class="task"><span class="chk">1</span><div>Creá tu <b>Proyecto</b> con el nombre de tu negocio</div></div>
+        <div class="task"><span class="chk">2</span><div>Completá la <b>plantilla</b> con tus datos reales en las Instrucciones</div></div>
+        <div class="task"><span class="chk">3</span><div>Hacé tu <b>primera pregunta</b> dentro del Proyecto</div></div>
+      </div>
+      <div class="callout anim">Primera pregunta sugerida:<br><b>“¿Cuáles son mis 3 mayores oportunidades de venta este mes?”</b></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — PASO 5: CIERRE SIN VS CON -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow anim">Paso 5 · Para cerrar</div>
+      <h2 class="anim">La misma pregunta, <span class="grad">dos resultados</span></h2>
+      <div class="vs">
+        <div class="vs-col bad anim">
+          <span class="tag bad">Chat normal</span>
+          <ul class="vs-list" style="margin-top:18px">
+            <li><span class="ic x">✕</span><span>Respuesta <b>genérica</b></span></li>
+            <li><span class="ic x">✕</span><span>Claude <b>no sabe nada</b> de tu negocio</span></li>
+            <li><span class="ic x">✕</span><span>Le tenés que <b>explicar todo</b> primero</span></li>
+          </ul>
+        </div>
+        <div class="vs-col good anim">
+          <span class="tag good">Dentro del Proyecto</span>
+          <ul class="vs-list" style="margin-top:18px">
+            <li><span class="ic v">✓</span><span>Respuesta <b>personalizada</b></span></li>
+            <li><span class="ic v">✓</span><span>Claude <b>sabe quién sos</b> y qué vendés</span></li>
+            <li><span class="ic v">✓</span><span>Va <b>directo al punto</b> de tu negocio</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout anim"><b>El momento clave:</b> pedile a un alumno que lea su respuesta en voz alta. Ahí es cuando todos entienden.</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 — CRÉDITO FINAL -->
+  <section class="slide final">
+    <div class="slide-inner">
+      <img class="cover-badge anim" src="assets/icono.png" alt="Ivan Lafuente">
+      <div class="big anim"><span class="grad">Gracias.</span></div>
+      <p class="lead anim" style="margin:18px auto 0;text-align:center">Ya tenés a Claude trabajando con el contexto de tu negocio.<br>Y esto es solo el comienzo.</p>
+      <div class="credit anim"><b>Ivan Lafuente</b></div>
+      <div class="url anim">ivanlafuente.com · Lafuente AI Cowork</div>
+    </div>
+  </section>
+
+</div>
+
+<div id="counter"><b id="cur">1</b> / <span id="tot">7</span></div>
+<div id="hint"><span class="key">←</span><span class="key">→</span> navegar · <span class="key">F</span> pantalla completa</div>
+<div id="dots"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  let i=0,animating=false;
+  const cur=document.getElementById('cur');
+  const tot=document.getElementById('tot');
+  const prog=document.getElementById('progress');
+  const dotsWrap=document.getElementById('dots');
+  tot.textContent=total;
+
+  slides.forEach((_,k)=>{
+    const d=document.createElement('div');
+    d.className='pdot'+(k===0?' on':'');
+    d.addEventListener('click',()=>go(k));
+    dotsWrap.appendChild(d);
+  });
+  const dots=[...dotsWrap.children];
+
+  function animateIn(slide){
+    const els=slide.querySelectorAll('.anim');
+    gsap.set(els,{opacity:0,y:28});
+    gsap.to(els,{opacity:1,y:0,duration:.55,ease:'power2.out',stagger:.09});
+  }
+  function show(n){
+    if(animating||(n===i&&slides[i].classList.contains('active')))return;
+    const out=slides[i],inn=slides[n];
+    animating=true;
+    inn.classList.add('active');
+    gsap.set(inn,{opacity:0});
+    if(out!==inn){gsap.to(out,{opacity:0,duration:.28,ease:'power1.in',onComplete:()=>out.classList.remove('active')});}
+    gsap.to(inn,{opacity:1,duration:.4,ease:'power1.out',delay:.18,onComplete:()=>{animating=false}});
+    animateIn(inn);
+    i=n;cur.textContent=i+1;
+    prog.style.width=((i)/(total-1)*100)+'%';
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+  }
+  function go(n){if(n<0||n>=total)return;show(n);}
+  function next(){if(i<total-1)show(i+1);}
+  function prev(){if(i>0)show(i-1);}
+
+  slides[0].classList.add('active');
+  gsap.set(slides[0],{opacity:1});
+  animateIn(slides[0]);
+  prog.style.width='0%';
+
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='Home'){go(0);}
+    else if(e.key==='End'){go(total-1);}
+    else if(e.key==='f'||e.key==='F'){toggleFs();}
+  });
+  document.getElementById('deck').addEventListener('click',e=>{
+    if(e.target.closest('button,a,.prompt-box'))return;
+    if(e.clientX < window.innerWidth*0.32) prev(); else next();
+  });
+  let sx=0,sy=0;
+  document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){dx<0?next():prev();}
+  },{passive:true});
+  function toggleFs(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  window.copyPrompt=function(btn){
+    const t=document.getElementById('promptText').innerText;
+    navigator.clipboard.writeText(t).then(()=>{const o=btn.textContent;btn.textContent='¡Copiado!';setTimeout(()=>btn.textContent=o,1600);});
+  };
+})();
+</script>
+</body>
+</html>
