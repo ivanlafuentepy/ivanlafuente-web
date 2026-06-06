@@ -1401,7 +1401,7 @@ body::after {
     display: none;
   }
   .nav-submenu::before { display: none; }
-  .nav-dropdown.open .nav-submenu { display: flex; }
+  .nav-dropdown.open .nav-submenu { display: flex; transform: none; }
   .nav-submenu a { font-size: 0.95rem; padding: 9px 0; }
 
   .hero h1 {
