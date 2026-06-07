@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Nivel 1 — Tu primer Proyecto: una Página Web · Ivan Lafuente</title>
-<meta name="description" content="Crear un Proyecto en Claude AI y publicar la página web de tu negocio en 15 minutos. CURSO IA de Ivan Lafuente, Nivel 1.">
+<title>Nivel 1 · Módulo 1 — La página web de tu negocio · Ivan Lafuente</title>
+<meta name="description" content="Creá la página web de tu negocio con Claude y publicala en internet hoy. CURSO IA de Ivan Lafuente, Nivel 1, Módulo 1.">
 <link rel="icon" href="assets/icono.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -185,6 +185,13 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
   .cmp th{font-size:.95rem}.cmp td{font-size:.92rem;padding:9px 12px}
 }
 @media (max-height:560px){.cover-badge{display:none}.brands{margin-top:16px}}
+/* WIREFRAME anatomía de una web */
+.wire{display:flex;flex-direction:column;gap:9px;padding:clamp(14px,1.8vw,22px)}
+.wire-row{display:flex;align-items:center;gap:13px}
+.wire-tag{flex-shrink:0;width:clamp(78px,9vw,108px);font-family:var(--mono);font-size:clamp(.72rem,1.1vw,.88rem);font-weight:700;color:var(--accent-light);text-align:right}
+.wire-box{flex:1;background:#141420;border:1px solid var(--border);border-radius:9px;padding:clamp(9px,1.3vw,14px) clamp(12px,1.6vw,18px);font-size:clamp(.82rem,1.25vw,1.02rem);color:var(--text2)}
+.wire-box b{color:var(--text)}
+.wire-row.hero .wire-box{background:linear-gradient(120deg,rgba(255,107,43,.16),rgba(201,168,76,.08));border-color:rgba(255,107,43,.4);padding-top:clamp(14px,2vw,20px);padding-bottom:clamp(14px,2vw,20px);color:var(--text)}
 .anim{will-change:transform,opacity}
 </style>
 </head>
@@ -196,9 +203,9 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
   <section class="slide cover">
     <div class="slide-inner">
       <img class="cover-badge anim" src="assets/icono.png" alt="Curso IA — Ivan Lafuente">
-      <div class="eyebrow anim">CURSO IA · Nivel 1 · IA desde cero</div>
-      <h1 class="anim">Tu primer Proyecto:<br><span class="grad">la página web de tu negocio</span></h1>
-      <p class="sub anim">Creás un Proyecto en Claude, le contás de tu negocio una sola vez, y publicás tu web hoy.</p>
+      <div class="eyebrow anim">CURSO IA · Nivel 1 · IA desde cero · Módulo 1</div>
+      <h1 class="anim">La página web<br><span class="grad">de tu negocio</span></h1>
+      <p class="sub anim">Hoy creás tu página web real con Claude y la publicás en internet.</p>
       <div class="brands">
         <div class="brand anim"><img class="brand-img" src="assets/agente-dorita.png" alt="Dorita — Salsa Soul Studio"><div class="brand-name"><b>Dorita</b> · Salsa Soul</div></div>
         <div class="brand anim"><img class="brand-img" src="assets/agente-fenix.png" alt="Fenix — Fenix Kids"><div class="brand-name"><b>Fenix</b> · Fenix Kids</div></div>
@@ -215,8 +222,8 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
       <h2 class="anim">Una página web <span class="grad">real, en internet</span></h2>
       <div class="grid2" style="align-items:center">
         <div class="anim">
-          <p class="lead" style="margin-bottom:20px">Hoy <strong>empezamos a trabajar con Claude</strong>. Vamos a crear nuestro <strong>primer proyecto</strong>.</p>
-          <p class="lead">Y nuestro primer proyecto va a ser <strong>tu página web real, en internet</strong>.</p>
+          <p class="lead" style="margin-bottom:20px">Hoy <strong>empezamos a trabajar con Claude</strong>. Vamos a crear <strong>nuestra página web</strong>.</p>
+          <p class="lead">Y va a ser <strong>tu página web real, en internet</strong>.</p>
         </div>
         <div class="anim">
           <div class="metrics">
@@ -228,65 +235,11 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
     </div>
   </section>
 
-  <!-- 3 — CHECKLIST (Parte 3) -->
-  <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
-    <div class="slide-inner">
-      <div class="eyebrow anim">Antes de arrancar</div>
-      <h2 class="anim">Tené esto <span class="grad">a mano</span></h2>
-      <div class="checkgrid anim">
-        <div class="task"><span class="chk">○</span><div><b>Nombre exacto</b> del negocio</div></div>
-        <div class="task"><span class="chk">○</span><div><b>WhatsApp</b> con código de país <small>(595 para Paraguay)</small></div></div>
-        <div class="task"><span class="chk">○</span><div>Usuario de <b>Instagram</b></div></div>
-        <div class="task"><span class="chk">○</span><div><b>Dirección</b> del local <small>(si aplica)</small></div></div>
-        <div class="task"><span class="chk">○</span><div><b>Horarios</b> de atención</div></div>
-        <div class="task"><span class="chk">○</span><div>2 o 3 <b>servicios/productos</b> con precio <small>(opcional)</small></div></div>
-        <div class="task"><span class="chk">○</span><div>Una idea del <b>estilo visual</b> que te gusta</div></div>
-        <div class="task"><span class="chk">○</span><div><b>Fotos</b> <small>(no obligatorias — se agregan después)</small></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4 — PASO 1: CREAR PROYECTO + INSTRUCCIONES -->
-  <section class="slide">
-    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
-    <div class="slide-inner">
-      <div class="eyebrow anim">Paso 1 · Crear el Proyecto</div>
-      <h2 class="anim">El negocio entra <span class="grad">una sola vez</span></h2>
-      <div class="grid2" style="align-items:center">
-        <div class="anim">
-          <div class="steplist">
-            <div class="steprow"><span class="mark">1</span><span>Barra lateral → <b>Proyectos</b> → <b>Nuevo Proyecto</b></span></div>
-            <div class="steprow"><span class="mark">2</span><span>Nombre del proyecto = <b>el nombre de tu negocio</b></span></div>
-            <div class="steprow"><span class="mark">3</span><span>Abrí <b>Instrucciones del proyecto</b></span></div>
-            <div class="steprow"><span class="mark">4</span><span>Pegá la <b>plantilla del negocio</b> → <b>Guardar</b> <i>(próximo slide)</i></span></div>
-          </div>
-        </div>
-        <div class="win anim">
-          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">claude.ai</span></div>
-          <div class="ui">
-            <div class="ui-side">
-              <div class="logo"><span></span> Claude</div>
-              <div class="ui-item">Chats</div>
-              <div class="ui-item hot"><span class="mark">1</span> Proyectos</div>
-              <div class="ui-item">Artefactos</div>
-            </div>
-            <div class="ui-main">
-              <div class="ui-field hot"><div class="lbl"><span class="mark">2</span> Nombre del proyecto</div><div class="val">Salsa Soul Studio</div></div>
-              <div class="ui-field hot"><div class="lbl"><span class="mark">3</span> Instrucciones del proyecto</div><div class="val ph">Pegá la plantilla de tu negocio…</div></div>
-              <div class="ui-btn"><span class="mark" style="background:rgba(255,255,255,.25)">4</span> Guardar</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5 — INSTRUCCIONES DEL PROYECTO (Parte 1) -->
+  <!-- 3 — PASO 1: CONTALE DE TU NEGOCIO (plantilla) -->
   <section class="slide">
     <div class="slide-inner">
-      <div class="eyebrow anim">Paso 1 · La plantilla que pegás en Instrucciones</div>
-      <h2 class="anim">Completá con <span class="grad">tus datos reales</span></h2>
+      <div class="eyebrow anim">Paso 1 · Contale a Claude de tu negocio</div>
+      <h2 class="anim">Abrí un chat y pegá <span class="grad">tus datos reales</span></h2>
       <div class="prompt-box anim">
 <button class="copy-btn" onclick="copyEl(this,'tpl')">Copiar</button><span id="tpl">Sos el asistente de mi negocio. Siempre que te haga preguntas,
 respondé teniendo en cuenta todo lo que te cuento acá abajo.
@@ -315,99 +268,84 @@ Email: <span class="ph">[EMAIL]</span>   Dirección exacta: <span class="ph">[pa
 <span class="hd">## Colores o estilo que me gusta</span>  <span class="ph">[moderno oscuro / colorido / minimalista…]</span>
 <span class="hd">## Tono de comunicación</span>  <span class="ph">[formal / amigable / joven y dinámico]</span>
 <span class="hd">## Slogan</span>  <span class="ph">[si tienen, o dejar vacío]</span></span></div>
+      <p class="note anim"><b>Este mismo texto</b> después lo vas a guardar en un Proyecto — así Claude recuerda tu negocio para siempre. Eso lo vemos en el próximo módulo.</p>
     </div>
   </section>
 
-  <!-- 6 — PASO 2: PEDIR LA WEB (Parte 2) -->
+  <!-- 4 — ANATOMÍA DE UNA WEB -->
+  <section class="slide">
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
+    <div class="slide-inner">
+      <div class="eyebrow anim">¿Cómo está formada una página web?</div>
+      <h2 class="anim">Las partes de <span class="grad">tu web</span></h2>
+      <div class="grid2" style="align-items:center">
+        <div class="win anim">
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">tunegocio.com</span></div>
+          <div class="wire">
+            <div class="wire-row"><span class="wire-tag">Header</span><div class="wire-box"><b>Logo</b> + menú de navegación</div></div>
+            <div class="wire-row hero"><span class="wire-tag">Hero</span><div class="wire-box"><b>Título grande</b> + botón de acción (lo primero que se ve)</div></div>
+            <div class="wire-row"><span class="wire-tag">Servicios</span><div class="wire-box">Qué ofrecés</div></div>
+            <div class="wire-row"><span class="wire-tag">Contacto</span><div class="wire-box">WhatsApp · mapa · redes</div></div>
+            <div class="wire-row"><span class="wire-tag">Footer</span><div class="wire-box">Pie de página</div></div>
+          </div>
+        </div>
+        <div class="anim">
+          <p class="lead" style="margin-bottom:clamp(14px,2vh,20px)">Y lo que la hace verse <strong>profesional</strong>:</p>
+          <div class="card">
+            <ul>
+              <li><b>Responsive</b> — se ve perfecta en el celular y en la computadora</li>
+              <li><b>Fade in al scroll</b> — cada sección aparece suave al bajar</li>
+              <li><b>Imágenes</b> — fotos del rubro en cada sección</li>
+              <li><b>Botón de WhatsApp</b> — burbuja flotante, siempre a la vista</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — PASO 2: PEDIR LA WEB (copy/pega visible) -->
   <section class="slide">
     <div class="slide-inner">
-      <div class="eyebrow anim">Paso 2 · El primer chat dentro del Proyecto</div>
-      <h2 class="anim">Ahora le pedís <span class="grad">la página web</span></h2>
-      <p class="lead anim" style="margin-bottom:clamp(14px,2vh,22px)">Como el Proyecto ya tiene tus datos, alcanza con pedir la web y dar las especificaciones:</p>
-      <div class="grid4 anim">
-        <div class="card"><div class="ct"><span class="ico">▤</span>Estructura</div><ul><li>Header con menú</li><li>Hero con CTA</li><li>Qué ofrezco</li><li>Por qué elegirnos</li><li>Contacto + footer</li></ul></div>
-        <div class="card"><div class="ct"><span class="ico">✦</span>Funcionalidades</div><ul><li>Botón flotante de WhatsApp</li><li>Links a Instagram/Facebook</li><li>wa.me directo + Google Maps</li><li>Menú hamburguesa</li><li>Scroll suave</li></ul></div>
-        <div class="card"><div class="ct"><span class="ico">◐</span>Diseño</div><ul><li>100% responsive</li><li>Tus colores y estilo</li><li>Google Fonts</li><li>Fade in al scroll</li><li>Imágenes de Unsplash</li></ul></div>
-        <div class="card"><div class="ct"><span class="ico">★</span>Calidad</div><ul><li>Todo en 1 archivo .html</li><li>Código comentado</li><li>SEO + Open Graph</li><li>Favicon con la inicial</li><li>Lista de qué personalizar</li></ul></div>
-      </div>
-      <button class="copy-btn big anim" onclick="copyEl(this,'webprompt')">Copiar el prompt completo</button>
-      <span id="webprompt" class="hidden">Con toda la información de mi negocio que ya tenés, creame una página web completa en un solo archivo HTML.
+      <div class="eyebrow anim">Paso 2 · Pedile la página web</div>
+      <h2 class="anim">Pegá este <span class="grad">prompt</span> en el mismo chat</h2>
+      <div class="prompt-box anim"><button class="copy-btn" onclick="copyEl(this,'webprompt')">Copiar</button><span id="webprompt">Con la información de mi negocio que te di, creame una <span class="hd">página web completa en un solo archivo HTML</span>.
 
-La página tiene que tener:
-
-ESTRUCTURA:
+<span class="hd">## Estructura</span>
 - Header con el nombre del negocio y menú de navegación
-- Sección hero con título impactante, subtítulo y botón de llamada a la acción
-- Sección "¿Qué ofrezco?" con mis servicios o productos principales
-- Sección "¿Por qué elegirnos?" con 3 puntos fuertes del negocio
+- Hero con título impactante, subtítulo y botón de acción
+- Sección "¿Qué ofrezco?" con mis servicios o productos
+- Sección "¿Por qué elegirnos?" con 3 puntos fuertes
 - Sección de contacto con todos mis datos
-- Footer con redes sociales y derechos
+- Footer con redes sociales
 
-FUNCIONALIDADES OBLIGATORIAS:
-- Botón flotante de WhatsApp en la esquina inferior derecha (burbuja verde, siempre visible, que abra WhatsApp directo con mensaje)
+<span class="hd">## Funcionalidades</span>
+- Botón flotante de WhatsApp (burbuja verde, siempre visible, abre chat directo)
 - Links clickeables a Instagram y Facebook
-- El número de WhatsApp que abra chat directo (wa.me/[NÚMERO])
+- WhatsApp que abra chat directo: <span class="ph">wa.me/[NÚMERO]</span>
 - Dirección con link a Google Maps
 - Menú hamburguesa en celular
 - Scroll suave entre secciones
 
-DISEÑO:
-- Responsive: que se vea perfecto en celular y computadora
-- Usar los colores y estilo que te indiqué
-- Tipografía de Google Fonts (moderna y legible)
-- Animaciones suaves al hacer scroll (fade in)
-- Imágenes: usar placeholders profesionales de Unsplash relacionados al rubro, con comentarios en el código indicando dónde reemplazar con fotos reales
-- Íconos de Font Awesome para redes sociales y contacto
+<span class="hd">## Diseño</span>
+- Responsive: perfecto en celular y computadora
+- Usá mis colores y mi estilo
+- Tipografía de Google Fonts
+- Fade in al hacer scroll
+- Imágenes profesionales de Unsplash del rubro, con comentarios de dónde poner mis fotos reales
+- Íconos de Font Awesome
 
-CALIDAD:
-- Todo en un solo archivo .html (CSS y JS incluidos)
+<span class="hd">## Calidad</span>
+- Todo en un solo archivo .html (CSS y JS adentro)
 - Código limpio y comentado
-- Meta tags para SEO con el nombre y descripción del negocio
-- Meta Open Graph para que se vea bien al compartir en WhatsApp
-- Favicon simple con la inicial del negocio
+- Meta tags de SEO y Open Graph (para que se vea bien al compartir en WhatsApp)
+- Favicon con la inicial del negocio
 
-Al final del código, agregá un comentario con la lista de todo lo que el dueño debería personalizar (fotos, textos, etc.)</span>
+Al final, dejame un comentario con la lista de lo que tengo que personalizar (fotos, textos…).</span></div>
     </div>
   </section>
 
-  <!-- 7 — FLUJO DE LA CLASE (Parte 4) -->
-  <section class="slide">
-    <div class="slide-inner">
-      <div class="eyebrow anim">El flujo completo de la clase</div>
-      <h2 class="anim">De cero a publicada <span class="grad">en 15 min</span></h2>
-      <div class="flow">
-        <div class="fstep anim"><div class="fn">1</div><div class="ft">Completás la plantilla con tus datos</div><div class="ftime">3 min</div></div>
-        <div class="fstep anim"><div class="fn">2</div><div class="ft">Creás el Proyecto y pegás las instrucciones</div><div class="ftime">3 min</div></div>
-        <div class="fstep anim"><div class="fn">3</div><div class="ft">Pegás el prompt para pedir la web</div><div class="ftime">1 min</div></div>
-        <div class="fstep anim"><div class="fn">4</div><div class="ft">Claude genera el HTML completo</div><div class="ftime">2 min</div></div>
-        <div class="fstep anim"><div class="fn">5</div><div class="ft">Copiás el código → creás <span class="mono">miempresa.html</span></div><div class="ftime">2 min</div></div>
-        <div class="fstep anim"><div class="fn">6</div><div class="ft">Arrastrás el archivo a <span class="mono">netlify.com/drop</span></div><div class="ftime">1 min</div></div>
-        <div class="fstep anim wow"><div class="fn">✓</div><div class="ft"><b>¡Página publicada!</b> Compartís el link con el grupo</div><div class="ftime">¡listo!</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8 — AMATEUR VS PRO (Parte 5) -->
-  <section class="slide">
-    <div class="slide-inner">
-      <div class="eyebrow anim">Lo que hace la diferencia</div>
-      <h2 class="anim">Amateur <span style="color:var(--text3)">vs</span> <span class="grad">Profesional</span></h2>
-      <table class="cmp anim">
-        <thead><tr><th class="a">Amateur</th><th class="p">Profesional</th></tr></thead>
-        <tbody>
-          <tr><td><span class="x">✕</span>Fondo blanco liso</td><td class="p"><span class="v">✓</span>Color de marca consistente</td></tr>
-          <tr><td><span class="x">✕</span>Texto plano</td><td class="p"><span class="v">✓</span>Tipografía de Google Fonts</td></tr>
-          <tr><td><span class="x">✕</span>Sin animaciones</td><td class="p"><span class="v">✓</span>Fade in al hacer scroll</td></tr>
-          <tr><td><span class="x">✕</span>WhatsApp solo en el footer</td><td class="p"><span class="v">✓</span>Burbuja flotante siempre visible</td></tr>
-          <tr><td><span class="x">✕</span>Links de texto</td><td class="p"><span class="v">✓</span>Íconos de redes sociales</td></tr>
-          <tr><td><span class="x">✕</span>No se ve en celular</td><td class="p"><span class="v">✓</span>100% responsive</td></tr>
-          <tr><td><span class="x">✕</span>Sin SEO</td><td class="p"><span class="v">✓</span>Meta tags y Open Graph</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- 9 — CIERRE -->
+  <!-- 6 — CIERRE -->
   <section class="slide final">
     <div class="slide-inner">
       <div class="final-brand anim">
@@ -415,7 +353,7 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
         <img class="final-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork">
       </div>
       <div class="big anim"><span class="grad">Tu web ya está online.</span></div>
-      <p class="lead anim" style="margin:18px auto 0;text-align:center">Y el Proyecto queda guardado: la próxima que necesites un cambio,<br>Claude ya sabe todo de tu negocio.</p>
+      <p class="lead anim" style="margin:18px auto 0;text-align:center">La hiciste en una sola charla con Claude.<br>En el próximo módulo la guardás en un <strong>Proyecto</strong>.</p>
       <div class="credit anim"><b>Ivan Lafuente</b></div>
       <div class="url anim">ivanlafuente.com · Lafuente AI Cowork</div>
     </div>
@@ -424,7 +362,7 @@ Al final del código, agregá un comentario con la lista de todo lo que el dueñ
 </div>
 
 <a class="back-web" href="../../index.html">&larr; Volver a la web</a>
-<div id="counter"><b id="cur">1</b> / <span id="tot">9</span></div>
+<div id="counter"><b id="cur">1</b> / <span id="tot">6</span></div>
 <div id="hint"><span class="key">←</span><span class="key">→</span> navegar · <span class="key">F</span> pantalla completa</div>
 <div id="dots"></div>
 
