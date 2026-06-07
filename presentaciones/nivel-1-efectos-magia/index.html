@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Nivel 1 · Módulo 4 — 2 efectos de magia con Claude · Ivan Lafuente</title>
+<meta name="description" content="Dos trucos con Claude para tu negocio: fotos de facturas a una planilla de gastos, y búsqueda web de tu competencia. CURSO IA de Ivan Lafuente, Nivel 1, Módulo 4.">
+<link rel="icon" href="assets/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#10101a;--bg-card:#181826;--bg-card2:#1f1f30;
+  --accent:#ff6b2b;--accent-light:#ff8f5a;--accent-dark:#cc4a10;--accent-glow:rgba(255,107,43,0.30);
+  --gold:#c9a84c;--green:#3ddc84;--red:#ff5c5c;
+  --text:#f0f0f5;--text2:#a8a8c0;--text3:#5c5c78;--border:rgba(255,255,255,0.09);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(60vw 60vw at 80% -10%, rgba(255,107,43,0.10), transparent 60%),radial-gradient(50vw 50vw at -10% 110%, rgba(201,168,76,0.07), transparent 60%)}
+
+#progress{position:fixed;top:0;left:0;height:4px;width:0%;z-index:50;background:linear-gradient(90deg,var(--accent),var(--gold));box-shadow:0 0 12px var(--accent-glow);transition:width .45s cubic-bezier(.6,.05,.3,1)}
+
+#deck{position:fixed;inset:0;z-index:1}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:clamp(28px,5vw,90px);opacity:0}
+.slide.active{display:flex}
+.slide-inner{width:100%;max-width:1280px;margin:0 auto}
+/* branding Lafuente AI Cowork — logo centrado arriba, visible, en todas las slides menos portada */
+.brandmark{position:absolute;top:clamp(14px,2.4vh,30px);left:50%;transform:translateX(-50%);z-index:6;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.brandmark .bm-logo{height:clamp(160px,23vh,270px);width:auto;object-fit:contain;opacity:1;filter:drop-shadow(0 6px 22px rgba(0,0,0,.6))}
+@media (max-width:780px){.brandmark .bm-logo{height:70px}.brandmark{top:10px}}
+/* botón volver a la web (fijo, todas las slides) */
+.back-web{position:fixed;top:clamp(12px,2.2vh,24px);left:clamp(14px,3vw,38px);z-index:30;display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);font-size:clamp(.76rem,1.15vw,.92rem);font-weight:600;text-decoration:none;transition:.2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.back-web:hover{background:rgba(255,107,43,.15);color:var(--accent-light);border-color:rgba(255,107,43,.4)}
+/* cierre: foto de perfil + logo AI Cowork lado a lado */
+.final-brand{display:flex;align-items:center;justify-content:center;gap:clamp(24px,5vw,72px);margin-bottom:clamp(20px,3.5vh,40px);flex-wrap:wrap}
+.final-foto{width:clamp(110px,15vh,184px);height:clamp(110px,15vh,184px);border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 0 0 6px rgba(255,107,43,.12),0 14px 50px rgba(0,0,0,.6)}
+.final-logo{height:clamp(120px,21vh,250px);width:auto;object-fit:contain;filter:drop-shadow(0 6px 22px rgba(0,0,0,.6))}
+
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:clamp(.85rem,1.4vw,1.1rem);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-light);margin-bottom:clamp(14px,2.2vh,28px)}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--accent);border-radius:2px}
+h1{font-size:clamp(2.4rem,6.5vw,5.4rem);font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:clamp(16px,2.5vh,28px)}
+h2{font-size:clamp(1.7rem,4.3vw,3.4rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:clamp(16px,2.6vh,30px)}
+h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
+.grad{background:linear-gradient(100deg,var(--accent) 10%,var(--gold) 60%,var(--accent-light) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead{font-size:clamp(1.1rem,2.2vw,1.85rem);line-height:1.5;color:var(--text2);max-width:62ch;font-weight:400}
+.lead strong{color:var(--text);font-weight:700}
+.mono{font-family:var(--mono)}
+
+/* PORTADA */
+.cover{align-items:center;text-align:center}
+.cover-badge{width:clamp(92px,12vw,142px);height:clamp(92px,12vw,142px);border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 0 0 6px rgba(255,107,43,.12),0 14px 50px rgba(0,0,0,.6);margin-bottom:clamp(18px,2.6vh,30px)}
+.cover h1{font-size:clamp(2.2rem,6.6vw,5.4rem)}
+.cover .sub{font-size:clamp(1.05rem,2.2vw,1.55rem);color:var(--text2);margin-top:8px;font-weight:500}
+.brands{display:flex;justify-content:center;align-items:flex-end;gap:clamp(16px,3.5vw,48px);margin-top:clamp(22px,4vh,48px);flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;align-items:center;gap:12px;position:relative}
+.brand-img{width:clamp(132px,20vw,242px);aspect-ratio:1;object-fit:cover;border-radius:18px;border:1px solid var(--border);box-shadow:0 14px 40px rgba(0,0,0,.55);animation:float 4s ease-in-out infinite}
+.brand:nth-child(2) .brand-img{animation-delay:.6s}
+.brand:nth-child(3) .brand-img{animation-delay:1.2s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.brand-name{font-size:clamp(.78rem,1.25vw,1rem);font-weight:700;color:var(--text2);letter-spacing:.03em}
+.brand-name b{color:var(--accent-light)}
+
+/* GRIDS / CARDS */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,30px)}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,2vw,22px)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:clamp(18px,2.4vw,30px);position:relative;overflow:hidden}
+.card.glow{border-color:rgba(255,107,43,.35);box-shadow:0 0 40px rgba(255,107,43,.10)}
+.card .ct{font-size:clamp(1.05rem,1.8vw,1.4rem);font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.card .ct .ico{width:34px;height:34px;border-radius:9px;background:rgba(255,107,43,.14);color:var(--accent-light);display:grid;place-items:center;font-size:1.05rem;flex-shrink:0}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.card li{font-size:clamp(.9rem,1.4vw,1.12rem);color:var(--text2);line-height:1.4;display:flex;gap:9px}
+.card li::before{content:"›";color:var(--accent);font-weight:800;flex-shrink:0}
+.tag{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.tag.bad{background:rgba(255,92,92,.13);color:var(--red);border:1px solid rgba(255,92,92,.3)}
+.tag.good{background:rgba(61,220,132,.13);color:var(--green);border:1px solid rgba(61,220,132,.3)}
+
+/* metric / objetivo */
+.metrics{display:flex;gap:clamp(14px,3vw,40px);flex-wrap:wrap;margin-top:clamp(8px,1.5vh,16px)}
+.metric .n{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1}
+.metric .l{font-size:clamp(.9rem,1.4vw,1.15rem);color:var(--text2);margin-top:4px;font-weight:500}
+
+/* MOCKUP UI claude.ai */
+.win{background:#0d0d16;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.win-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:#15151f;border-bottom:1px solid var(--border)}
+.win-bar .dot{width:12px;height:12px;border-radius:50%}
+.dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+.win-bar .title{margin-left:10px;font-family:var(--mono);font-size:.85rem;color:var(--text3)}
+.ui{display:flex;min-height:clamp(170px,28vh,290px)}
+.ui-side{width:clamp(140px,22%,230px);background:#12121c;border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:8px}
+.ui-side .logo{font-weight:800;font-size:1rem;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:8px}
+.ui-side .logo span{width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:inline-block}
+.ui-item{padding:9px 12px;border-radius:9px;font-size:clamp(.82rem,1.3vw,1rem);color:var(--text2);display:flex;align-items:center;gap:8px}
+.ui-item.hot{background:rgba(255,107,43,.14);color:var(--accent-light);font-weight:700;border:1px solid rgba(255,107,43,.3)}
+.ui-main{flex:1;padding:clamp(16px,2.2vw,28px);display:flex;flex-direction:column;gap:14px;justify-content:center}
+.ui-field{background:#141420;border:1px solid var(--border);border-radius:10px;padding:13px 16px}
+.ui-field.hot{border-color:rgba(255,107,43,.45);box-shadow:0 0 26px rgba(255,107,43,.10)}
+.ui-field .lbl{font-size:.78rem;color:var(--text3);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center}
+.ui-field .val{font-size:clamp(.9rem,1.4vw,1.1rem);color:var(--text)}
+.ui-field .val.ph{color:var(--text3);font-style:italic}
+.ui-btn{align-self:flex-start;background:var(--accent);color:#fff;padding:9px 22px;border-radius:9px;font-weight:700;font-size:clamp(.85rem,1.3vw,1rem);display:flex;align-items:center}
+.mark{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:7px;background:var(--accent);color:#fff;font-weight:900;font-size:.82rem;font-family:var(--mono);margin-right:8px;flex-shrink:0}
+
+/* STEP list */
+.steplist{display:flex;flex-direction:column;gap:clamp(12px,1.8vh,20px)}
+.steprow{display:flex;gap:14px;align-items:flex-start;font-size:clamp(.98rem,1.6vw,1.35rem);line-height:1.35;color:var(--text2)}
+.steprow b{color:var(--text)}
+.steprow code{font-family:var(--mono);color:var(--accent-light);background:rgba(255,107,43,.1);padding:2px 8px;border-radius:6px;font-size:.9em}
+
+/* PROMPT BOX */
+.prompt-box{background:#0d0d16;border:1px dashed rgba(255,107,43,.4);border-radius:16px;padding:clamp(16px,2.2vw,28px);font-family:var(--mono);font-size:clamp(.82rem,1.32vw,1.08rem);line-height:1.7;color:var(--text);white-space:pre-wrap;position:relative;max-height:62vh;overflow:auto}
+.prompt-box .ph{color:var(--accent-light);font-weight:700}
+.prompt-box .hd{color:var(--gold);font-weight:700}
+.prompt-box::-webkit-scrollbar{width:8px}
+.prompt-box::-webkit-scrollbar-thumb{background:rgba(255,107,43,.3);border-radius:8px}
+.copy-btn{position:absolute;top:14px;right:14px;background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;z-index:2}
+.copy-btn:hover{background:var(--accent-light)}
+.copy-btn.big{position:static;margin-top:clamp(14px,2vh,22px);padding:11px 26px;font-size:1rem}
+.note{margin-top:clamp(12px,2vh,20px);font-size:clamp(.9rem,1.45vw,1.18rem);color:var(--text2);line-height:1.45}
+.note b{color:var(--accent-light)}
+.hidden{display:none}
+
+/* CHECKLIST */
+.task{display:flex;gap:13px;align-items:flex-start;font-size:clamp(.98rem,1.55vw,1.32rem);line-height:1.35;color:var(--text);padding:clamp(9px,1.3vw,14px) 0;border-bottom:1px solid var(--border)}
+.task:last-child{border-bottom:none}
+.task .chk{flex-shrink:0;width:clamp(26px,2.7vw,34px);height:clamp(26px,2.7vw,34px);border-radius:8px;border:2px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:900;margin-top:1px}
+.task b{color:var(--accent-light)}
+.task small{color:var(--text3);font-weight:400}
+.checkgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(20px,3vw,44px)}
+
+/* TIMELINE flujo */
+.flow{display:flex;flex-direction:column;gap:clamp(8px,1.3vh,14px)}
+.fstep{display:flex;align-items:center;gap:clamp(12px,1.6vw,20px);background:var(--bg-card);border:1px solid var(--border);border-radius:13px;padding:clamp(11px,1.5vw,18px) clamp(14px,2vw,22px)}
+.fstep .fn{flex-shrink:0;width:clamp(34px,3.6vw,46px);height:clamp(34px,3.6vw,46px);border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:grid;place-items:center;font-weight:900;font-size:clamp(1rem,1.7vw,1.4rem);color:#fff}
+.fstep .ft{flex:1;font-size:clamp(.95rem,1.5vw,1.3rem);color:var(--text);font-weight:600}
+.fstep .ftime{font-family:var(--mono);font-size:clamp(.8rem,1.3vw,1.05rem);color:var(--accent-light);font-weight:700;background:rgba(255,107,43,.1);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.fstep.wow{border-color:rgba(61,220,132,.4);box-shadow:0 0 36px rgba(61,220,132,.10)}
+.fstep.wow .fn{background:linear-gradient(135deg,var(--green),#2bbf6d)}
+.fstep.wow .ftime{color:var(--green);background:rgba(61,220,132,.12)}
+
+/* TABLA amateur vs pro */
+.cmp{width:100%;border-collapse:separate;border-spacing:0 8px}
+.cmp th{text-align:left;padding:10px 18px;font-size:clamp(.9rem,1.5vw,1.2rem);font-weight:800}
+.cmp th.a{color:var(--red)}
+.cmp th.p{color:var(--green)}
+.cmp td{padding:clamp(10px,1.4vw,15px) 18px;font-size:clamp(.92rem,1.45vw,1.2rem);background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cmp td:first-child{border-left:1px solid var(--border);border-radius:11px 0 0 11px;color:var(--text2)}
+.cmp td:last-child{border-right:1px solid var(--border);border-radius:0 11px 11px 0;color:var(--text);font-weight:600}
+.cmp td.p{border-color:rgba(61,220,132,.18)}
+.cmp .x{color:var(--red);margin-right:8px;font-weight:800}
+.cmp .v{color:var(--green);margin-right:8px;font-weight:800}
+
+/* QUOTE / callout */
+.callout{margin-top:clamp(14px,2.3vh,26px);background:rgba(255,107,43,.07);border:1px solid rgba(255,107,43,.25);border-radius:14px;padding:clamp(13px,1.9vw,22px);font-size:clamp(1rem,1.65vw,1.4rem);color:var(--text);line-height:1.4}
+.callout b{color:var(--accent-light)}
+
+/* FINAL */
+.final{align-items:center;text-align:center}
+.final .big{font-size:clamp(2.4rem,7.5vw,5.6rem);font-weight:900;line-height:1;letter-spacing:-.02em}
+.final .credit{margin-top:clamp(24px,3.6vh,42px);font-size:clamp(1rem,1.7vw,1.4rem);color:var(--text2);font-weight:600}
+.final .credit b{color:var(--accent-light)}
+.final .url{color:var(--text3);font-size:clamp(.85rem,1.3vw,1.05rem);margin-top:6px}
+
+/* HUD */
+#counter{position:fixed;bottom:22px;right:26px;z-index:40;font-family:var(--mono);font-size:.95rem;color:var(--text3);font-weight:500}
+#counter b{color:var(--accent-light)}
+#hint{position:fixed;bottom:22px;left:26px;z-index:40;font-size:.85rem;color:var(--text3);display:flex;align-items:center;gap:8px}
+.key{font-family:var(--mono);font-size:.78rem;border:1px solid var(--border);border-radius:6px;padding:2px 8px;background:rgba(255,255,255,.03);color:var(--text2)}
+#dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:40;display:flex;gap:9px}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--text3);opacity:.4;transition:.3s;cursor:pointer}
+.pdot.on{background:var(--accent);opacity:1;width:24px;border-radius:5px}
+
+@media (max-width:780px){
+  .grid2,.grid4,.checkgrid{grid-template-columns:1fr}
+  .brands{gap:24px}#hint{display:none}
+  /* mobile: cada slide scrollea su contenido en vez de cortarlo */
+  .slide{padding:90px 20px 86px;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .slide-inner{margin:auto}
+  .ui{flex-direction:column}.ui-side{width:100%;flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--border)}
+  .prompt-box{max-height:52vh}
+  .cmp th{font-size:.95rem}.cmp td{font-size:.92rem;padding:9px 12px}
+}
+@media (max-height:560px){.cover-badge{display:none}.brands{margin-top:16px}}
+/* WIREFRAME anatomía de una web */
+.wire{display:flex;flex-direction:column;gap:9px;padding:clamp(14px,1.8vw,22px)}
+.wire-row{display:flex;align-items:center;gap:13px}
+.wire-tag{flex-shrink:0;width:clamp(78px,9vw,108px);font-family:var(--mono);font-size:clamp(.72rem,1.1vw,.88rem);font-weight:700;color:var(--accent-light);text-align:right}
+.wire-box{flex:1;background:#141420;border:1px solid var(--border);border-radius:9px;padding:clamp(9px,1.3vw,14px) clamp(12px,1.6vw,18px);font-size:clamp(.82rem,1.25vw,1.02rem);color:var(--text2)}
+.wire-box b{color:var(--text)}
+.wire-row.hero .wire-box{background:linear-gradient(120deg,rgba(255,107,43,.16),rgba(201,168,76,.08));border-color:rgba(255,107,43,.4);padding-top:clamp(14px,2vw,20px);padding-bottom:clamp(14px,2vw,20px);color:var(--text)}
+/* TABLA de resultado (planilla / comparativa que devuelve Claude) */
+.rtable-win .win-body{padding:clamp(6px,1vw,12px) clamp(10px,1.4vw,18px) clamp(10px,1.4vw,16px)}
+.rtable{width:100%;border-collapse:collapse;font-size:clamp(.78rem,1.18vw,1.02rem)}
+.rtable th{text-align:left;padding:9px 12px;font-weight:800;color:var(--accent-light);border-bottom:2px solid var(--border);font-size:.8em;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+.rtable td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2);line-height:1.3}
+.rtable tr:last-child td{border-bottom:none}
+.rtable td.num{text-align:right;font-family:var(--mono);color:var(--text);font-weight:700;white-space:nowrap}
+.rtable .total-row td{border-top:2px solid rgba(255,107,43,.45);color:var(--text);font-weight:800;background:rgba(255,107,43,.06)}
+.rtable .you td{background:rgba(61,220,132,.08);color:var(--text)}
+.rtable .you td:first-child{color:var(--green);font-weight:800}
+.rtable td .mark2{display:inline-block;font-size:.78em;color:var(--text3);font-weight:600}
+@media (max-width:780px){.rtable{font-size:.8rem}.rtable th,.rtable td{padding:7px 8px}}
+.anim{will-change:transform,opacity}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck">
+
+  <!-- 1 — PORTADA -->
+  <section class="slide cover">
+    <div class="slide-inner">
+      <img class="cover-badge anim" src="assets/icono.png" alt="Curso IA — Ivan Lafuente">
+      <div class="eyebrow anim">CURSO IA · Nivel 1 · IA desde cero · Módulo 4</div>
+      <h1 class="anim">2 efectos de<br><span class="grad">magia con Claude</span></h1>
+      <p class="sub anim">Dos tareas de tu negocio que te llevaban horas, ahora en minutos. Subís una foto o pedís una búsqueda, y listo.</p>
+      <div class="brands">
+        <div class="brand anim"><img class="brand-img" src="assets/agente-dorita.png" alt="Dorita — Salsa Soul Studio"><div class="brand-name"><b>Dorita</b> · Salsa Soul</div></div>
+        <div class="brand anim"><img class="brand-img" src="assets/agente-fenix.png" alt="Fenix — Fenix Kids"><div class="brand-name"><b>Fenix</b> · Fenix Kids</div></div>
+        <div class="brand anim"><img class="brand-img" src="assets/agente-neo.png" alt="Neo — Lafuente AI Cowork"><div class="brand-name"><b>Neo</b> · AI Cowork</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 — LOS 2 EFECTOS (teaser) -->
+  <section class="slide">
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
+    <div class="slide-inner">
+      <div class="eyebrow anim">Hoy te muestro dos</div>
+      <h2 class="anim">Claude no solo <span class="grad">escribe</span></h2>
+      <p class="lead anim" style="margin-bottom:clamp(14px,2vh,22px)">Ve tus fotos, lee tus facturas y busca en internet por vos. Dos trucos que parecen magia:</p>
+      <div class="grid2 anim">
+        <div class="card glow">
+          <div class="ct"><span class="ico">📸</span>Efecto 1 · Facturas</div>
+          <ul>
+            <li>Sacás fotos a tus facturas</li>
+            <li>Claude las lee todas</li>
+            <li>Te arma una planilla de gastos ordenada</li>
+          </ul>
+        </div>
+        <div class="card glow">
+          <div class="ct"><span class="ico">🔎</span>Efecto 2 · Competencia</div>
+          <ul>
+            <li>Claude busca a tu competencia en la web</li>
+            <li>Compara precios y servicios</li>
+            <li>Te dice cómo diferenciarte</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — EFECTO 1 · FACTURAS (prompt) -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow anim">Efecto 1 · De papel a planilla</div>
+      <h2 class="anim">Una pila de facturas, <span class="grad">ordenada en 1 minuto</span></h2>
+      <p class="lead anim" style="margin-bottom:clamp(12px,1.8vh,18px)">En un chat (mejor dentro de tu Proyecto), <b>subí las fotos</b> de tus facturas y pegá esto:</p>
+      <div class="prompt-box anim"><button class="copy-btn" onclick="copyEl(this,'factprompt')">Copiar</button><span id="factprompt">Te subí las fotos de varias facturas de mi negocio.
+
+Leé cada una y armame una <span class="hd">planilla de gastos</span> en una tabla, con estas columnas:
+- Proveedor
+- RUC
+- Fecha
+- N° de factura / timbrado
+- Concepto (qué se compró)
+- Monto sin IVA
+- IVA (10% o 5%)
+- Total
+
+Al final, sumá el total general de gastos.
+Si algún dato no se lee bien en la foto, marcalo como <span class="ph">"revisar"</span> en vez de inventarlo.
+Dame la tabla lista para copiar a Excel o Google Sheets.</span></div>
+    </div>
+  </section>
+
+  <!-- 4 — EFECTO 1 · RESULTADO (tabla) -->
+  <section class="slide">
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
+    <div class="slide-inner">
+      <div class="eyebrow anim">Efecto 1 · El resultado</div>
+      <h2 class="anim">Tu <span class="grad">planilla de gastos</span>, lista</h2>
+      <div class="win rtable-win anim">
+        <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">claude.ai · Planilla de gastos</span></div>
+        <div class="win-body">
+          <table class="rtable">
+            <thead><tr><th>Proveedor</th><th>Fecha</th><th>Concepto</th><th>IVA</th><th>Total</th></tr></thead>
+            <tbody>
+              <tr><td>Petrobras</td><td>02/06</td><td>Combustible</td><td>10%</td><td class="num">₲ 250.000</td></tr>
+              <tr><td>Casa Rica</td><td>03/06</td><td>Insumos</td><td>10%</td><td class="num">₲ 480.000</td></tr>
+              <tr><td>Tigo</td><td>05/06</td><td>Internet</td><td>10%</td><td class="num">₲ 320.000</td></tr>
+              <tr><td>Librería Mar</td><td>05/06</td><td>Materiales</td><td>5%</td><td class="num">₲ 95.000</td></tr>
+              <tr class="total-row"><td colspan="4">TOTAL DE GASTOS</td><td class="num">₲ 1.145.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="note anim">Copiás la tabla, la pegás en Excel o Google Sheets, y ya tenés tu <b>libro de compras</b> del mes.</p>
+    </div>
+  </section>
+
+  <!-- 5 — EFECTO 2 · COMPETENCIA (prompt) -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow anim">Efecto 2 · Espiá a tu competencia</div>
+      <h2 class="anim">Qué cobran y qué ofrecen, <span class="grad">sin moverte</span></h2>
+      <p class="lead anim" style="margin-bottom:clamp(12px,1.8vh,18px)">Claude <b>busca en internet en vivo</b>. Pedile que investigue a tu competencia:</p>
+      <div class="prompt-box anim"><button class="copy-btn" onclick="copyEl(this,'compprompt')">Copiar</button><span id="compprompt">Investigá a mi competencia. Buscá en internet negocios como el mío:
+<span class="ph">[mi rubro]</span> en <span class="ph">[mi ciudad]</span>.
+
+De cada competidor que encuentres, armame una <span class="hd">tabla comparativa</span> con:
+- Nombre
+- Qué ofrece
+- Precios (si están publicados)
+- Redes y cuántos seguidores
+- Qué dicen las reseñas (lo bueno y lo malo)
+
+Después decime en 3 puntos:
+- En qué soy más fuerte que ellos
+- Dónde me están ganando
+- Una oportunidad concreta para diferenciarme</span></div>
+    </div>
+  </section>
+
+  <!-- 6 — EFECTO 2 · RESULTADO (comparativa) -->
+  <section class="slide">
+    <div class="brandmark"><img class="bm-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork"></div>
+    <div class="slide-inner">
+      <div class="eyebrow anim">Efecto 2 · El resultado</div>
+      <h2 class="anim">Tu mercado, <span class="grad">de un vistazo</span></h2>
+      <div class="win rtable-win anim">
+        <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">claude.ai · Mi competencia</span></div>
+        <div class="win-body">
+          <table class="rtable">
+            <thead><tr><th>Competidor</th><th>Precio / mes</th><th>Qué destaca</th><th>Su punto débil</th></tr></thead>
+            <tbody>
+              <tr><td>Academia A</td><td class="num">₲ 250.000</td><td>Muchos horarios</td><td>Grupos grandes</td></tr>
+              <tr><td>Academia B</td><td class="num">₲ 200.000</td><td>La más barata</td><td>Sin clase de prueba</td></tr>
+              <tr class="you"><td>VOS</td><td class="num">₲ 230.000</td><td>Grupos chicos + 1ª clase gratis</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="callout anim"><b>Tu oportunidad:</b> ninguno ofrece la primera clase gratis. Ese es tu gancho para el próximo carrusel. 👉</div>
+    </div>
+  </section>
+
+  <!-- 7 — CIERRE -->
+  <section class="slide final">
+    <div class="slide-inner">
+      <div class="final-brand anim">
+        <img class="final-foto" src="assets/icono.png" alt="Ivan Lafuente — Curso IA">
+        <img class="final-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork">
+      </div>
+      <div class="big anim"><span class="grad">Eso es magia real.</span></div>
+      <p class="lead anim" style="margin:18px auto 0;text-align:center">Lo que te llevaba una tarde, Claude lo hace en minutos.<br>Fotos, facturas, búsquedas… probá con una tarea tuya hoy mismo.</p>
+      <div class="credit anim"><b>Ivan Lafuente</b></div>
+      <div class="url anim">ivanlafuente.com · Lafuente AI Cowork</div>
+    </div>
+  </section>
+
+</div>
+
+<a class="back-web" href="../../index.html">&larr; Volver a la web</a>
+<div id="counter"><b id="cur">1</b> / <span id="tot">7</span></div>
+<div id="hint"><span class="key">←</span><span class="key">→</span> navegar · <span class="key">F</span> pantalla completa</div>
+<div id="dots"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  let i=0,animating=false;
+  const cur=document.getElementById('cur'),tot=document.getElementById('tot');
+  const prog=document.getElementById('progress'),dotsWrap=document.getElementById('dots');
+  tot.textContent=total;
+  slides.forEach((_,k)=>{const d=document.createElement('div');d.className='pdot'+(k===0?' on':'');d.addEventListener('click',()=>go(k));dotsWrap.appendChild(d);});
+  const dots=[...dotsWrap.children];
+  function animateIn(slide){const els=slide.querySelectorAll('.anim');gsap.set(els,{opacity:0,y:28});gsap.to(els,{opacity:1,y:0,duration:.55,ease:'power2.out',stagger:.07});}
+  function show(n){
+    if(animating||(n===i&&slides[i].classList.contains('active')))return;
+    const out=slides[i],inn=slides[n];animating=true;
+    inn.classList.add('active');gsap.set(inn,{opacity:0});
+    if(out!==inn){gsap.to(out,{opacity:0,duration:.28,ease:'power1.in',onComplete:()=>out.classList.remove('active')});}
+    gsap.to(inn,{opacity:1,duration:.4,ease:'power1.out',delay:.18,onComplete:()=>{animating=false}});
+    animateIn(inn);i=n;cur.textContent=i+1;prog.style.width=((i)/(total-1)*100)+'%';
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+  }
+  function go(n){if(n<0||n>=total)return;show(n);}
+  function next(){if(i<total-1)show(i+1);}
+  function prev(){if(i>0)show(i-1);}
+  slides[0].classList.add('active');gsap.set(slides[0],{opacity:1});animateIn(slides[0]);prog.style.width='0%';
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='Home'){go(0);}else if(e.key==='End'){go(total-1);}
+    else if(e.key==='f'||e.key==='F'){toggleFs();}
+  });
+  document.getElementById('deck').addEventListener('click',e=>{
+    if(e.target.closest('button,a,.prompt-box'))return;
+    if(e.clientX < window.innerWidth*0.32) prev(); else next();
+  });
+  let sx=0,sy=0;
+  document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){dx<0?next():prev();}},{passive:true});
+  function toggleFs(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
+  window.copyEl=function(btn,id){
+    const t=document.getElementById(id).innerText;
+    navigator.clipboard.writeText(t).then(()=>{const o=btn.textContent;btn.textContent='¡Copiado!';setTimeout(()=>btn.textContent=o,1600);});
+  };
+})();
+</script>
+</body>
+</html>
