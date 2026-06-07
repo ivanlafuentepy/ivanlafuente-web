@@ -194,13 +194,14 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
 .wire-row.hero .wire-box{background:linear-gradient(120deg,rgba(255,107,43,.16),rgba(201,168,76,.08));border-color:rgba(255,107,43,.4);padding-top:clamp(14px,2vw,20px);padding-bottom:clamp(14px,2vw,20px);color:var(--text)}
 /* CARRUSEL Instagram — tira de 5 slides */
 .ig-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(8px,1.2vw,14px)}
-.ig-card{aspect-ratio:4/5;border-radius:13px;border:1px solid var(--border);background:linear-gradient(160deg,var(--bg-card2),var(--bg-card));padding:clamp(9px,1.1vw,15px);display:flex;flex-direction:column;gap:7px;position:relative;overflow:hidden}
-.ig-card .ig-n{font-family:var(--mono);font-size:clamp(.62rem,.85vw,.78rem);font-weight:700;color:var(--accent-light)}
-.ig-card .ig-role{font-size:clamp(.54rem,.72vw,.66rem);text-transform:uppercase;letter-spacing:.06em;color:var(--text3);font-weight:700}
-.ig-card .ig-txt{font-size:clamp(.7rem,.95vw,.92rem);font-weight:700;line-height:1.22;color:var(--text);margin-top:auto}
+.ig-card{aspect-ratio:4/5;border-radius:13px;border:1px solid var(--border);background:linear-gradient(160deg,var(--bg-card2),var(--bg-card));padding:clamp(12px,1.4vw,18px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:clamp(8px,1vw,12px);position:relative;overflow:hidden}
+.ig-card .ig-n{position:absolute;top:9px;left:11px;font-family:var(--mono);font-size:clamp(.6rem,.8vw,.74rem);font-weight:700;color:var(--text3)}
+.ig-card .ig-role{font-size:clamp(.62rem,.85vw,.82rem);text-transform:uppercase;letter-spacing:.05em;font-weight:800;padding:4px 13px;border-radius:999px;background:rgba(255,107,43,.16);color:var(--accent-light)}
+.ig-card .ig-txt{font-size:clamp(.76rem,1.02vw,1rem);font-weight:700;line-height:1.26;color:var(--text)}
 .ig-card.hook{border-color:rgba(255,107,43,.45);background:linear-gradient(160deg,rgba(255,107,43,.18),var(--bg-card))}
 .ig-card.cta{border-color:rgba(61,220,132,.42);background:linear-gradient(160deg,rgba(61,220,132,.15),var(--bg-card))}
 .ig-card.cta .ig-n{color:var(--green)}
+.ig-card.cta .ig-role{background:rgba(61,220,132,.16);color:var(--green)}
 .caption-box{background:#0d0d16;border:1px solid var(--border);border-radius:14px;padding:clamp(14px,1.9vw,22px);margin-top:clamp(12px,1.8vh,18px)}
 .caption-box .cap-h{font-size:.74rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-light);margin-bottom:8px}
 .caption-box .cap-t{font-size:clamp(.9rem,1.35vw,1.1rem);color:var(--text);line-height:1.5}
@@ -266,7 +267,7 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
         <div class="ig-card"><div class="ig-n">02</div><div class="ig-role">Valor</div><div class="ig-txt">Empezás de cero, sin pareja</div></div>
         <div class="ig-card"><div class="ig-n">03</div><div class="ig-role">Valor</div><div class="ig-txt">Grupos chicos para tu nivel</div></div>
         <div class="ig-card"><div class="ig-n">04</div><div class="ig-role">Valor</div><div class="ig-txt">Profes que te corrigen de verdad</div></div>
-        <div class="ig-card cta"><div class="ig-n">05</div><div class="ig-role">Cierre · CTA</div><div class="ig-txt">Tu primera clase, gratis 👉</div></div>
+        <div class="ig-card cta"><div class="ig-n">05</div><div class="ig-role">CTA</div><div class="ig-txt">Tu primera clase, gratis 👉</div></div>
       </div>
       <p class="note anim"><b>Gancho</b> para que frenen, <b>valor</b> para que se queden, <b>CTA</b> para que te escriban. <i>(Ejemplo: una academia de salsa.)</i> Claude arma las 3 partes solo.</p>
     </div>
