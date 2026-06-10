@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Nivel 2 · Tu agente funcionando en tu computadora · Ivan Lafuente</title>
-<meta name="description" content="Construí y probá tu agente de WhatsApp en tu propia computadora antes de ponerlo en producción: instalás Claude Code en Claude Desktop, traés el agente base, lo configurás y le hablás en un chat local. CURSO IA de Ivan Lafuente, Nivel 2.">
+<meta name="description" content="Construí y probá tu agente de WhatsApp en tu propia computadora antes de ponerlo en producción: instalás Claude Code en Claude Desktop, traés el kit Cowork AgentKit, lo armás con /build-agent y le hablás en un chat local. CURSO IA de Ivan Lafuente, Nivel 2.">
 <link rel="icon" href="assets/icono.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,6 +130,8 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
 .callout b{color:var(--accent-light)}
 .callout.good{background:rgba(61,220,132,.07);border-color:rgba(61,220,132,.28)}
 .callout.good b{color:var(--green)}
+.callout.warn{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.3)}
+.callout.warn b{color:var(--gold)}
 .quote{border-left:4px solid var(--accent);padding:clamp(16px,2vw,26px) clamp(20px,3vw,38px);background:rgba(255,107,43,.05);border-radius:0 16px 16px 0;font-size:clamp(1.2rem,2.6vw,2rem);line-height:1.4;font-weight:600;font-style:italic}
 .quote span{color:var(--accent-light)}
 
@@ -255,60 +257,60 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
     </div>
   </section>
 
-  <!-- 5 — TRAER EL AGENTE -->
+  <!-- 5 — TRAER EL KIT -->
   <section class="slide">
     <div class="slide-inner">
-      <div class="eyebrow anim">Paso 2 · El agente base</div>
-      <h2 class="anim">Traé el agente <span class="grad">a tu computadora</span></h2>
-      <p class="lead anim" style="margin-bottom:clamp(14px,2.2vh,22px)">No empezamos de cero. Hay un <strong>agente base ya armado</strong> — con su cerebro y su ventanita de chat lista. Le pedís a Claude Code que lo traiga y en segundos lo tenés.</p>
+      <div class="eyebrow anim">Paso 2 · El kit</div>
+      <h2 class="anim">Traé el kit <span class="grad">a tu computadora</span></h2>
+      <p class="lead anim" style="margin-bottom:clamp(14px,2.2vh,22px)">No empezamos de cero. Usamos <strong>Cowork AgentKit</strong> — destilado de <strong>NEO</strong>, un agente real en producción. El código <strong>ya viene hecho y probado</strong>: Claude Code no lo improvisa, solo lo personaliza con tu negocio.</p>
       <div class="grid2" style="align-items:start">
         <div class="win anim">
           <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">Claude Code — le hablás en español</span></div>
           <div class="win-body">
-            <span class="pr">vos →</span> <span class="cm">Traé el agente base de</span><br>
-            <span class="cm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;github.com/ivanlafuentepy/<span class="hl">agente-base</span></span><br>
-            <span class="cm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y dejalo listo para usar.</span><br><br>
-            <span class="co">Claude → clonando el repositorio…</span><br>
-            <span class="co">Claude → instalando lo que necesita…</span><br>
-            <span class="co">Claude → ✓ listo, lo podés encender.</span>
+            <span class="pr">vos →</span> <span class="cm">Traé el kit de</span><br>
+            <span class="cm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;github.com/ivanlafuentepy/<span class="hl">cowork-agentkit</span></span><br>
+            <span class="cm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y preparalo.</span><br><br>
+            <span class="co">Claude → git clone… ✓</span><br>
+            <span class="co">Claude → start.ps1: Python, deps, .env… ✓</span><br>
+            <span class="co">Claude → listo para construir tu agente.</span>
           </div>
         </div>
         <div class="win anim">
-          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">tu carpeta — lo que llegó</span></div>
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">cowork-agentkit — lo que llegó</span></div>
           <div class="win-body">
-            <span class="tree">agente-base/<br>
-            ├── <span class="imp">datos-negocio.md</span> <span class="co">← tus datos</span><br>
-            ├── <span class="f">cerebro</span>/ <span class="co">← cómo piensa y responde</span><br>
-            ├── <span class="f">chat-local</span>/ <span class="co">← la ventanita de prueba</span><br>
-            └── README.md <span class="co">← instrucciones</span></span>
+            <span class="tree">cowork-agentkit/<br>
+            ├── <span class="f">agent</span>/ <span class="co">← el código, ya hecho</span><br>
+            ├── <span class="imp">config</span>/ <span class="co">← los datos de tu negocio</span><br>
+            ├── <span class="f">tests</span>/test_local.py <span class="co">← chat de prueba</span><br>
+            └── CLAUDE.md <span class="co">← el cerebro del kit</span></span>
           </div>
         </div>
       </div>
-      <div class="callout anim"><b>Vos hablás, Claude traduce.</b> No escribís comandos raros: le decís qué querés en español y él se encarga de bajarlo e instalarlo.</div>
+      <div class="callout anim"><b>Vos hablás, Claude traduce.</b> No escribís comandos raros: le decís qué querés en español y él clona el kit y prepara todo.</div>
     </div>
   </section>
 
-  <!-- 6 — CONFIGURAR -->
+  <!-- 6 — CONSTRUIR CON /build-agent -->
   <section class="slide">
     <div class="slide-inner">
       <div class="eyebrow anim">Paso 3 · Hacelo tuyo</div>
-      <h2 class="anim">Cargale los datos <span class="grad">de tu negocio</span></h2>
+      <h2 class="anim">Un comando te <span class="grad">entrevista y lo arma</span></h2>
       <div class="grid2" style="align-items:center">
         <div class="anim">
-          <p class="lead" style="margin-bottom:clamp(14px,2vh,20px)">El agente base es <strong>genérico</strong>. Se vuelve tuyo cuando le cargás quién sos: nombre, qué vendés, precios, horarios y el tono con el que querés que hable.</p>
-          <div class="callout"><b>El mismo agente, cualquier negocio:</b> cambiás estos datos y la <span class="mono">misma</span> base sirve para una academia, un consultorio o una tienda.</div>
+          <p class="lead" style="margin-bottom:clamp(12px,2vh,18px)">Escribís <b class="mono">/build-agent</b> y Claude Code te hace una <strong>entrevista</strong> sobre tu negocio — 7 preguntas, una por una. Con tus respuestas genera la configuración. <strong>No tocás el código.</strong></p>
+          <div class="callout warn"><b>Lo único de afuera:</b> una <b>API key de Anthropic</b> (la nafta del agente). Cargás un saldo mínimo (~5 USD) y con el modelo Haiku te rinde miles de mensajes.</div>
         </div>
         <div class="win anim">
-          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">datos-negocio.md</span></div>
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">config/business.yaml — lo genera /build-agent</span></div>
           <div class="win-body cfg">
-            <span class="co"># Quién es tu agente</span><br>
-            <span class="k">Negocio:</span> <span class="v">Salsa Soul Studio</span><br>
-            <span class="k">Atiende:</span> <span class="v">Dorita</span><br>
-            <span class="k">Tono:</span> <span class="v">cálido, paraguayo, de vos</span><br><br>
-            <span class="co"># Qué ofrece</span><br>
-            <span class="k">Servicios:</span> <span class="v">salsa, bachata, ritmos</span><br>
-            <span class="k">Precio mensual:</span> <span class="v">₲250.000</span><br>
-            <span class="k">Horarios:</span> <span class="v">lun a sáb, tarde/noche</span>
+            <span class="co"># Tu negocio</span><br>
+            <span class="k">nombre:</span> <span class="v">Salsa Soul Studio</span><br>
+            <span class="k">descripcion:</span> <span class="v">academia de salsa</span><br>
+            <span class="k">horario:</span> <span class="v">lun a sáb, tarde/noche</span><br>
+            <span class="k">ubicacion:</span> <span class="v">Asunción</span><br><br>
+            <span class="co"># Tu agente</span><br>
+            <span class="k">nombre:</span> <span class="v">Dorita</span><br>
+            <span class="k">tono:</span> <span class="v">cálido, paraguayo</span>
           </div>
         </div>
       </div>
@@ -322,11 +324,11 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
       <h2 class="anim">Hablá con tu agente<br><span class="grad">acá mismo, en tu compu</span></h2>
       <div class="grid2" style="align-items:center">
         <div class="anim">
-          <p class="lead" style="margin-bottom:clamp(12px,2vh,18px)">Le pedís a Claude Code que lo <strong>encienda</strong>. Se abre una ventanita de chat en tu compu y le escribís <strong>como si fueras un cliente</strong>. Te responde al instante — todavía sin WhatsApp.</p>
+          <p class="lead" style="margin-bottom:clamp(12px,2vh,18px)">Corrés <b class="mono">python tests/test_local.py</b> y chateás <strong>en la terminal, como si fueras un cliente</strong>. Te responde al instante — sin WhatsApp. Ajustás el tono hasta que digas <strong>"¡es ese!"</strong>.</p>
           <div class="callout good"><b>Si te responde bien acá, está listo.</b> El próximo paso es conectarlo al WhatsApp de verdad.</div>
         </div>
         <div class="win anim">
-          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">Chat local · tu compu (sin WhatsApp)</span></div>
+          <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">terminal · python tests/test_local.py</span></div>
           <div class="chat">
             <div class="bubble user"><span class="who">Cliente</span>Hola! Hacen clases de salsa?</div>
             <div class="bubble bot"><span class="who">Dorita</span>¡Hola! 💃 Sí, en Salsa Soul tenemos clases de salsa toda la semana. ¿Buscás para vos o para dos?</div>
@@ -346,7 +348,7 @@ h3{font-size:clamp(1.15rem,2vw,1.7rem);font-weight:700;line-height:1.2}
         <img class="final-logo" src="assets/logo-cowork.png" alt="Lafuente AI Cowork">
       </div>
       <div class="big anim"><span class="grad">Tu agente ya está vivo.</span></div>
-      <p class="lead anim" style="margin:18px auto 0;text-align:center">Lo trajiste, lo configuraste y lo probaste — todo en tu compu, vos solo.<br>En el próximo módulo lo ponemos en <strong>producción</strong>: WhatsApp real, 24/7.</p>
+      <p class="lead anim" style="margin:18px auto 0;text-align:center">Lo armaste y lo probaste — todo en tu compu, vos solo.<br>Cuando quieras, la <strong>Parte 2</strong> lo conecta a <strong>WhatsApp real</strong> (Twilio o Meta), 24/7.</p>
       <div class="credit anim"><b>Ivan Lafuente</b></div>
       <div class="url anim">ivanlafuente.com · Lafuente AI Cowork</div>
     </div>
