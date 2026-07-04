@@ -143,6 +143,27 @@ a:hover {
   color: #fff;
 }
 
+/* Pago directo con tarjeta (pasarela Bancard) — naranja de marca, distinto
+   del verde-WhatsApp para que se lea "pago online" vs "chat". */
+.btn-tarjeta {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 16px 32px;
+  box-shadow: 0 4px 20px rgba(255, 107, 43, 0.35);
+  margin-right: 10px;
+}
+.btn-tarjeta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 107, 43, 0.5);
+  color: #fff;
+}
+.pricing-nota-pago {
+  color: var(--text3);
+  font-size: 0.82rem;
+  margin-top: 12px;
+}
+
 /* ── Cards ── */
 .card {
   background: var(--bg-card);
