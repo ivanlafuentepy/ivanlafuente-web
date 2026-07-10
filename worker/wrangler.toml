@@ -1,0 +1,11 @@
+# Worker que sirve agente.ivanlafuente.com (formulario de entrevista) bypasseando
+# el cert roto del custom domain de Railway. Ver agente-proxy.js.
+name = "agente-ivanlafuente-proxy"
+main = "agente-proxy.js"
+compatibility_date = "2026-07-01"
+account_id = "6a877596301bce477daa1431223def8e"
+workers_dev = false
+
+routes = [
+  { pattern = "agente.ivanlafuente.com/*", zone_name = "ivanlafuente.com" }
+]
