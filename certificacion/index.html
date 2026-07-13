@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sala de Examen · Claude Certified Architect – Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E141B;
+    --bg-2:#131C25;
+    --surface:#18232E;
+    --surface-2:#1F2E3B;
+    --border:#2A3B49;
+    --border-soft:#223140;
+    --ink:#E9F0F5;
+    --ink-2:#93A4B2;
+    --ink-3:#61717E;
+    --amber:#F2A93B;
+    --amber-soft:#5a4620;
+    --blue:#5FA8DE;
+    --green:#42D699;
+    --green-dim:#1e3a30;
+    --red:#F26B47;
+    --red-dim:#3a231c;
+    --radius:14px;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --disp:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+    --body:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #172432 0%, transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px 80px}
+  code,.mono{font-family:var(--mono);font-size:0.9em}
+  .q-text code,.exp code,.opt-text code,.sc code{
+    background:#0d1720;border:1px solid var(--border-soft);
+    border-radius:5px;padding:1px 5px;color:#cfe6f5;font-size:0.85em;
+  }
+  button{font-family:inherit;cursor:pointer}
+  button:focus-visible,.opt:focus-visible,.dom-card:focus-visible{
+    outline:2px solid var(--amber);outline-offset:2px;
+  }
+
+  /* ---- top bar ---- */
+  header.top{
+    position:sticky;top:0;z-index:20;
+    background:rgba(14,20,27,0.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .top-in{max-width:940px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:baseline;gap:10px;cursor:pointer;user-select:none}
+  .brand .mark{
+    font-family:var(--disp);font-weight:700;letter-spacing:-0.02em;font-size:1.05rem;color:var(--ink);
+  }
+  .brand .mark b{color:var(--amber)}
+  .brand .sub{font-size:0.72rem;color:var(--ink-3);font-family:var(--mono);letter-spacing:0.04em}
+  .top-stats{margin-left:auto;display:flex;align-items:center;gap:18px;font-family:var(--mono);font-size:0.78rem;color:var(--ink-2)}
+  .top-stats b{color:var(--ink);font-weight:600}
+  .gbar{width:120px;height:6px;background:var(--border-soft);border-radius:99px;overflow:hidden}
+  .gbar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),#ffcf7a);width:0%}
+
+  /* ---- hero ---- */
+  .hero{padding:44px 0 26px}
+  .eyebrow{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin:0 0 14px}
+  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(1.9rem,5vw,3rem);line-height:1.02;letter-spacing:-0.03em;margin:0 0 14px}
+  .hero h1 .thin{color:var(--ink-2);font-weight:400}
+  .hero p{color:var(--ink-2);max-width:620px;margin:0;font-size:1.02rem}
+  .meta-row{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px}
+  .meta{font-family:var(--mono);font-size:0.78rem;color:var(--ink-3)}
+  .meta b{color:var(--ink);font-weight:600;font-size:0.95rem;display:block;font-family:var(--disp)}
+
+  /* ---- diagnostic panel (signature) ---- */
+  .panel{
+    background:linear-gradient(180deg,var(--bg-2),var(--surface));
+    border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px 22px 8px;margin:30px 0;
+  }
+  .panel h2{font-family:var(--disp);font-size:0.85rem;letter-spacing:0.02em;margin:0 0 4px;color:var(--ink);font-weight:600}
+  .panel .hint{font-size:0.8rem;color:var(--ink-3);margin:0 0 18px}
+  .diag-row{display:grid;grid-template-columns:1fr;gap:2px;margin-bottom:14px;cursor:pointer;border-radius:8px;padding:6px;margin:0 -6px 8px;transition:background .12s}
+  .diag-row:hover{background:#0d1720}
+  .diag-head{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+  .diag-num{font-family:var(--mono);font-size:0.72rem;color:var(--ink-3);width:24px}
+  .diag-name{font-family:var(--disp);font-size:0.92rem;font-weight:500;flex:1}
+  .diag-weight{font-family:var(--mono);font-size:0.72rem;color:var(--ink-2);background:#0d1720;border:1px solid var(--border-soft);padding:2px 7px;border-radius:5px}
+  .diag-score{font-family:var(--mono);font-size:0.78rem;color:var(--ink-2);min-width:66px;text-align:right}
+  .diag-track{height:8px;background:#0c151d;border-radius:99px;overflow:hidden;position:relative}
+  .diag-fill{height:100%;width:0%;border-radius:99px;transition:width .5s ease}
+  .diag-arrow{color:var(--ink-3);font-size:0.9rem;margin-left:2px}
+
+  /* ---- actions ---- */
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}
+  .btn{
+    border:1px solid var(--border);background:var(--surface);color:var(--ink);
+    padding:12px 18px;border-radius:10px;font-weight:500;font-size:0.9rem;
+    display:inline-flex;align-items:center;gap:9px;transition:all .14s;
+  }
+  .btn:hover{border-color:var(--amber);background:var(--surface-2)}
+  .btn.primary{background:var(--amber);color:#1a1206;border-color:var(--amber);font-weight:600}
+  .btn.primary:hover{background:#ffbe55;filter:brightness(1.03)}
+  .btn.ghost{background:transparent}
+  .btn small{font-family:var(--mono);color:var(--ink-3);font-weight:400;font-size:0.72rem}
+  .btn.primary small{color:#6b4d16}
+
+  /* ---- study view ---- */
+  #study{display:none}
+  .study-bar{display:flex;align-items:center;gap:14px;padding:20px 0 8px;flex-wrap:wrap}
+  .backlink{background:none;border:none;color:var(--ink-2);font-size:0.85rem;padding:6px 0;display:inline-flex;gap:7px;align-items:center}
+  .backlink:hover{color:var(--amber)}
+  .study-title{font-family:var(--disp);font-weight:600;font-size:1.05rem}
+  .study-count{margin-left:auto;font-family:var(--mono);font-size:0.8rem;color:var(--ink-2)}
+  .progress-line{height:4px;background:var(--border-soft);border-radius:99px;overflow:hidden;margin:6px 0 26px}
+  .progress-line i{display:block;height:100%;background:var(--blue);width:0%;transition:width .3s}
+
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px 26px 22px;
+  }
+  .q-top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+  .badge{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.04em;padding:3px 9px;border-radius:6px;text-transform:uppercase;font-weight:500}
+  .badge.dom{background:var(--amber-soft);color:#ffce85;border:1px solid #6b5227}
+  .badge.tag{background:#0d1720;color:var(--ink-2);border:1px solid var(--border-soft)}
+  .sc{background:#0e1a13;border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px;margin:0 0 16px;font-size:0.86rem;color:var(--ink-2)}
+  .sc b{color:var(--green);font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:3px}
+  .q-text{font-size:1.06rem;color:var(--ink);margin:0 0 20px;font-weight:500;line-height:1.5}
+
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{
+    text-align:left;width:100%;background:var(--bg-2);border:1px solid var(--border-soft);
+    border-radius:10px;padding:13px 15px;display:flex;gap:13px;align-items:flex-start;
+    color:var(--ink);font-size:0.95rem;transition:border-color .12s,background .12s;
+  }
+  .opt:hover:not(.locked){border-color:var(--ink-3)}
+  .opt .key{
+    font-family:var(--mono);font-weight:600;font-size:0.82rem;color:var(--ink-2);
+    background:#0c151d;border:1px solid var(--border-soft);border-radius:6px;
+    width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px;
+  }
+  .opt-text{flex:1;line-height:1.45}
+  .opt.correct{background:var(--green-dim);border-color:var(--green)}
+  .opt.correct .key{background:var(--green);color:#06241a;border-color:var(--green)}
+  .opt.wrong{background:var(--red-dim);border-color:var(--red)}
+  .opt.wrong .key{background:var(--red);color:#2a0f06;border-color:var(--red)}
+  .opt.locked{cursor:default}
+  .opt .ico{margin-left:auto;font-weight:700;font-size:1rem;display:none;flex:0 0 auto}
+  .opt.correct .ico{display:block;color:var(--green)}
+  .opt.wrong .ico{display:block;color:var(--red)}
+
+  .reveal-row{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .btn-reveal{background:transparent;border:1px dashed var(--border);color:var(--ink-2);padding:9px 16px;border-radius:9px;font-size:0.85rem}
+  .btn-reveal:hover{border-color:var(--amber);color:var(--amber)}
+  .verdict{font-family:var(--mono);font-size:0.8rem;font-weight:500}
+  .verdict.ok{color:var(--green)}
+  .verdict.no{color:var(--red)}
+
+  .exp{
+    margin-top:18px;background:#0d1720;border:1px solid var(--border-soft);border-radius:10px;
+    padding:16px 18px;font-size:0.92rem;color:var(--ink-2);line-height:1.55;display:none;
+  }
+  .exp.show{display:block;animation:fade .25s ease}
+  .exp h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin:0 0 8px}
+  .exp b{color:var(--ink)}
+  .btn-example{background:transparent;border:1px dashed var(--blue);color:var(--blue);padding:9px 16px;border-radius:9px;font-size:0.85rem}
+  .btn-example:hover{background:rgba(95,168,222,0.10);border-style:solid}
+  .example{margin-top:16px;background:#0c1722;border:1px solid #27455f;border-left:3px solid var(--blue);border-radius:10px;padding:16px 18px;font-size:0.94rem;color:#cfe0ee;line-height:1.55;display:none}
+  .example.show{display:block;animation:fade .25s ease}
+  .example h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin:0 0 8px}
+  .example code{background:#0d1720;border:1px solid var(--border-soft);border-radius:5px;padding:1px 5px;color:#cfe6f5;font-size:0.85em}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .nav{display:flex;gap:12px;margin-top:22px;align-items:center}
+  .nav .spacer{flex:1}
+  .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--ink);padding:11px 20px;border-radius:9px;font-size:0.88rem;font-weight:500}
+  .btn-nav:hover:not(:disabled){border-color:var(--amber)}
+  .btn-nav:disabled{opacity:0.35;cursor:default}
+  .btn-nav.next{background:var(--amber);color:#1a1206;border-color:var(--amber);font-weight:600}
+  .btn-nav.next:hover{background:#ffbe55}
+
+  /* ---- results ---- */
+  #results{display:none}
+  .res-hero{text-align:center;padding:40px 0 20px}
+  .res-score{font-family:var(--disp);font-weight:700;font-size:4.2rem;line-height:1;letter-spacing:-0.03em}
+  .res-score.pass{color:var(--green)}
+  .res-score.fail{color:var(--red)}
+  .res-label{font-family:var(--mono);font-size:0.85rem;color:var(--ink-2);margin-top:10px}
+  .res-note{font-size:0.82rem;color:var(--ink-3);max-width:520px;margin:14px auto 0}
+  .res-break{margin:26px 0}
+  .res-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border-soft)}
+  .res-item .nm{flex:1;font-family:var(--disp);font-size:0.92rem}
+  .res-item .track{width:120px;height:7px;background:#0c151d;border-radius:99px;overflow:hidden}
+  .res-item .track i{display:block;height:100%;border-radius:99px}
+  .res-item .pct{font-family:var(--mono);font-size:0.8rem;width:64px;text-align:right;color:var(--ink-2)}
+
+  footer{margin-top:50px;text-align:center;color:var(--ink-3);font-size:0.76rem;font-family:var(--mono)}
+  footer b{color:var(--ink-2)}
+
+  @media (max-width:560px){
+    .top-stats{width:100%;margin-left:0;justify-content:space-between}
+    .card{padding:20px 16px}
+    .res-score{font-size:3.2rem}
+    .diag-score{min-width:54px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand" onclick="goHome()" tabindex="0" onkeydown="if(event.key==='Enter')goHome()">
+      <span class="mark">Sala de <b>Examen</b></span>
+      <span class="sub">CCA · FOUNDATIONS</span>
+    </div>
+    <div class="top-stats">
+      <span>Contestadas <b id="st-ans">0</b>/<b id="st-total">0</b></span>
+      <span>Aciertos <b id="st-acc">–</b></span>
+      <div class="gbar" title="Preguntas contestadas"><i id="st-bar"></i></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ================= HOME ================= -->
+  <section id="home">
+    <div class="hero">
+      <p class="eyebrow">Entrenamiento para la certificación</p>
+      <h1>Claude Certified Architect<br><span class="thin">Foundations · práctica dirigida</span></h1>
+      <p>Banco de preguntas tipo examen sobre los cinco dominios reales, con sus pesos oficiales. Cada pregunta trae la respuesta y el porqué, ocultos hasta que los pidas. El panel de abajo te dice dónde estás flojo para que no estudies a ciegas.</p>
+      <div class="meta-row">
+        <div class="meta"><b id="m-total">–</b>preguntas en el banco</div>
+        <div class="meta"><b>720</b>score mínimo (escala 100–1000)</div>
+        <div class="meta"><b>5</b>dominios ponderados</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Diagnóstico por dominio</h2>
+      <p class="hint">Peso en el examen · tu acierto actual. Rojo = flojo, ámbar = en camino, verde = sólido. Tocá un dominio para practicarlo.</p>
+      <div id="diag"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" onclick="startExam()">
+        Simulacro de examen <small id="exam-n">60 preguntas</small>
+      </button>
+      <button class="btn" onclick="startReview()">
+        Repasar las que fallé <small id="fail-n">0</small>
+      </button>
+      <button class="btn ghost" onclick="resetAll()">Reiniciar progreso</button>
+    </div>
+
+    <footer>
+      Basado en la guía oficial · Anthropic PBC · v0.1 (feb 2025). &nbsp;·&nbsp; <b id="foot-total">–</b> ítems.<br>
+      El score escalado del examen real es propietario; acá ves tu <b>% de acierto crudo</b> como referencia honesta.
+    </footer>
+  </section>
+
+  <!-- ================= STUDY ================= -->
+  <section id="study">
+    <div class="study-bar">
+      <button class="backlink" onclick="goHome()">← Inicio</button>
+      <span class="study-title" id="study-title">Dominio</span>
+      <span class="study-count" id="study-count">1 / 10</span>
+    </div>
+    <div class="progress-line"><i id="study-prog"></i></div>
+    <div id="q-mount"></div>
+    <div class="nav">
+      <button class="btn-nav" id="btn-prev" onclick="prevQ()">← Anterior</button>
+      <div class="spacer"></div>
+      <button class="btn-nav next" id="btn-next" onclick="nextQ()">Siguiente →</button>
+    </div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="results">
+    <div class="res-hero">
+      <div class="res-score" id="res-score">0%</div>
+      <div class="res-label" id="res-label"></div>
+      <p class="res-note" id="res-note"></p>
+    </div>
+    <div class="res-break" id="res-break"></div>
+    <div class="actions" style="justify-content:center">
+      <button class="btn primary" onclick="startExam()">Otro simulacro</button>
+      <button class="btn" onclick="reviewExamFails()">Repasar los que fallé acá</button>
+      <button class="btn ghost" onclick="goHome()">Inicio</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   BANCO DE PREGUNTAS
+   d = dominio (1..5) · sc = escenario · q = pregunta
+   o = opciones · a = índice correcto (0..3) · e = explicación
+   ============================================================ */
+const DOMAINS = {
+  1:{name:"Agentic Architecture & Orchestration", weight:27},
+  2:{name:"Tool Design & MCP Integration", weight:18},
+  3:{name:"Claude Code Configuration & Workflows", weight:20},
+  4:{name:"Prompt Engineering & Structured Output", weight:20},
+  5:{name:"Context Management & Reliability", weight:15},
+};
+
+const BANK = [
+/* ---------------- DOMINIO 1 ---------------- */
+{d:1,sc:'Customer Support Resolution Agent',q:'En el 12% de los casos el agente saltea <code>get_customer</code> y llama a <code>lookup_order</code> usando solo el nombre declarado por el cliente, generando cuentas mal identificadas y refunds incorrectos. ¿Qué cambio ataca mejor la confiabilidad?',
+o:['Un prerrequisito programático que bloquee <code>lookup_order</code> y <code>process_refund</code> hasta que <code>get_customer</code> devuelva un ID verificado.','Reforzar el system prompt indicando que la verificación es obligatoria antes de operar sobre órdenes.','Agregar ejemplos few-shot mostrando al agente llamando siempre a <code>get_customer</code> primero.','Un clasificador de ruteo que habilite solo el subconjunto de tools apropiado para ese request.'],
+a:0,e:'Cuando una secuencia de tools es crítica para la lógica de negocio, el <b>enforcement programático</b> da garantías determinísticas que el prompt (B, C) nunca alcanza —y acá los errores tienen consecuencias financieras. D ataca la disponibilidad de tools, no el ordenamiento, que es el problema real.',ex:'Tu agente de cobros por WhatsApp: en vez de escribir "acordate de verificar antes de reembolsar", ponés un candado en el código que NO deja correr <code>reembolsar</code> hasta que <code>verificar_cliente</code> diga OK. El modelo no puede saltearlo aunque quiera.'},
+
+{d:1,q:'Estás implementando el control de flujo del agentic loop. ¿Cuál es la condición correcta para continuar o cortar el loop?',
+o:['Parsear el texto del assistant buscando frases como "he terminado".','Continuar mientras <code>stop_reason</code> sea <code>"tool_use"</code>; terminar cuando sea <code>"end_turn"</code>.','Cortar al llegar a un tope fijo de iteraciones definido de antemano.','Chequear si el assistant devolvió texto y, si lo hizo, dar por terminado el loop.'],
+a:1,e:'El loop se guía por <code>stop_reason</code>: <code>"tool_use"</code> significa que hay que ejecutar tools y volver a llamar; <code>"end_turn"</code> significa que terminó. Parsear lenguaje natural (A, D) o poner topes arbitrarios (C) son anti-patrones frágiles.',ex:'Pensalo como un semáforo que Claude te devuelve en cada vuelta: <code>tool_use</code> = "necesito una herramienta, seguí"; <code>end_turn</code> = "terminé". Vos mirás ese semáforo, no lo que escribió en palabras.'},
+
+{d:1,q:'Un dev termina el loop cuando detecta la frase "listo, completé la tarea" en la respuesta del modelo. ¿Por qué es un anti-patrón?',
+o:['Consume demasiados tokens al leer todo el texto.','El texto del assistant es un indicador poco confiable de completitud; el mecanismo correcto es <code>stop_reason == "end_turn"</code>.','Debería usar un tope de iteraciones como corte principal.','El modelo nunca genera texto y tool_use en el mismo turno.'],
+a:1,e:'Parsear señales en lenguaje natural para decidir el fin del loop es exactamente el anti-patrón que la guía marca. La señal estructurada y confiable es <code>stop_reason</code>. Los topes de iteración (C) sirven como red de seguridad, no como corte principal.',ex:'Es como cerrar la caja de la academia porque un alumno dijo "creo que ya pagué todo". Te fiás de una frase suelta en vez del dato real (el semáforo <code>end_turn</code>). Un día la frase cambia y te comés el error.'},
+
+{d:1,sc:'Multi-Agent Research System',q:'Un subagent no tiene acceso a los hallazgos que el coordinator ya reunió. ¿Cuál es la explicación correcta y su implicancia?',
+o:['Los subagents comparten memoria con el coordinator, así que es un bug de configuración.','Los subagents operan con contexto aislado: no heredan el historial del coordinator, hay que pasarles el contexto explícito en el prompt.','El coordinator debe subir el historial a un vector store para que el subagent lo lea.','Falta habilitar la herencia automática de contexto en <code>AgentDefinition</code>.'],
+a:1,e:'Los subagents <b>no heredan automáticamente</b> el historial. Su contexto debe proveerse explícitamente en el prompt. No existe memoria compartida ni "herencia automática" que activar.',ex:'Como cuando le pasás una tarea a un profe nuevo: no sabe nada de lo que hablaste con el otro profe. Le tenés que contar TODO en la consigna. El subagent arranca en cero igual: no hereda nada.'},
+
+{d:1,sc:'Multi-Agent Research System',q:'Sobre "impacto de la IA en las industrias creativas", cada subagent termina bien pero el reporte cubre solo artes visuales. Los logs muestran que el coordinator descompuso el tema en "IA en arte digital", "IA en diseño gráfico" e "IA en fotografía". Causa raíz más probable:',
+o:['El agente de síntesis no identifica gaps de cobertura.','La descomposición del coordinator es demasiado estrecha y las asignaciones no cubren todos los dominios relevantes.','Las queries del web search agent no son exhaustivas.','El document analysis agent filtra fuentes no visuales.'],
+a:1,e:'Los logs muestran la causa directamente: el coordinator redujo "industrias creativas" a subtareas solo de artes visuales. Los subagents ejecutaron bien lo asignado —el problema es <b>qué se les asignó</b>. A, C y D culpan a agentes downstream que trabajan bien dentro de su alcance.',ex:'Pediste "cubrí todas las industrias creativas" pero el coordinador solo repartió arte digital, diseño y foto. Como mandar a relevar "todos los bailes" y que solo cubran salsa, bachata y merengue: faltó todo lo demás.'},
+
+{d:1,q:'Tu coordinator no logra spawnear subagents; las llamadas a la Task tool no tienen efecto. ¿Qué revisás primero?',
+o:['Que el modelo tenga <code>max_tokens</code> suficiente.','Que <code>allowedTools</code> del coordinator incluya <code>"Task"</code>.','Que los subagents estén desplegados como MCP servers.','Que <code>tool_choice</code> esté en <code>"any"</code>.'],
+a:1,e:'La Task tool es el mecanismo para spawnear subagents, y <code>allowedTools</code> debe incluir <code>"Task"</code> para que el coordinator pueda invocarlos. Sin eso, no hay spawning posible.',ex:'El coordinador quiere delegar pero no tiene activado el "permiso para delegar". Como un encargado sin la llave de las otras oficinas: por más que quiera mandar gente, no puede. Le falta <code>"Task"</code> en la lista.'},
+
+{d:1,q:'Querés lanzar tres subagents en paralelo para acortar la latencia total. ¿Cómo se hace?',
+o:['Emitir las tres Task tool calls en una sola respuesta del coordinator.','Llamar una Task tool y que ella dispare las otras dos.','Configurar <code>parallel:true</code> en el <code>AgentDefinition</code>.','Correr tres sesiones separadas y unir los resultados a mano.'],
+a:0,e:'El paralelismo se logra emitiendo <b>múltiples Task tool calls en una única respuesta</b> del coordinator. No hay flag mágica ni cadena de disparo entre subagents.',ex:'En vez de mandar un profe, esperar que vuelva, y recién mandar al otro... los mandás a los tres JUNTOS en una sola orden. Terminan a la vez y ahorrás tiempo.'},
+
+{d:1,sc:'Customer Support Resolution Agent',q:'Necesitás garantizar que la verificación de identidad ocurra siempre antes de cualquier operación financiera. ¿Qué principio aplica?',
+o:['Prompt bien redactado alcanza si incluís ejemplos suficientes.','Cuando se requiere cumplimiento determinístico, el enforcement programático es necesario porque el prompt tiene una tasa de falla distinta de cero.','El modelo aprende la secuencia sola tras varias iteraciones.','Basta con <code>tool_choice</code> forzado en la primera tool.'],
+a:1,e:'La instrucción por prompt tiene una tasa de falla no-cero. Para compliance determinístico (identidad antes de operación financiera) se usan gates/hooks programáticos. <code>tool_choice</code> forzado no cubre toda la secuencia posterior.',ex:'Tu agente que cobra: "verificá identidad antes de cobrar" escrito en las instrucciones funciona casi siempre. Pero "casi" con plata no alcanza. Candado en el código = garantía. Instrucción = probabilidad.'},
+
+{d:1,q:'Tres tools devuelven fechas en formatos distintos (Unix timestamp, ISO 8601, código numérico de estado). Querés que el modelo siempre reciba un formato normalizado. ¿Qué usás?',
+o:['Un hook <code>PostToolUse</code> que transforme los resultados antes de que el modelo los procese.','Un tope de iteraciones que fuerce reintentos hasta normalizar.','Instrucciones en el system prompt pidiendo interpretar cada formato.','Un subagent dedicado a reformatear cada respuesta.'],
+a:0,e:'Un hook <code>PostToolUse</code> intercepta los tool results y los transforma antes de que el modelo los vea —el patrón exacto para normalizar formatos heterogéneos de forma determinística.',ex:'Tres sistemas te dan la fecha distinta (una en número raro, otra "2024-05-01", otra un código). Un hook es un filtro automático que las convierte todas al mismo formato ANTES de que Claude las lea, para que no se confunda.'},
+
+{d:1,sc:'Customer Support Resolution Agent',q:'La política prohíbe refunds mayores a $500 sin aprobación humana. ¿Cómo garantizás el cumplimiento?',
+o:['Pedirlo en el system prompt con ejemplos de casos límite.','Un hook que intercepte los tool calls salientes, bloquee el refund que exceda el umbral y redirija a escalado.','Un enum en el schema que no permita montos altos.','Confiar en que el modelo aprenda el límite con few-shot.'],
+a:1,e:'Para cumplimiento garantizado se usa un <b>hook de intercepción</b> sobre los tool calls salientes que bloquea la acción que viola la política y redirige a escalado. El prompt (A, D) es probabilístico; un enum de schema no captura reglas de negocio de este tipo.',ex:'Un guardia en la puerta: cada intento de reembolso pasa por él primero. Si supera $500, lo frena y lo manda a que un humano apruebe. No depende de que el modelo "se acuerde" del límite.'},
+
+{d:1,sc:'Claude Code for Continuous Integration',q:'Vas a revisar un PR multi-aspecto: cada archivo se analiza igual y después hay una pasada de integración. El flujo es predecible y siempre el mismo. ¿Qué estrategia de descomposición conviene?',
+o:['Descomposición dinámica adaptativa según hallazgos.','Prompt chaining: pipeline secuencial fijo (análisis por archivo y luego pasada de integración cross-file).','Un solo prompt gigante con todos los archivos juntos.','Fork de sesión por cada archivo.'],
+a:1,e:'Cuando el flujo es predecible y multi-aspecto, el <b>prompt chaining</b> (pipeline secuencial fijo) es lo indicado. La descomposición dinámica se reserva para investigación abierta donde los subtareas surgen de lo que se va descubriendo.',ex:'Como tu checklist fijo de cierre de caja: siempre los mismos pasos, en el mismo orden. Cuando la tarea es predecible, seguís la receta fija (prompt chaining), no improvisás.'},
+
+{d:1,sc:'Developer Productivity con Claude',q:'Tenés que explorar un codebase legacy desconocido sin saber de antemano qué vas a encontrar. ¿Qué enfoque de descomposición?',
+o:['Prompt chaining con pasos fijos definidos al inicio.','Descomposición adaptativa: mapear estructura, identificar áreas de alto impacto y generar subtareas a partir de los descubrimientos.','Un pipeline secuencial idéntico al de code review.','Procesar todo el codebase en un único request.'],
+a:1,e:'La investigación abierta pide <b>descomposición dinámica/adaptativa</b>: primero se mapea la estructura, se identifican áreas de alto impacto y el plan se ajusta a medida que aparecen dependencias. Un pipeline fijo no cubre lo desconocido.',ex:'Entrás a un local que vas a comprar sin saber qué hay adentro. No podés seguir una receta fija: primero mirás qué hay y, según lo que encontrás, decidís el próximo paso. Eso es descomposición adaptativa.'},
+
+{d:1,sc:'Developer Productivity con Claude',q:'Retomás una investigación tras modificar varios de los archivos que ya habías analizado. Los tool results de la sesión previa quedaron obsoletos. ¿Qué es más confiable?',
+o:['Resumir con <code>--resume</code> tal cual, porque el contexto sigue siendo válido.','Arrancar una sesión nueva inyectando un resumen estructurado del estado actual (o informar explícitamente los cambios de archivo).','Borrar todo el proyecto y empezar de cero sin contexto.','Aumentar <code>max_tokens</code> para que entre el historial viejo completo.'],
+a:1,e:'Con resultados previos obsoletos, resumir arrastra información desactualizada. Es más confiable <b>arrancar limpio con un resumen estructurado</b> del estado real, o al menos informar los cambios específicos de archivo para un re-análisis dirigido.',ex:'Es como retomar un WhatsApp de hace un mes donde ya cambió el precio y el stock. Mejor arrancar limpio con un resumen actualizado que seguir sobre datos viejos que ya no valen.'},
+
+{d:1,q:'Querés explorar dos enfoques divergentes partiendo de una misma base de investigación ya construida, sin que una rama contamine a la otra. ¿Qué mecanismo usás?',
+o:['<code>--resume</code> con el mismo nombre de sesión para ambas.','<code>fork_session</code> para crear ramas independientes desde una base común.','Dos coordinators compartiendo memoria.','Un hook <code>PostToolUse</code> que duplique el contexto.'],
+a:1,e:'<code>fork_session</code> crea ramas independientes desde una base compartida —ideal para explorar enfoques divergentes sin interferencia. <code>--resume</code> continúa una misma sesión, no la bifurca.',ex:'Tenés una base de investigación y querés probar dos caminos sin que se pisen. Es como sacar dos fotocopias de un plan para que dos profes prueben ideas distintas sin arruinar el original. <code>fork_session</code> hace esas copias.'},
+
+{d:1,sc:'Customer Support Resolution Agent',q:'El agente escala un caso a un humano que no tiene la transcripción de la conversación. ¿Qué debe incluir el handoff?',
+o:['Solo el último mensaje del cliente.','Un resumen de handoff estructurado: datos del cliente, causa raíz y acciones recomendadas.','Un link a la sesión para que el humano la lea entera.','Nada; el humano reinicia la investigación desde cero.'],
+a:1,e:'El handoff estructurado compila lo que el humano necesita sin la transcripción: datos del cliente, causa raíz y acciones recomendadas. Mandar solo el último mensaje o hacer que reinicie desperdicia todo el trabajo previo.',ex:'Cuando derivás un cliente a otra persona de tu equipo, no le decís "atendelo y ya". Le pasás: quién es, qué quería, qué causó el problema, qué recomendás. Ese resumen ordenado es el handoff.'},
+
+{d:1,sc:'Multi-Agent Research System',q:'Estás escribiendo el prompt del coordinator. ¿Cuál es el mejor enfoque?',
+o:['Detallar cada paso procedimental que debe seguir en orden estricto.','Especificar objetivos y criterios de calidad, dejando que el coordinator decida cómo delegar.','Listar exactamente qué subagent invocar y en qué momento fijo.','Prohibirle tomar cualquier decisión y hardcodear el pipeline.'],
+a:1,e:'Los prompts de coordinator efectivos definen <b>objetivos y criterios de calidad</b>, no procedimientos paso a paso. Eso permite selección dinámica de subagents según la complejidad, en vez de rutear siempre por el pipeline completo.',ex:'A un buen encargado no le dictás cada paso; le decís "el objetivo es cerrar la venta con calidad" y él resuelve. Al coordinador igual: metas y criterios, no un instructivo rígido paso a paso.'},
+
+{d:1,sc:'Multi-Agent Research System',q:'¿Por qué conviene que toda la comunicación entre subagents pase por el coordinator (hub-and-spoke) en vez de que los subagents se hablen entre sí?',
+o:['Porque los subagents no pueden ejecutar tools.','Por observabilidad y flujo de información controlado: el coordinator centraliza ruteo, manejo de errores y agregación.','Porque la comunicación directa entre subagents está prohibida por MCP.','Para ahorrar tokens exclusivamente.'],
+a:1,e:'El patrón hub-and-spoke centraliza comunicación, manejo de errores y ruteo en el coordinator, lo que da <b>observabilidad y control del flujo</b> de información. No es una limitación técnica de MCP.',ex:'Como manejar la academia con todo pasando por recepción: sabés qué entra y qué sale, tenés control. Si cada profe arregla cosas por su lado sin avisar, perdés visibilidad. Todo por el coordinador = control.'},
+
+{d:1,sc:'Customer Support Resolution Agent',q:'Un cliente manda un único mensaje con tres problemas distintos (un cargo duplicado, una devolución y un cambio de dirección). ¿Cómo lo maneja el agente?',
+o:['Atiende solo el primero y pide que reescriba los otros dos.','Descompone en ítems distintos, los investiga en paralelo y luego sintetiza una resolución unificada.','Escala automáticamente por ser multi-asunto.','Los resuelve en un solo tool call combinado.'],
+a:1,e:'Los pedidos multi-asunto se descomponen en ítems distintos investigados <b>en paralelo</b> y luego se sintetiza una respuesta unificada. Ni ignorar problemas ni escalar por defecto son correctos.',ex:'Un cliente te escribe: "me cobraron dos veces, quiero devolver el otro curso Y cambiar mi dirección". El agente separa los tres, resuelve cada uno, y te da UNA respuesta que cierra todo. No atiende solo el primero.'},
+
+/* ---------------- DOMINIO 2 ---------------- */
+{d:2,sc:'Customer Support Resolution Agent',q:'El agente llama <code>get_customer</code> cuando el usuario pregunta por una orden ("revisá mi orden #12345") en vez de <code>lookup_order</code>. Ambas tools tienen descriptions mínimas y aceptan identificadores similares. ¿Primer paso más efectivo?',
+o:['Agregar 5–8 ejemplos few-shot ruteando queries de orden a <code>lookup_order</code>.','Expandir cada description con formatos de input, queries de ejemplo, edge cases y cuándo usar una vs otra.','Una capa de ruteo que parsee el input y pre-seleccione la tool por keywords.','Consolidar ambas en una sola tool <code>lookup_entity</code>.'],
+a:1,e:'Las <b>tool descriptions son el mecanismo principal de selección</b>. Descriptions mínimas dejan al modelo sin poder diferenciar. Expandirlas es un fix de causa raíz, bajo esfuerzo y alto apalancamiento. A agrega tokens sin arreglar la causa; C saltea el entendimiento del LLM; D es más esfuerzo del que amerita un primer paso.',ex:'Es como tener dos botones sin etiqueta clara: "consultar" y "buscar". El operador (el modelo) no sabe cuál es cuál. La solución barata: etiquetarlos bien, con ejemplos de cuándo usar cada uno.'},
+
+{d:2,q:'Dos tools, <code>analyze_content</code> y <code>analyze_document</code>, se solapan y el modelo las confunde. ¿Fix más adecuado?',
+o:['Bajar la temperatura del modelo.','Renombrar y reescribir descriptions para diferenciar propósito, o partir la tool genérica en tools con propósito específico (ej. <code>extract_web_results</code>).','Eliminar una de las dos al azar.','Poner ambas en servers MCP distintos.'],
+a:1,e:'El misrouting por descriptions ambiguas o superpuestas se corrige <b>renombrando y diferenciando</b> (ej. <code>analyze_content → extract_web_results</code>) o partiendo la genérica en tools de propósito específico. El server donde viven no cambia el problema.',ex:'Dos herramientas llamadas casi igual (<code>analizar_contenido</code> vs <code>analizar_documento</code>). El modelo se confunde. Como tener dos carpetas "clientes" y "clientes 2": renombralas para que quede claro qué va en cada una.'},
+
+{d:2,q:'¿Cuál es el mecanismo estándar de MCP para que una tool comunique una falla de vuelta al agente?',
+o:['Devolver <code>null</code> silenciosamente.','La flag <code>isError</code> en la respuesta de la tool.','Lanzar una excepción no capturada.','Poner <code>stop_reason: "error"</code>.'],
+a:1,e:'MCP usa la flag <code>isError</code> para señalar fallas al agente. Devolver null o lanzar excepciones sin estructura impide que el agente decida cómo recuperarse.',ex:'Cuando una herramienta falla tiene que avisar con una bandera de "esto salió mal" (<code>isError</code>), no quedarse callada. Como un mozo que te dice "se acabó ese plato" en vez de traerte el plato vacío sin explicar.'},
+
+{d:2,sc:'Customer Support Resolution Agent',q:'Todas tus tools devuelven el mismo mensaje ante cualquier problema: "Operation failed". ¿Por qué es un problema y qué conviene?',
+o:['No es problema; los errores uniformes simplifican el código.','Impiden decisiones de recuperación apropiadas; conviene devolver metadata estructurada (<code>errorCategory</code>, booleano <code>isRetryable</code>, descripción legible).','Conviene reintentar siempre, sin importar el error.','Conviene escalar todo error a un humano.'],
+a:1,e:'Errores uniformes esconden si el fallo es transitorio, de validación, de negocio o de permisos, y el agente no puede decidir bien. La metadata estructurada (<code>errorCategory</code>, <code>isRetryable</code>, descripción) habilita recuperación diferenciada.',ex:'Si tu sistema solo dice "error" ante todo, no sabés si reintentar o no. No es lo mismo "tarjeta rechazada por saldo" que "se cayó internet". El agente necesita el TIPO de error para decidir qué hacer.'},
+
+{d:2,sc:'Multi-Agent Research System',q:'Un subagent tiene 18 tools disponibles y su selección se volvió poco confiable. ¿Qué hacés?',
+o:['Agregar más ejemplos para cada una de las 18 tools.','Restringir el set de tools de cada subagent solo a las que su rol necesita.','Subir a un modelo de context window más grande.','Fusionar las 18 tools en 3 tools genéricas.'],
+a:1,e:'Demasiadas tools (18 vs 4–5) degrada la confiabilidad de selección. La solución es <b>scope por rol</b>: cada subagent recibe solo las tools que su función necesita. Fusionar en genéricas reintroduce ambigüedad.',ex:'Un empleado con 18 llaves distintas se traba eligiendo cuál usar. Dale solo las 4 que su puesto necesita. Menos opciones, menos errores.'},
+
+{d:2,q:'Querés garantizar que el modelo llame alguna tool en vez de devolver texto conversacional, sin forzar cuál. ¿Qué configurás?',
+o:['<code>tool_choice: "auto"</code>','<code>tool_choice: "any"</code>','<code>tool_choice: {"type":"tool","name":"..."}</code>','No hay forma de garantizarlo.'],
+a:1,e:'<code>tool_choice: "any"</code> obliga al modelo a llamar <b>alguna</b> tool (no texto libre), sin fijar cuál. <code>"auto"</code> deja que elija incluso responder con texto; el objeto <code>{type:"tool"...}</code> fuerza una tool específica.',ex:'Querés obligar al agente a USAR una herramienta sí o sí (cobrar, agendar), no que conteste con chamuyo. <code>"any"</code> es decirle "hacé algo, no me respondas solo con palabras".'},
+
+{d:2,sc:'Structured Data Extraction',q:'Necesitás que <code>extract_metadata</code> corra siempre primero, antes de cualquier enriquecimiento. ¿Cómo lo garantizás?',
+o:['<code>tool_choice: "auto"</code> y confiar en el orden.','<code>tool_choice</code> forzado: <code>{"type":"tool","name":"extract_metadata"}</code>, y procesar los pasos siguientes en turnos posteriores.','Ponerla primera en la lista de tools.','Un hook que reordene las llamadas.'],
+a:1,e:'El <code>tool_choice</code> forzado con <code>{"type":"tool","name":"extract_metadata"}</code> asegura que esa tool se llame primero. Los pasos siguientes se procesan en turnos posteriores. El orden en la lista no garantiza nada.',ex:'"Primero sacá los datos del cliente, después el resto". Forzás que esa herramienta corra primera, como pedir el DNI antes de cualquier trámite. El resto viene después.'},
+
+{d:2,sc:'Developer Productivity con Claude',q:'Tu equipo comparte un MCP server para el proyecto y vos tenés un server experimental personal. ¿Dónde configura cada uno?',
+o:['Ambos en <code>~/.claude.json</code>.','El compartido en <code>.mcp.json</code> (scope de proyecto, versionado); el personal en <code>~/.claude.json</code> (scope de usuario).','Ambos en <code>.mcp.json</code>.','El compartido en <code>CLAUDE.md</code>; el personal en <code>.mcp.json</code>.'],
+a:1,e:'El tooling compartido del equipo va en <code>.mcp.json</code> a nivel proyecto (versionado); los servers personales/experimentales van en <code>~/.claude.json</code> a nivel usuario, para no afectar a los demás.',ex:'Lo del equipo va en el archivo compartido del proyecto (lo ven todos al clonar). Lo tuyo experimental va en TU archivo personal, que nadie más ve. Como el manual de la academia (compartido) vs tus notas personales.'},
+
+{d:2,q:'Tu <code>.mcp.json</code> necesita un token de GitHub, pero no querés commitear el secreto. ¿Qué usás?',
+o:['Hardcodear el token en el archivo y agregarlo a <code>.gitignore</code>.','Expansión de variables de entorno: <code>${GITHUB_TOKEN}</code> en el <code>.mcp.json</code>.','Guardar el token en <code>CLAUDE.md</code>.','Pasar el token como argumento de cada tool call.'],
+a:1,e:'La expansión de env vars (<code>${GITHUB_TOKEN}</code>) en <code>.mcp.json</code> permite compartir la config sin exponer el secreto. Hardcodear + gitignore rompe para el resto del equipo.',ex:'En vez de escribir tu contraseña dentro del archivo que compartís (¡y que se filtre!), ponés un marcador <code>${TOKEN}</code> que apunta a un lugar secreto. Compartís el archivo sin regalar la clave.'},
+
+{d:2,sc:'Developer Productivity con Claude',q:'Querés buscar en qué archivos aparece el nombre de una función a lo largo de todo el codebase. ¿Qué built-in tool usás?',
+o:['Glob','Grep','Read','Bash con <code>ls</code>'],
+a:1,e:'<b>Grep</b> busca contenido (nombres de función, mensajes de error, imports) dentro de los archivos. Glob es para matchear <i>paths</i> por nombre/extensión, no contenido.',ex:'Grep es el "Ctrl+F gigante": buscar dónde aparece una palabra DENTRO de todos los archivos. Como buscar el nombre de un alumno adentro de todas las planillas a la vez.'},
+
+{d:2,sc:'Developer Productivity con Claude',q:'Querés listar todos los archivos que matcheen <code>**/*.test.tsx</code> sin importar en qué carpeta estén. ¿Qué tool?',
+o:['Grep','Glob','Edit','Read'],
+a:1,e:'<b>Glob</b> hace matching de paths por patrón de nombre/extensión (ej. <code>**/*.test.tsx</code>). Grep es para contenido, no para encontrar archivos por patrón de nombre.',ex:'Glob busca por NOMBRE de archivo, no por contenido. Como pedir "todos los que terminan en .pdf" en tu carpeta. Distinto de Grep, que busca adentro de los archivos.'},
+
+{d:2,q:'La tool <code>Edit</code> falla porque el texto ancla que le pasaste aparece varias veces y no es único. ¿Fallback correcto?',
+o:['Reintentar <code>Edit</code> con el mismo texto varias veces.','Usar <code>Read</code> para leer el archivo y <code>Write</code> para reescribirlo con el cambio.','Borrar el archivo y volver a crearlo de memoria.','Cambiar a Grep.'],
+a:1,e:'<code>Edit</code> requiere un match de texto único. Cuando no lo hay, el fallback es <b>Read + Write</b>: leer el archivo completo y reescribirlo con la modificación aplicada.',ex:'Le pediste cambiar "precio: 100" pero eso aparece 5 veces y no sabe cuál. El plan B: leer el archivo entero y reescribirlo con el cambio bien puesto. Como reescribir toda la planilla en vez de tocar una celda ambigua.'},
+
+{d:2,sc:'Developer Productivity con Claude',q:'El agente prefiere usar Grep (built-in) en vez de tu MCP tool más capaz para búsquedas de código. ¿Qué hacés?',
+o:['Deshabilitar Grep por completo.','Mejorar la description de la MCP tool para que quede claro cuándo es preferible sobre las built-in.','Renombrar Grep.','Poner la MCP tool en <code>tool_choice</code> forzado siempre.'],
+a:1,e:'Si el agente no prefiere la MCP tool más capaz, casi siempre es porque su <b>description</b> no comunica bien su ventaja. Mejorarla es el fix. Deshabilitar built-ins o forzar tool_choice siempre es demasiado rígido.',ex:'El agente usa la herramienta vieja porque la nueva (mejor) no explica bien para qué sirve. Como un vendedor que no ofrece el producto premium porque nadie le contó sus ventajas. Mejorá la descripción de la herramienta.'},
+
+{d:2,sc:'Multi-Agent Research System',q:'El agente de síntesis verifica hechos constantemente devolviendo control al coordinator, que invoca web search y re-invoca síntesis: +2–3 round trips y +40% de latencia. El 85% son fact-checks simples; el 15% requiere investigación profunda. Mejor enfoque:',
+o:['Darle al agente de síntesis una tool acotada <code>verify_fact</code> para lookups simples; las verificaciones complejas siguen pasando por el coordinator.','Darle acceso a todas las web search tools.','Batchear todas las verificaciones y mandarlas al final de la pasada.','Que el web search agent pre-cachee contexto extra alrededor de cada fuente.'],
+a:0,e:'Aplica least privilege: la síntesis recibe solo lo que necesita para el 85% común (una <code>verify_fact</code> acotada) y preserva la coordinación para el 15% complejo. C bloquea (síntesis posterior puede depender de hechos previos); B sobre-provisiona; D depende de caching especulativo poco confiable.',ex:'Al que arma el resumen dale una herramientita para chequear datos fáciles él solo (el 85%). Solo lo complicado (15%) sube al jefe. Como dejar que recepción confirme horarios, pero no reprogramar todo un evento.'},
+
+/* ---------------- DOMINIO 3 ---------------- */
+{d:3,sc:'Code Generation con Claude Code',q:'Querés un slash command <code>/review</code> que corra el checklist del equipo y esté disponible para todos al clonar/pullear el repo. ¿Dónde va el archivo?',
+o:['En <code>.claude/commands/</code> del repositorio del proyecto.','En <code>~/.claude/commands/</code> del home de cada developer.','En el <code>CLAUDE.md</code> de la raíz.','En un <code>.claude/config.json</code> con un array <code>commands</code>.'],
+a:0,e:'Los comandos con scope de proyecto viven en <code>.claude/commands/</code>, se versionan y quedan disponibles automáticamente para todo el equipo. <code>~/.claude/commands/</code> es personal; <code>CLAUDE.md</code> es contexto, no definición de comandos; el <code>config.json</code> con array no existe.',ex:'Querés que TODO tu equipo tenga el mismo comando <code>/review</code> al descargar el proyecto. Va en la carpeta compartida del proyecto, no en tu compu. Como el manual de procedimientos que viene con el local, no en tu cajón.'},
+
+{d:3,sc:'Code Generation con Claude Code',q:'Tenés que reestructurar un monolito en microservicios: cambios en decenas de archivos y decisiones sobre límites de servicio y dependencias. ¿Qué enfoque?',
+o:['Entrar en plan mode para explorar el codebase, entender dependencias y diseñar antes de tocar nada.','Ejecución directa, dejando que la implementación revele los límites naturales.','Ejecución directa con instrucciones exhaustivas de entrada.','Empezar directo y pasar a plan mode solo si aparece complejidad inesperada.'],
+a:0,e:'Plan mode está diseñado para cambios a gran escala, múltiples enfoques válidos y decisiones arquitectónicas. B arriesga retrabajo costoso; C asume que ya sabés la estructura correcta; D ignora que la complejidad ya está declarada en el requisito.',ex:'Vas a remodelar todo el local: tirar paredes, mover todo. No empezás a martillar: primero el plano. Plan mode es hacer el plano antes de tocar nada, cuando el cambio es grande.'},
+
+{d:3,sc:'Code Generation con Claude Code',q:'Tu codebase tiene convenciones distintas por área. Los tests están repartidos junto al código que testean (<code>Button.test.tsx</code> al lado de <code>Button.tsx</code>) y querés que todos sigan las mismas convenciones sin importar la carpeta. ¿Forma más mantenible?',
+o:['Archivos en <code>.claude/rules/</code> con patrones glob en el frontmatter YAML para aplicar convenciones por path.','Consolidar todo en el <code>CLAUDE.md</code> raíz bajo headers y confiar en que Claude infiera.','Un skill en <code>.claude/skills/</code> por cada tipo de código.','Un <code>CLAUDE.md</code> separado en cada subdirectorio.'],
+a:0,e:'Los patrones glob (ej. <code>**/*.test.tsx</code>) aplican convenciones por path sin importar el directorio —esencial para tests dispersos. B depende de inferencia; C requiere invocación manual (contradice "automático"); D no cubre archivos repartidos porque <code>CLAUDE.md</code> está atado al directorio.',ex:'Querés que TODOS los archivos de test sigan la misma regla, estén donde estén. Definís la regla por "tipo de archivo" (los que terminan en .test), no por carpeta. Así se aplica sola donde corresponde.'},
+
+{d:3,q:'Un nuevo integrante del equipo no recibe las instrucciones de Claude Code que vos sí tenés. ¿Diagnóstico más probable?',
+o:['Su Claude Code está desactualizado.','Las instrucciones están a nivel usuario (<code>~/.claude/CLAUDE.md</code>) y no se comparten por version control; hay que moverlas a nivel proyecto.','Le falta correr <code>/compact</code>.','El <code>.mcp.json</code> no tiene env vars.'],
+a:1,e:'Los settings de nivel usuario aplican solo a ese usuario y no viajan por VCS. Si un teammate no las recibe, es porque están en <code>~/.claude/CLAUDE.md</code> en vez de a nivel proyecto (<code>.claude/CLAUDE.md</code> o <code>CLAUDE.md</code> raíz).',ex:'Tu compañero no recibe las instrucciones porque las guardaste en TU configuración personal, no en la del proyecto. Como pegar las reglas de la academia en tu casa en vez de en recepción: solo vos las ves.'},
+
+{d:3,q:'Tu <code>CLAUDE.md</code> creció demasiado y querés incluir estándares distintos según el package. ¿Qué mecanismo mantiene todo modular?',
+o:['Duplicar el <code>CLAUDE.md</code> en cada package.','La sintaxis <code>@import</code> para referenciar archivos externos selectivamente.','Comprimir el archivo con <code>/compact</code>.','Poner todo en un solo header gigante.'],
+a:1,e:'<code>@import</code> permite referenciar archivos externos y mantener <code>CLAUDE.md</code> modular, incluyendo selectivamente los estándares relevantes por package.',ex:'Tu archivo de instrucciones se hizo enorme. En vez de un mamotreto, lo partís y "llamás" a cada pedazo cuando hace falta (<code>@import</code>). Como tener manuales separados por área en vez de uno de 300 páginas.'},
+
+{d:3,q:'Preferís no tener un <code>CLAUDE.md</code> monolítico y organizar las reglas por tema (testing, convenciones de API, deployment). ¿Qué usás?',
+o:['Un único archivo con todo separado por comentarios.','Archivos enfocados dentro de <code>.claude/rules/</code> (ej. <code>testing.md</code>, <code>api-conventions.md</code>, <code>deployment.md</code>).','Un skill por tema.','Variables de entorno por tema.'],
+a:1,e:'El directorio <code>.claude/rules/</code> permite partir un <code>CLAUDE.md</code> monolítico en archivos por tema, más fáciles de mantener.',ex:'En vez de un solo documento gigante, carpetas separadas: reglas de testing acá, de deploy allá. Ordenado por tema, más fácil de mantener. Como carpetas separadas para ventas, cobros y RRHH.'},
+
+{d:3,q:'¿Qué comando de Claude Code usás para verificar qué archivos de memoria están efectivamente cargados?',
+o:['<code>/compact</code>','<code>/memory</code>','<code>/rules</code>','<code>--resume</code>'],
+a:1,e:'<code>/memory</code> muestra qué archivos de memoria están cargados —útil para diagnosticar problemas de jerarquía de <code>CLAUDE.md</code>.',ex:'<code>/memory</code> es preguntarle a Claude "¿qué instrucciones tenés cargadas ahora mismo?". Como revisar qué reglas están activas antes de arrancar, para no llevarte sorpresas.'},
+
+{d:3,q:'Un skill produce output verboso y exploratorio que ensucia la conversación principal. ¿Cómo lo aislás?',
+o:['Bajar <code>max_tokens</code> del skill.','Configurar <code>context: fork</code> en el frontmatter del <code>SKILL.md</code> para correrlo en un sub-agent aislado.','Ponerlo en <code>~/.claude/skills/</code>.','Restringir <code>allowed-tools</code>.'],
+a:1,e:'<code>context: fork</code> corre el skill en un contexto de sub-agent aislado, evitando que su output verboso contamine la conversación principal. <code>allowed-tools</code> restringe tools, no aísla el contexto.',ex:'Un proceso hace mucho ruido y ensucia la conversación. <code>context: fork</code> lo manda a un cuartito aparte a trabajar y solo te trae el resultado limpio. Como mandar a alguien a hacer el desorden en otra sala.'},
+
+{d:3,q:'Querés que durante la ejecución de un skill solo estén disponibles ciertas tools. ¿Qué campo del frontmatter configura eso?',
+o:['<code>context: fork</code>','<code>allowed-tools</code>','<code>argument-hint</code>','<code>paths</code>'],
+a:1,e:'<code>allowed-tools</code> en el frontmatter del <code>SKILL.md</code> restringe qué tools puede usar el skill durante su ejecución.',ex:'Al arrancar cierta tarea, limitás qué herramientas puede tocar. Como darle a un practicante acceso solo a la caja chica, no a todo el sistema.'},
+
+{d:3,q:'Querés que Claude Code le pida al developer un parámetro requerido al invocar un skill. ¿Qué campo usás?',
+o:['<code>argument-hint</code>','<code>allowed-tools</code>','<code>context: fork</code>','<code>@import</code>'],
+a:0,e:'<code>argument-hint</code> en el frontmatter indica qué parámetros pedir al developer al invocar el skill.',ex:'Cuando alguien invoca la tarea, el sistema le pregunta "¿qué dato necesitás para esto?". Como un formulario que no te deja avanzar sin completar el campo obligatorio.'},
+
+{d:3,q:'¿Cuándo conviene un skill (en <code>.claude/skills/</code>) por sobre reglas en <code>CLAUDE.md</code>?',
+o:['Skills para estándares universales siempre cargados; <code>CLAUDE.md</code> para tareas puntuales.','Skills para lógica on-demand específica de una tarea; <code>CLAUDE.md</code> para estándares universales siempre cargados.','Son intercambiables, da igual cuál.','Skills solo para MCP; <code>CLAUDE.md</code> solo para tools built-in.'],
+a:1,e:'Los <b>skills</b> son on-demand y específicos de tarea; <code>CLAUDE.md</code> son <b>estándares universales siempre cargados</b>. Elegís según si el conocimiento aplica siempre o solo en ciertas tareas.',ex:'<code>CLAUDE.md</code> = las reglas que aplican SIEMPRE (como el trato al cliente). Un skill = una herramienta que sacás solo cuando la tarea puntual lo pide (como el instructivo de cierre de mes).'},
+
+{d:3,sc:'Code Generation con Claude Code',q:'Tenés un bug de un solo archivo con un stack trace claro que apunta exactamente a la línea. ¿Plan mode o ejecución directa?',
+o:['Plan mode, siempre es más seguro.','Ejecución directa: es un cambio simple y bien acotado.','Plan mode para explorar todo el codebase primero.','Fork de sesión para probar varias soluciones.'],
+a:1,e:'La ejecución directa es para cambios simples y bien entendidos, como un bug fix de un solo archivo con causa clara. Plan mode se reserva para tareas complejas, multi-archivo o con múltiples enfoques válidos.',ex:'Se quemó una lámpara y sabés exactamente cuál. No armás un plano de remodelación: la cambiás y listo. Cambio chico y claro = ejecución directa, sin plan mode.'},
+
+{d:3,sc:'Developer Productivity con Claude',q:'La fase de descubrimiento de tu tarea genera mucho output verboso que amenaza con agotar el contexto de la sesión principal. ¿Qué usás?',
+o:['Subir a un modelo con más contexto.','El Explore subagent para aislar el descubrimiento verboso y devolver solo un resumen.','Correr todo en plan mode.','Borrar el historial con <code>/memory</code>.'],
+a:1,e:'El <b>Explore subagent</b> aísla las fases de descubrimiento verbosas y devuelve resúmenes, evitando agotar el contexto de la sesión principal.',ex:'La fase de "revisar todo para entender" genera mucha data y te llena la cabeza. Mandás a un explorador a hacer eso aparte y que te traiga solo el resumen. Así no agotás tu memoria de trabajo.'},
+
+{d:3,sc:'Claude Code for Continuous Integration',q:'Tu pipeline corre <code>claude "Analyze this PR for security issues"</code> pero el job cuelga esperando input interactivo. ¿Fix correcto para CI?',
+o:['Agregar la flag <code>-p</code>: <code>claude -p "Analyze this PR..."</code>.','Setear <code>CLAUDE_HEADLESS=true</code>.','Redirigir stdin desde <code>/dev/null</code>.','Agregar la flag <code>--batch</code>.'],
+a:0,e:'<code>-p</code> (o <code>--print</code>) es el modo no interactivo documentado: procesa el prompt, imprime a stdout y sale. Las otras referencian features inexistentes (<code>CLAUDE_HEADLESS</code>, <code>--batch</code>) o workarounds que no atacan la sintaxis del comando.',ex:'Corriste el comando pero se quedó esperando que alguien apriete enter, y en un proceso automático no hay nadie. La flag <code>-p</code> le dice "modo automático: hacelo y salí, sin preguntar nada".'},
+
+{d:3,sc:'Claude Code for Continuous Integration',q:'Querés que los hallazgos de review de CI salgan como comentarios inline parseables por máquina en el PR. ¿Qué flags usás?',
+o:['<code>-p</code> solamente.','<code>--output-format json</code> junto con <code>--json-schema</code>.','<code>--batch</code> con <code>custom_id</code>.','<code>--resume</code> con nombre de sesión.'],
+a:1,e:'<code>--output-format json</code> con <code>--json-schema</code> enforza structured output parseable por máquina, ideal para publicar hallazgos como comentarios inline en el PR.',ex:'Querés que el resultado salga en un formato que la máquina lea sola (para pegarlo automático en el PR). Le pedís JSON con estructura fija, como una planilla con columnas definidas en vez de un texto libre.'},
+
+{d:3,sc:'Claude Code for Continuous Integration',q:'¿Por qué la misma sesión que generó el código no es la mejor para revisar sus propios cambios en CI?',
+o:['Porque consume el doble de tokens.','Por aislamiento de contexto de sesión: la sesión que generó el código retiene su razonamiento y es menos efectiva cuestionándolo.','Porque CI no permite reusar sesiones.','Porque el modelo olvida el código que generó.'],
+a:1,e:'La misma sesión arrastra el contexto de razonamiento de la generación, lo que la hace menos crítica con sus propias decisiones. Conviene aislar el review en un contexto separado.',ex:'Es como pedirle a la misma persona que escribió un texto que le encuentre los errores: está "enamorada" de lo que hizo y no los ve. Unos ojos frescos (otra sesión) los cazan mejor.'},
+
+{d:3,sc:'Code Generation con Claude Code',q:'Querés comunicarle a Claude Code exactamente qué transformación esperás sobre un input. ¿Técnica más efectiva de refinamiento?',
+o:['Escribir una descripción abstracta muy detallada.','Dar 2–3 ejemplos concretos de input/output.','Subir la temperatura para más creatividad.','Pedirle que adivine y corregir después.'],
+a:1,e:'Los <b>ejemplos concretos de input/output</b> son la forma más efectiva de comunicar la transformación esperada —más claros que cualquier descripción abstracta.',ex:'La forma más clara de que entienda qué querés: mostrale 2-3 ejemplos de "esto entra → esto sale". Como enseñar a un empleado nuevo con casos reales resueltos, no explicándole en abstracto.'},
+
+/* ---------------- DOMINIO 4 ---------------- */
+{d:4,sc:'Claude Code for Continuous Integration',q:'Tu prompt "chequeá que los comentarios sean precisos" genera demasiados false positives y los devs pierden confianza. ¿Mejor cambio?',
+o:['Agregar "sé conservador, reportá solo hallazgos de alta confianza".','Usar un criterio específico: "flaguear un comentario solo cuando el comportamiento que afirma contradice el comportamiento real del código".','Bajar la temperatura.','Pedir que reporte todo y filtrar después manualmente.'],
+a:1,e:'Los <b>criterios explícitos y categóricos</b> superan a las instrucciones vagas. "Flaguear solo cuando el comentario contradice el código real" define exactamente qué reportar. "Sé conservador / alta confianza" (A) no mejora la precisión.',ex:'"Chequeá que esté bien" es vago y marca todo. "Marcá solo cuando el comentario dice una cosa y el código hace otra" es un criterio claro. Como decirle a un profe "corregí solo errores de técnica", no "corregí lo que veas mal".'},
+
+{d:4,q:'Un dev intenta bajar los false positives agregando "reportá solo con confianza >90%". ¿Por qué no funciona?',
+o:['Porque la confianza autorreportada del modelo está bien calibrada y sobre-filtra.','Porque las instrucciones genéricas de confianza no mejoran la precisión; se necesitan criterios categóricos específicos sobre qué reportar y qué saltear.','Porque el modelo no entiende porcentajes.','Porque hay que usar un enum en el schema.'],
+a:1,e:'Filtrar por confianza genérica no mejora la precisión. Lo que funciona es definir <b>categorías específicas</b>: qué issues reportar (bugs, seguridad) vs cuáles saltear (estilo menor).',ex:'Pedirle "reportá solo si estás 90% seguro" no sirve: el modelo no mide bien su propia seguridad. Como preguntar "¿estás seguro?" y que diga que sí igual. Mejor: reglas concretas de qué reportar y qué no.'},
+
+{d:4,sc:'Claude Code for Continuous Integration',q:'Una categoría de review tiene tantos false positives que socava la confianza de los devs en todo el sistema. Mientras mejorás los prompts, ¿qué acción inmediata conviene?',
+o:['Desactivar temporalmente esa categoría de alto false-positive para recuperar la confianza.','Aumentar el umbral de confianza global.','Eliminar el review por completo.','Duplicar la cantidad de ejemplos de todas las categorías.'],
+a:0,e:'Una tasa alta de false positives en una categoría erosiona la confianza incluso en las categorías donde el sistema acierta. Desactivarla temporalmente restaura la confianza mientras se mejora el prompt.',ex:'Una categoría de alertas da tantos falsos avisos que ya nadie les cree, ni a las buenas. Apagala un tiempo mientras la arreglás, para recuperar la confianza. Como frenar a un profe que da mal feedback hasta reentrenarlo.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Querés output consistente y accionable de un agente que maneja casos ambiguos de extracción. ¿Técnica más efectiva?',
+o:['Subir <code>max_tokens</code>.','Few-shot: 2–4 ejemplos dirigidos que muestren el razonamiento de la acción elegida en casos ambiguos.','Bajar la temperatura a 0.','Un system prompt más largo con reglas abstractas.'],
+a:1,e:'Los ejemplos few-shot son la técnica más efectiva para output consistente y accionable, sobre todo para demostrar el manejo de <b>casos ambiguos</b> mostrando el razonamiento de la acción correcta.',ex:'Para que el agente resuelva bien los casos raros, mostrale 2-4 ejemplos de casos ambiguos ya resueltos, con el razonamiento. Como entrenar a recepción con los "casos difíciles" típicos que aparecen.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Tu extracción devuelve campos vacíos/null cuando los documentos tienen estructuras variadas (citas inline vs bibliografías). ¿Qué mejora el manejo?',
+o:['Marcar todos los campos como requeridos.','Agregar ejemplos few-shot que demuestren extracción correcta de cada formato variado.','Forzar <code>tool_choice: "auto"</code>.','Subir la temperatura.'],
+a:1,e:'Los few-shot que muestran extracción correcta de <b>formatos variados</b> ayudan al modelo a generalizar y reducen la extracción vacía/null de campos requeridos.',ex:'Tus documentos vienen en formas distintas y el agente deja campos vacíos. Mostrale un ejemplo de cada forma bien extraída. Así aprende que "el dato está, pero en otro lugar".'},
+
+{d:4,sc:'Structured Data Extraction',q:'Querés el enfoque más confiable para que el output cumpla un schema estricto sin errores de sintaxis JSON. ¿Qué usás?',
+o:['Pedir JSON en el prompt y parsear con regex.','Tool use (<code>tool_use</code>) con JSON schema como parámetros de input, extrayendo desde la respuesta.','Post-procesar el texto con un segundo modelo.','Bajar la temperatura a 0 y confiar.'],
+a:1,e:'<code>tool_use</code> con JSON schema es el enfoque más confiable para output compatible con schema: elimina los errores de sintaxis JSON. Pedir JSON en texto plano y parsear es frágil.',ex:'La forma más confiable de que el resultado salga SIEMPRE con la estructura correcta, sin errores de formato. Como un formulario con campos fijos: no te deja mandar basura ni inventar campos nuevos.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Usás un schema estricto vía tool use, pero aparecen facturas donde los line items no suman el total declarado. ¿Qué pasa?',
+o:['El schema estricto debería haber impedido eso.','El schema estricto elimina errores de sintaxis pero no errores semánticos; conviene extraer <code>calculated_total</code> junto a <code>stated_total</code> para flaguear discrepancias.','Hay que reintentar hasta que sumen.','Es un bug de la API.'],
+a:1,e:'Un schema estricto garantiza la <b>forma</b> pero no la <b>semántica</b>. Line items que no suman es un error semántico. Extraer <code>calculated_total</code> vs <code>stated_total</code> permite detectar la discrepancia.',ex:'El formulario garantiza que pusiste un número en "total", pero no que el total esté BIEN sumado. Para eso calculás el total vos y lo comparás con el declarado. La forma correcta no garantiza el contenido correcto.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Algunos documentos fuente no contienen cierta info, y el modelo la fabrica para completar el campo. ¿Diseño de schema correcto?',
+o:['Marcar el campo como requerido para forzar un valor.','Diseñar el campo como opcional/nullable para que devuelva null en vez de fabricar.','Poner un valor por defecto fijo.','Pedir en el prompt que invente un valor razonable.'],
+a:1,e:'Campos opcionales/nullable permiten que el modelo devuelva <code>null</code> cuando la info no está, en vez de <b>fabricar valores</b>. Forzar requerido induce alucinación.',ex:'Si el documento no tiene el dato y lo marcás como obligatorio, el modelo lo inventa. Si lo dejás opcional, responde "no está" (null) en vez de mentir. Mejor un campo vacío honesto que un dato inventado.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Tenés un campo de categoría que a veces no encaja en ninguna opción prevista. ¿Diseño de schema extensible?',
+o:['Un string libre sin restricción.','Un enum con valores como <code>"unclear"</code> y <code>"other"</code> más un campo de detalle.','Solo las categorías conocidas, sin escape.','Un booleano por cada categoría posible.'],
+a:1,e:'Un enum con <code>"other"</code>/<code>"unclear"</code> más un campo de detalle permite categorización extensible sin perder estructura ni forzar encajes incorrectos.',ex:'Un menú de categorías fijo se queda corto cuando aparece algo nuevo. Agregás "otro" + un campo para describir. Como el formulario con "otro (especificar)" para lo que no encaja en las opciones.'},
+
+{d:4,sc:'Structured Data Extraction',q:'La validación (Pydantic/JSON schema) falla por un desajuste de formato. ¿Cómo diseñás el retry?',
+o:['Reintentar con el mismo prompt sin cambios.','Reenviar el documento original + la extracción fallida + los errores de validación específicos.','Bajar la temperatura y reintentar.','Escalar a un humano de inmediato.'],
+a:1,e:'El retry efectivo appendea los <b>errores de validación específicos</b> al prompt, junto al documento original y la extracción fallida, para que el modelo corrija exactamente lo que falló.',ex:'Cuando falla la validación, no reintentás igual: le devolvés QUÉ falló exacto ("la fecha está en formato inválido") junto al documento. Como devolver un formulario marcando en rojo el campo mal, no diciendo solo "está mal".'},
+
+{d:4,sc:'Structured Data Extraction',q:'La info requerida no está en el documento provisto (está en un anexo externo que no cargaste). ¿Sirve reintentar?',
+o:['Sí, con suficientes reintentos el modelo la encuentra.','No: el retry es inútil cuando la información simplemente no está en la fuente; hay que proveer el documento faltante.','Sí, si subís la temperatura.','Sí, agregando más few-shot.'],
+a:1,e:'El retry sirve para desajustes de formato, no para <b>info ausente</b>. Si el dato no está en la fuente provista, ningún reintento lo va a producir sin fabricar; hay que aportar el documento faltante.',ex:'Si el dato no está en el papel que le diste, reintentar mil veces no lo hace aparecer. Como pedirle a un alumno el pago de un mes que nunca abonó: no hay reintento que lo cobre. Falta el dato, no el intento.'},
+
+{d:4,sc:'Claude Code for Continuous Integration',q:'Querés bajar costos. Tenés (1) un check pre-merge bloqueante que los devs esperan y (2) un reporte de deuda técnica overnight. Tu manager propone pasar ambos a la Message Batches API por el 50% de ahorro. ¿Cómo lo evaluás?',
+o:['Usar batch solo para el reporte overnight; mantener tiempo real para el check pre-merge.','Pasar ambos a batch con polling de estado.','Mantener tiempo real para ambos por miedo a problemas de ordenamiento.','Pasar ambos a batch con timeout de fallback a tiempo real.'],
+a:0,e:'La Batch API da 50% de ahorro pero con procesamiento de hasta 24h y sin SLA de latencia: inadecuada para checks pre-merge bloqueantes, ideal para jobs overnight. B rompe el flujo bloqueante; C refleja un malentendido (se correlaciona por <code>custom_id</code>); D agrega complejidad innecesaria.',ex:'El reporte que mirás mañana a la mañana → mandalo por la vía barata que tarda (batch). El chequeo que un dev espera AHORA para avanzar → tiempo real. Barato y lento para lo que espera; caro y ya para lo urgente.'},
+
+{d:4,q:'¿Qué limitación de la Message Batches API importa al diseñar agentes?',
+o:['No permite más de 100 requests por batch.','No soporta tool calling multi-turno dentro de un mismo request.','No devuelve resultados en JSON.','No admite <code>custom_id</code>.'],
+a:1,e:'La Batch API <b>no soporta tool calling multi-turno</b> dentro de un request, lo que la hace inadecuada para loops agénticos interactivos. Sí usa <code>custom_id</code> para correlacionar pares request/response.',ex:'La vía barata (batch) no sirve para conversaciones de ida y vuelta con herramientas. Es para "mandá 100 tareas sueltas, recibí 100 respuestas", no para un agente que va y viene varias veces.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Enviaste 100 documentos por la Batch API y algunos fallaron (documentos demasiado grandes). ¿Cómo manejás las fallas?',
+o:['Reenviar los 100 documentos completos otra vez.','Reenviar solo los fallidos (identificados por <code>custom_id</code>) con modificaciones, ej. chunkear los oversized.','Descartar los fallidos.','Cambiar a la API sincrónica para todo el lote.'],
+a:1,e:'Se reenvían <b>solo los fallidos</b>, identificados por <code>custom_id</code>, aplicando modificaciones como chunkear los documentos demasiado grandes. Reenviar todo desperdicia costo y tiempo.',ex:'De 100 documentos, fallaron 5 por ser muy grandes. Reenviás SOLO esos 5 (cada uno con su etiqueta <code>custom_id</code>), partidos en pedazos. No reenviás los 100 de nuevo.'},
+
+{d:4,sc:'Code Generation con Claude Code',q:'Un PR modifica 14 archivos y tu review de una sola pasada da resultados inconsistentes: detallado en algunos, superficial en otros, bugs obvios que se escapan y feedback contradictorio entre archivos. ¿Cómo lo reestructurás?',
+o:['Partir en pasadas enfocadas: cada archivo por separado para issues locales, más una pasada de integración cross-file.','Exigir a los devs que partan los PRs en entregas de 3–4 archivos.','Cambiar a un modelo con context window más grande.','Correr tres pasadas y flaguear solo lo que aparece en al menos dos.'],
+a:0,e:'La causa raíz es la <b>dilución de atención</b> por procesar muchos archivos a la vez. Archivo por archivo asegura profundidad consistente; una pasada de integración separada atrapa lo cross-file. B traslada la carga a los devs; C confunde tamaño de contexto con calidad de atención; D suprimiría bugs reales.',ex:'Revisar 14 archivos de un saque es como corregir 14 exámenes leyéndolos todos a la vez: se te mezclan y baja la calidad. Uno por uno, y después una pasada mirando cómo se conectan entre sí.'},
+
+{d:4,q:'¿Por qué una segunda instancia independiente de Claude atrapa más issues que pedirle a la misma instancia que se autorrevise?',
+o:['Porque usa un modelo distinto.','Porque la instancia que generó el código retiene el contexto de razonamiento y es menos propensa a cuestionar sus propias decisiones.','Porque el self-review consume demasiados tokens.','Porque la autorrevisión no está permitida por la API.'],
+a:1,e:'El self-review es limitado: el modelo <b>retiene el contexto de razonamiento</b> de la generación, lo que lo hace menos crítico con sus decisiones. Una instancia independiente, sin ese contexto, es más efectiva atrapando issues sutiles.',ex:'El que escribió el código quedó "casado" con su lógica y no ve los errores. Otra sesión, sin ese apego, los caza. Los mismos ojos frescos que le pedís a otro profe que mire tu clase.'},
+
+/* ---------------- DOMINIO 5 ---------------- */
+{d:5,sc:'Customer Support Resolution Agent',q:'Tu agente logra 55% de resolución (meta 80%). Escala casos simples (reemplazos estándar con foto) mientras intenta resolver solo los casos que requieren excepciones de política. ¿Mejor forma de calibrar el escalado?',
+o:['Agregar criterios de escalado explícitos al system prompt con ejemplos few-shot de cuándo escalar vs resolver.','Que el agente autorreporte un score de confianza (1–10) y rutear por debajo de un umbral.','Desplegar un clasificador separado entrenado con tickets históricos.','Sentiment analysis para escalar ante sentiment negativo.'],
+a:0,e:'La causa raíz son límites de decisión poco claros; los <b>criterios explícitos + few-shot</b> son la respuesta proporcionada. B falla porque la confianza autorreportada del LLM está mal calibrada; C está sobre-ingenierizado; D resuelve otro problema (sentiment no correlaciona con complejidad).',ex:'Tu agente escala lo fácil y se traba con lo difícil, al revés de lo que querés. La solución: criterios claros CON ejemplos de "esto lo resolvés vos, esto lo pasás a un humano". Definir bien el límite.'},
+
+{d:5,q:'Un input muy largo hace que el modelo procese bien el principio y el final pero omita datos del medio. ¿Cómo lo mitigás?',
+o:['Poner los hallazgos clave al principio del input y usar headers de sección explícitos.','Repetir todo el contenido dos veces.','Subir la temperatura.','Confiar en que el modelo lea todo por igual.'],
+a:0,e:'El efecto <b>lost in the middle</b>: los modelos procesan de forma confiable el principio y el final, pero pueden omitir el medio. Colocar lo crítico al inicio y usar headers explícitos de sección mitiga el efecto de posición.',ex:'En un texto largo, el modelo lee bien el principio y el final pero "se pierde" en el medio. Como una reunión de 2 horas: te acordás del arranque y el cierre, el medio se diluye. Poné lo importante al principio.'},
+
+{d:5,sc:'Customer Support Resolution Agent',q:'En conversaciones largas, la summarization progresiva va condensando montos, fechas y expectativas del cliente en resúmenes vagos, y se pierden datos. ¿Qué hacés?',
+o:['Resumir más agresivamente para ahorrar tokens.','Extraer los hechos transaccionales (montos, fechas, números de orden, estados) a un bloque persistente de "case facts" incluido en cada prompt, fuera del historial resumido.','Aumentar <code>max_tokens</code> hasta que entre todo.','Confiar en que el modelo recuerde los números.'],
+a:1,e:'Los valores transaccionales no deben quedar sujetos a la summarization. Se extraen a un <b>bloque de "case facts"</b> persistente, incluido en cada prompt por fuera del historial resumido, para que nunca se condensen a vaguedad.',ex:'En una charla larga, los números (montos, fechas) se van "redondeando" y se pierden. Guardás los datos duros en un bloque fijo que va SIEMPRE, aparte del resumen. Como la ficha del cliente que no se borra nunca.'},
+
+{d:5,sc:'Customer Support Resolution Agent',q:'Un tool result trae 40+ campos pero solo 5 son relevantes, y esos outputs se acumulan en el contexto conversación tras conversación. ¿Qué hacés?',
+o:['Guardar todo por si acaso.','Recortar los outputs verbosos dejando solo los campos relevantes antes de que se acumulen.','Aumentar el context window.','Resumir todo el historial cada dos turnos.'],
+a:1,e:'Los tool results se acumulan de forma desproporcionada a su relevancia. Conviene <b>recortarlos a los campos relevantes</b> antes de que saturen el contexto.',ex:'Una consulta te devuelve 40 datos y usás 5. Guardás solo esos 5, no los 40. Si no, se te llena la memoria de basura conversación tras conversación. Quedate con lo que sirve.'},
+
+{d:5,sc:'Customer Support Resolution Agent',q:'Un cliente frustrado exige explícitamente hablar con un humano. La consulta en sí sería resoluble por el agente. ¿Qué hacés?',
+o:['Intentar resolverlo igual y escalar solo si insiste mucho.','Honrar de inmediato el pedido explícito de humano, sin investigar primero.','Correr sentiment analysis para confirmar la frustración.','Pedir más datos antes de decidir.'],
+a:1,e:'Un pedido <b>explícito</b> de hablar con un humano se honra de inmediato, sin investigar primero. (Distinto es cuando el cliente solo está frustrado pero el caso es simple: ahí se reconoce la frustración y se ofrece resolver.)',ex:'Si un cliente dice CLARO "quiero hablar con una persona", lo derivás YA, no lo hacés dar vueltas. Distinto de uno solo molesto: a ese le ofrecés resolver. Pero el pedido explícito se respeta al toque.'},
+
+{d:5,sc:'Customer Support Resolution Agent',q:'Un cliente pide price matching contra un competidor, pero tu política solo cubre ajustes de precio dentro de tu propio sitio y no dice nada sobre competidores. ¿Qué hacés?',
+o:['Negar el pedido porque la política no lo menciona.','Escalar, porque la política es ambigua/silenciosa sobre ese caso.','Aplicar el price matching asumiendo que está permitido.','Cerrar el ticket sin respuesta.'],
+a:1,e:'Cuando la política es <b>ambigua o guarda silencio</b> (no solo cuando el caso es complejo), corresponde escalar. Ni negar ni asumir permiso: el agente no debe inventar política.',ex:'Cliente pide igualar el precio de la competencia, pero tu política solo habla de descuentos internos, nada de competidores. No inventes: escalá. Como cuando un caso no está en el reglamento, preguntás, no decidís solo.'},
+
+{d:5,sc:'Customer Support Resolution Agent',q:'El tool <code>get_customer</code> devuelve dos clientes que matchean el nombre provisto. ¿Qué hacés?',
+o:['Elegir el primero por heurística.','Pedir identificadores adicionales para desambiguar.','Elegir el que tenga más órdenes.','Escalar a un humano de inmediato.'],
+a:1,e:'Múltiples coincidencias requieren <b>clarificación</b>: pedir identificadores adicionales. Elegir por heurística arriesga operar sobre la cuenta equivocada.',ex:'Buscás "Juan Pérez" y aparecen dos. No adivines cuál. Pedís un dato más (DNI, teléfono). Como cuando hay dos alumnos con el mismo nombre: preguntás cuál antes de tocar la cuenta equivocada.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'El web search subagent hace timeout. ¿Cómo debe fluir esa falla al coordinator para una recuperación inteligente?',
+o:['Devolver contexto de error estructurado: tipo de falla, query intentada, resultados parciales y alternativas posibles.','Reintentar con exponential backoff y devolver un genérico "search unavailable" tras agotar reintentos.','Atrapar el timeout y devolver un set vacío marcado como exitoso.','Propagar el timeout a un handler que termine todo el workflow.'],
+a:0,e:'El contexto de error estructurado deja que el coordinator decida: reintentar, probar una alternativa o seguir con parciales. B esconde el contexto; C suprime el error (falla marcada como éxito); D termina el workflow cuando la recuperación podía funcionar.',ex:'Cuando algo falla, no digas solo "no anduvo". Contá: qué falló, qué intentaste, qué alcanzaste a traer, qué alternativa hay. Así el jefe decide bien. Como un vendedor que reporta "no cerré, pero quedó interesado y pidió que llame el lunes".'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Al reportar el resultado de un subagent, ¿por qué importa distinguir una falla de acceso (timeout) de un resultado vacío válido (query exitosa sin coincidencias)?',
+o:['No importa; ambos son "sin datos".','Porque un timeout requiere una decisión de retry/alternativa, mientras que un vacío válido es un resultado correcto que no debe reintentarse.','Porque el vacío válido siempre es un error.','Porque el timeout siempre significa que hay datos.'],
+a:1,e:'Confundir un <b>timeout</b> (acceso fallido, amerita retry) con un <b>vacío válido</b> (la query corrió bien, no hay coincidencias) lleva a reintentos inútiles o a descartar resultados correctos. Hay que reportarlos distinto.',ex:'"Se cortó la búsqueda" (hay que reintentar) es distinto de "busqué bien y no hay nada" (resultado correcto). Como "no pude revisar la agenda" vs "revisé y no hay turnos": reaccionás distinto a cada uno.'},
+
+{d:5,sc:'Developer Productivity con Claude',q:'En una sesión larga de exploración de codebase, el modelo empieza a referir "patrones típicos" en vez de las clases específicas que descubrió antes. ¿Qué contrarresta esta degradación?',
+o:['Reiniciar la sesión cada 10 mensajes.','Mantener scratchpad files con los hallazgos clave y referenciarlos para anclar el contexto.','Subir la temperatura.','Pedirle que confíe en su memoria.'],
+a:1,e:'Los <b>scratchpad files</b> persisten hallazgos clave a través de los límites de contexto; referenciarlos contrarresta la degradación donde el modelo empieza a generalizar en vez de usar lo específico descubierto.',ex:'En una exploración larga, el modelo empieza a hablar de "lo típico" en vez de lo que descubrió específicamente. Lo anclás con un archivo de notas donde va guardando lo concreto y se lo hacés releer. Como tu libreta de apuntes.'},
+
+{d:5,sc:'Developer Productivity con Claude',q:'¿Qué comando reduce el uso de contexto durante una exploración extensa sin perder el hilo de la sesión?',
+o:['<code>/memory</code>','<code>/compact</code>','<code>--resume</code>','<code>fork_session</code>'],
+a:1,e:'<code>/compact</code> reduce el uso de contexto durante exploraciones extensas, condensando el historial para seguir dentro del presupuesto de tokens.',ex:'<code>/compact</code> es "resumime y liberá espacio" sin perder el hilo. Como limpiar el escritorio dejando solo lo esencial cuando ya no entra nada más.'},
+
+{d:5,sc:'Structured Data Extraction',q:'Tu pipeline reporta 97% de precisión general y proponés reducir el human review. ¿Qué riesgo hay y cómo lo mitigás?',
+o:['Ninguno; 97% es suficiente para automatizar todo.','La métrica agregada puede enmascarar mal desempeño en ciertos tipos de documento o campos; conviene muestreo estratificado y analizar precisión por tipo/campo antes de automatizar.','Subir el umbral de confianza global al 99%.','Confiar en el promedio y automatizar.'],
+a:1,e:'Un 97% agregado puede ocultar tipos de documento o campos con desempeño pobre. Antes de reducir el human review hay que <b>desagregar por tipo y campo</b> y usar muestreo estratificado para medir de verdad.',ex:'"97% de acierto general" puede esconder que en cierto tipo de factura acertás 60%. Como decir "la academia va bien" cuando una sede tira el promedio para arriba y la otra está en rojo. Mirá por segmento antes de confiarte.'},
+
+{d:5,sc:'Structured Data Extraction',q:'Querés dirigir la capacidad limitada de tus revisores humanos a donde más importa. ¿Cómo?',
+o:['Revisar todo por igual, al azar.','Hacer que el modelo emita scores de confianza a nivel de campo, calibrar umbrales con un set etiquetado y rutear las extracciones de baja confianza o contradictorias a human review.','Revisar solo las de alta confianza.','Eliminar el human review para ahorrar.'],
+a:1,e:'Los <b>scores de confianza a nivel de campo</b>, calibrados con un set de validación etiquetado, permiten rutear a revisión humana lo de baja confianza o contradictorio, priorizando la capacidad limitada del revisor.',ex:'El modelo te dice qué tan seguro está de cada dato. Los dudosos van a revisión humana; los firmes pasan solos. Así tus revisores gastan tiempo solo donde importa, no en todo.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Durante la síntesis multi-fuente se pierde la atribución: los hallazgos se comprimen sin saber de qué fuente vino cada claim. ¿Qué diseño lo evita?',
+o:['Confiar en que el modelo recuerde las fuentes.','Requerir que los subagents emitan mapeos claim-source estructurados (URLs, nombres de documento, excerpts) que la síntesis preserve y fusione.','Poner todas las fuentes al final del reporte sin vincularlas.','Resumir agresivamente para ahorrar tokens.'],
+a:1,e:'La atribución se pierde cuando se comprime sin <b>mapeos claim-source</b>. Requerir que los subagents emitan esos mapeos estructurados (fuente, excerpt) y que la síntesis los preserve mantiene la procedencia.',ex:'Al resumir varias fuentes se pierde de dónde salió cada dato. Obligás a que cada afirmación venga pegada a su fuente (link, documento). Como citar de dónde sacaste cada precio en una cotización.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Dos fuentes creíbles reportan estadísticas en conflicto sobre el mismo dato. ¿Cómo debe manejarlo la síntesis?',
+o:['Elegir arbitrariamente una y descartar la otra.','Incluir ambos valores anotando el conflicto con atribución, dejando que el coordinator reconcilie.','Promediar los dos números.','Omitir el dato por completo.'],
+a:1,e:'Ante estadísticas en conflicto de fuentes creíbles, se <b>anota el conflicto con atribución</b> y se preservan ambos valores, en vez de elegir arbitrariamente, promediar u omitir. La reconciliación la decide el coordinator.',ex:'Dos fuentes serias dan números distintos. No elijas una al azar ni promedies: mostrás los dos con su fuente y se decide con criterio. Como dos proveedores con precios distintos: los ponés ambos, no inventás uno.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Dos fuentes dan cifras distintas, pero una es de 2021 y otra de 2024. Sin más contexto podrían leerse como contradicción. ¿Qué requerís en los outputs?',
+o:['Nada; el modelo infiere las fechas.','Fechas de publicación o de recolección de datos en los outputs estructurados, para que las diferencias temporales no se lean como contradicciones.','Descartar la fuente más vieja siempre.','Promediar ambas cifras.'],
+a:1,e:'Requerir <b>fechas de publicación/recolección</b> en los outputs evita que diferencias temporales legítimas se interpreten como contradicciones. Descartar por antigüedad o promediar pierde información.',ex:'Dos cifras distintas pueden no ser contradicción: una es de 2021 y otra de 2024. Por eso exigís la fecha en cada dato. Como comparar "la facturación del año pasado" sin aclarar cuál año: te confunde.'},
+
+/* ============================================================
+   AMPLIACIÓN · cobertura de cada concepto de los 30 task statements
+   ============================================================ */
+
+/* ---- D1 · conceptos faltantes ---- */
+{d:1,q:'El modelo pidió ejecutar una tool. Ya tenés el resultado. ¿Qué hacés antes de la siguiente iteración del loop?',
+o:['Descartarlo si no parece relevante.','Agregar el <code>tool_result</code> al historial de conversación para que el modelo razone la próxima acción.','Guardarlo en un archivo y no pasarlo al modelo.','Resumirlo en una frase corta.'],
+a:1,e:'Los tool results se agregan al historial de conversación entre iteraciones. Así el modelo tiene el contexto de lo que devolvió cada tool para decidir el próximo paso.',ex:'Después de que una herramienta te da un resultado, lo pegás en la conversación para que Claude lo tenga presente en la próxima vuelta. Si no, es como pedir un dato y tirarlo antes de usarlo.'},
+
+{d:1,q:'¿Qué distingue a un agentic loop model-driven de un árbol de decisión o secuencia de tools preconfigurada?',
+o:['El model-driven siempre es más lento.','En el model-driven el modelo decide dinámicamente la próxima acción según el contexto; el preconfigurado sigue un flujo fijo definido de antemano.','Son lo mismo con otro nombre.','El preconfigurado usa <code>stop_reason</code> y el model-driven no.'],
+a:1,e:'La flexibilidad del enfoque model-driven viene de que el modelo razona la próxima acción según el estado. Un árbol de decisión o secuencia preconfigurada fija el flujo por adelantado.',ex:'Un empleado que DECIDE según la situación vs un cajero automático con pasos fijos. El agente model-driven improvisa el próximo paso según lo que ve; el árbol fijo hace siempre lo mismo pase lo que pase.'},
+
+{d:1,q:'Un dev usa "máximo 5 iteraciones" como su mecanismo principal para cortar el loop. ¿Por qué es un anti-patrón?',
+o:['Porque 5 es un número muy bajo.','Porque los topes de iteración arbitrarios como corte principal son un anti-patrón; el corte correcto es <code>stop_reason == "end_turn"</code> (el tope sirve solo como red de seguridad).','Porque debería ser 10.','Porque los loops nunca deben tener límite.'],
+a:1,e:'El mecanismo principal de terminación debe ser <code>stop_reason == "end_turn"</code>. Un tope de iteraciones es una salvaguarda contra loops infinitos, no la lógica de corte primaria.',ex:'Cortar a las 5 vueltas "porque sí" es como cerrar la caja a las 5 aunque falten clientes por cobrar. El corte real es el semáforo <code>end_turn</code>. El límite de vueltas es solo un fusible por las dudas.'},
+
+{d:1,sc:'Multi-Agent Research System',q:'Dos subagents terminan investigando lo mismo y duplican trabajo. ¿Qué diseño lo evita?',
+o:['Darle a ambos el tema completo.','Particionar el alcance de la investigación entre subagents para minimizar solapamiento.','Correrlos secuencialmente.','Fusionarlos en un solo subagent.'],
+a:1,e:'El coordinator debe partir el alcance entre subagents para minimizar duplicación. Darles a todos el tema completo genera trabajo redundante.',ex:'Dos profes preparan "la clase de ritmos" y ambos arman salsa: trabajo duplicado. Repartís: vos salsa, vos bachata. Al coordinador igual, le partís el tema para que los subagents no se pisen.'},
+
+{d:1,sc:'Multi-Agent Research System',q:'El coordinator recibe la síntesis y detecta que quedó sin cubrir un sub-tema importante. ¿Patrón correcto?',
+o:['Publicar el reporte igual.','Un loop de refinamiento iterativo: el coordinator evalúa la síntesis buscando gaps y re-delega con queries dirigidas a esos huecos.','Reiniciar todo el pipeline desde cero.','Pedirle al usuario que complete el gap.'],
+a:1,e:'El coordinator evalúa la síntesis en busca de gaps y re-delega con queries dirigidas —un loop de refinamiento iterativo, sin reiniciar todo el pipeline.',ex:'El coordinador ve que faltó cubrir algo y manda a completar ESE hueco puntual, sin rehacer todo. Como revisar un informe, ver que falta la parte de costos, y pedir solo esa parte.'},
+
+{d:1,sc:'Multi-Agent Research System',q:'Al pasar hallazgos entre agentes querés preservar la atribución (URLs, nombres de documento, páginas). ¿Cómo estructurás el output del subagent?',
+o:['Todo en un párrafo de texto libre.','Formatos de datos estructurados que separen el contenido de la metadata (fuente, documento, página).','Solo el contenido, sin las fuentes.','Un resumen general sin detalles.'],
+a:1,e:'Separar contenido de metadata (URLs, documentos, páginas) en un formato estructurado preserva la atribución a través de los handoffs entre agentes.',ex:'Cada hallazgo viaja con su "etiqueta de origen" (link, documento, página) separada del texto. Como una factura que siempre lleva de qué proveedor vino, no un monto suelto sin saber de dónde salió.'},
+
+{d:1,q:'Querés continuar exactamente una investigación que dejaste a la mitad ayer, cuyo contexto sigue siendo válido. ¿Qué usás?',
+o:['<code>fork_session</code>','<code>--resume &lt;nombre-de-sesión&gt;</code> para retomar la sesión nombrada.','<code>/compact</code>','Empezar una sesión nueva desde cero.'],
+a:1,e:'<code>--resume &lt;session-name&gt;</code> retoma una sesión nombrada cuando el contexto previo sigue válido. <code>fork_session</code> bifurca en ramas; empezar de cero se reserva para resultados obsoletos.',ex:'Retomás EXACTO donde dejaste ayer, porque nada cambió. <code>--resume nombre</code> es abrir de nuevo esa conversación puntual. Como retomar el chat con un cliente justo donde quedó.'},
+
+/* ---- D2 · conceptos faltantes ---- */
+{d:2,q:'Escribiste descriptions excelentes pero el agente sigue eligiendo mal la tool. Sospechás del system prompt. ¿Qué revisás?',
+o:['La temperatura del modelo.','Instrucciones sensibles a keywords en el system prompt que puedan estar pisando las descriptions bien escritas.','El <code>max_tokens</code>.','La versión del modelo.'],
+a:1,e:'El wording del system prompt impacta la selección de tools. Instrucciones sensibles a ciertas keywords pueden anular descriptions bien redactadas; hay que revisarlas.',ex:'Escribiste bien las etiquetas de cada herramienta pero igual elige mal. Revisá si en las instrucciones generales hay una frase que le "grita" que use otra. Como un cartel viejo que contradice el procedimiento nuevo.'},
+
+{d:2,sc:'Customer Support Resolution Agent',q:'Una tool rechaza un refund por violar una regla de negocio (monto sobre el límite). ¿Cómo debe ser la respuesta de error?',
+o:['Un genérico "Operation failed".','Incluir <code>retriable:false</code> y una explicación amigable al cliente sobre por qué no procede.','Reintentar en silencio.','Un código numérico sin texto.'],
+a:1,e:'Las violaciones de reglas de negocio son no-retryable: se marca <code>retriable:false</code> y se da una explicación clara/amigable, para que el agente no reintente inútilmente y pueda comunicar el motivo.',ex:'Un reembolso se rechaza por regla de negocio (supera el tope). La respuesta debe decir "no reintentés" + un motivo claro para el cliente. Como avisar "este descuento no aplica a tu plan" en vez de un "error" seco.'},
+
+{d:2,sc:'Multi-Agent Research System',q:'¿Por qué darle a un subagent tools fuera de su especialización degrada el sistema?',
+o:['Consume más memoria.','Los agentes con tools fuera de su rol tienden a usarlas mal; por eso conviene acceso scoped por rol.','No pasa nada, más tools siempre es mejor.','Rompe la conexión con el MCP server.'],
+a:1,e:'Los agentes con acceso a tools fuera de su especialización tienden a usarlas incorrectamente. El principio es acceso scoped: solo las tools que el rol necesita.',ex:'Le das al profe de baile las llaves de la caja fuerte "por las dudas" y termina metiéndose donde no debe. Cada rol, solo sus herramientas. Menos accesos de más, menos líos.'},
+
+{d:2,q:'Tu agente tiene una tool genérica <code>fetch_url</code> que a veces trae URLs inválidas o inseguras. ¿Mejor cambio?',
+o:['Bajar la temperatura.','Reemplazarla por una alternativa acotada, ej. <code>load_document</code> con validación de URL.','Agregar más instancias de <code>fetch_url</code>.','Solo documentar en el prompt que valide.'],
+a:1,e:'Reemplazar tools genéricas por alternativas constreñidas (<code>fetch_url → load_document</code> con validación de URL) reduce el mal uso y acota el comportamiento a lo esperado.',ex:'Una herramienta que abre cualquier link es peligrosa (puede traer basura). La cambiás por una que valida el link antes. Como no aceptar cualquier archivo que te mandan: primero chequeás que sea seguro.'},
+
+{d:2,q:'Configuraste dos MCP servers distintos. ¿Cómo quedan disponibles sus tools?',
+o:['Solo uno a la vez; hay que alternar entre servers.','Las tools de todos los servers configurados se descubren al conectar y quedan disponibles simultáneamente.','Hay que invocarlas indicando el server cada vez.','Se cargan de a una por request.'],
+a:1,e:'Al conectar, se descubren las tools de todos los servers configurados y quedan disponibles a la vez. No hay que alternar entre servers.',ex:'Conectás dos proveedores de herramientas y quedan TODAS disponibles juntas al arrancar, no de a una. Como enchufar dos regletas: tenés todos los tomas listos de una.'},
+
+{d:2,q:'El agente hace muchas tool calls exploratorias solo para descubrir qué contenido existe. ¿Qué mecanismo de MCP lo reduce?',
+o:['Agregar más tools de búsqueda.','Exponer el catálogo de contenido como MCP resources, para dar visibilidad sin llamadas exploratorias.','Subir el context window.','Un hook <code>PostToolUse</code>.'],
+a:1,e:'Los MCP resources exponen catálogos de contenido, dándole al agente visibilidad de qué existe sin gastar tool calls exploratorias.',ex:'El agente pierde tiempo "tanteando" qué información existe. Le das un catálogo listo de qué hay disponible. Como darle al vendedor la lista de productos en vez de que adivine qué tenés en depósito.'},
+
+{d:2,sc:'Developer Productivity con Claude',q:'Necesitás integrar Jira, una integración estándar. ¿Qué conviene?',
+o:['Construir un MCP server custom desde cero.','Elegir un MCP server existente de la comunidad para la integración estándar.','Usar solo built-in tools.','Scrapear Jira con Grep.'],
+a:1,e:'Para integraciones estándar (ej. Jira) conviene elegir MCP servers existentes de la comunidad en vez de reimplementar uno custom.',ex:'Para conectar algo estándar (como Jira), usás el conector que ya existe hecho por la comunidad, no armás uno de cero. Como comprar un mueble ya armado en vez de fabricarlo: mismo resultado, menos laburo.'},
+
+{d:2,sc:'Developer Productivity con Claude',q:'Querés entender un codebase desconocido de forma incremental. ¿Secuencia de tools correcta?',
+o:['<code>Read</code> de todos los archivos de una.','<code>Grep</code> para ubicar entry points, luego <code>Read</code> para seguir imports y trazar flujos.','Solo <code>Glob</code>.','<code>Bash</code> con <code>cat</code> de todo el repo.'],
+a:1,e:'Se construye entendimiento incremental: Grep para ubicar entry points y luego Read para seguir imports y trazar flujos, en vez de leer todo de golpe.',ex:'Para entender un local nuevo: primero buscás la entrada principal (Grep) y desde ahí seguís los pasillos (Read los imports). No entrás leyendo cada rincón al azar; seguís el hilo.'},
+
+{d:2,sc:'Developer Productivity con Claude',q:'Una función se usa a través de varios módulos wrapper que la re-exportan con otros nombres. ¿Cómo trazás su uso real?',
+o:['Un solo <code>Grep</code> del nombre original.','Identificar los nombres exportados en cada wrapper y luego buscar cada nombre con <code>Grep</code>.','<code>Read</code> del archivo original solamente.','<code>Glob</code> de <code>*.wrapper.ts</code>.'],
+a:1,e:'Para trazar uso a través de wrappers hay que identificar los nombres exportados en cada capa y buscar cada uno; un solo Grep del nombre original pierde las re-exportaciones.',ex:'Una función se re-nombra al pasar por varias capas (como un producto que cambia de nombre entre mayorista y minorista). Para rastrear su uso real, seguís cada nombre nuevo en cada capa, no solo el original.'},
+
+/* ---- D3 · conceptos faltantes ---- */
+{d:3,q:'Querés una variante personalizada de un skill del equipo sin afectar a tus compañeros. ¿Dónde y cómo?',
+o:['Editar directamente el skill compartido en <code>.claude/skills/</code>.','Crear una variante con otro nombre en <code>~/.claude/skills/</code> (scope de usuario).','Cambiar el <code>CLAUDE.md</code> del proyecto.','Borrar el skill del equipo y rehacerlo.'],
+a:1,e:'Las personalizaciones personales van como variantes con nombres distintos en <code>~/.claude/skills/</code> (scope de usuario), para no pisar el skill compartido del equipo.',ex:'Querés tu versión personal de una herramienta del equipo sin romper la de los demás. La guardás con otro nombre en TU carpeta. Como tener tu propia planilla ajustada sin tocar la oficial del equipo.'},
+
+{d:3,sc:'Code Generation con Claude Code',q:'Una tarea grande necesita diseño cuidadoso, pero una vez decidido el enfoque la implementación es mecánica. ¿Qué combinás?',
+o:['Todo en plan mode.','Plan mode para investigar y diseñar, y ejecución directa para implementar.','Todo en ejecución directa.','Un fork de sesión por cada archivo.'],
+a:1,e:'Se combina plan mode para la investigación/diseño y ejecución directa para la implementación una vez que el enfoque está claro.',ex:'Para un cambio grande: primero el plano (plan mode) para decidir, después ejecutás directo lo mecánico. Como diseñar la reforma en papel y recién ahí mandar a los obreros a ejecutar sin dudar.'},
+
+{d:3,sc:'Code Generation con Claude Code',q:'Querés iterar sobre una implementación compartiendo qué falla, de forma objetiva y repetible. ¿Técnica?',
+o:['Describir los bugs en prosa.','Iteración test-driven: escribir las suites de tests primero y luego iterar compartiendo los failures.','Subir la temperatura.','Pedir que se autorrevise.'],
+a:1,e:'La iteración test-driven escribe suites de tests (comportamiento, edge cases, performance) antes de implementar y luego itera compartiendo los failures concretos.',ex:'Antes de construir, escribís las pruebas de "esto tiene que funcionar así". Después iterás mostrando qué prueba falla. Objetivo y medible, como tener el checklist de calidad ANTES de abrir el local.'},
+
+{d:3,sc:'Code Generation con Claude Code',q:'Antes de implementar una feature compleja querés que salgan a la luz consideraciones que ni pensaste (invalidación de cache, modos de falla). ¿Qué patrón usás?',
+o:['Implementar y ver qué pasa.','El interview pattern: que Claude te haga preguntas para sacar consideraciones de diseño antes de implementar.','Escribir un spec de 10 páginas.','Un fork de sesión.'],
+a:1,e:'El interview pattern hace que Claude te entreviste con preguntas que revelan consideraciones de diseño (cache, modos de falla) antes de escribir código.',ex:'Antes de arrancar algo complejo, dejás que Claude TE haga preguntas para destapar cosas que no pensaste. Como un buen contador que te interroga antes de armar tu estructura y te hace ver riesgos ocultos.'},
+
+{d:3,q:'Tenés varios problemas para arreglar: algunos interactúan entre sí, otros son independientes. ¿Cómo los pasás?',
+o:['Todos siempre de a uno.','Los que interactúan, todos en un mismo mensaje; los independientes, de forma secuencial.','Todos siempre juntos en un mensaje.','Da igual el orden.'],
+a:1,e:'Los problemas que interactúan conviene darlos todos en un mensaje para que se resuelvan de forma coherente; los independientes se pueden iterar secuencialmente.',ex:'Si dos problemas se afectan entre sí, los pasás JUNTOS (para que la solución sea coherente). Si son separados, de a uno. Como no mover el precio y la promo por separado si uno depende del otro.'},
+
+{d:3,sc:'Claude Code for Continuous Integration',q:'Tu Claude Code invocado desde CI genera tests que ignoran tus fixtures y convenciones. ¿Qué mejora la calidad?',
+o:['Subir a un modelo de tier más alto.','Documentar estándares de testing y fixtures disponibles en <code>CLAUDE.md</code> para que el Claude Code de CI los use.','Aumentar <code>max_tokens</code>.','Correr sin la flag <code>-p</code>.'],
+a:1,e:'<code>CLAUDE.md</code> le da al Claude Code de CI el contexto del proyecto (estándares de testing, fixtures, criterios de review), mejorando la calidad de los tests generados.',ex:'El generador de tests ignora tus convenciones porque nadie se las contó. Las escribís en el archivo de contexto del proyecto para que las use. Como dejar el manual de la sede para que el suplente atienda igual que vos.'},
+
+{d:3,sc:'Claude Code for Continuous Integration',q:'Al re-correr el review de un PR en CI aparecen comentarios duplicados de la corrida anterior. ¿Cómo lo evitás?',
+o:['Desactivar el review automatizado.','Incluir los hallazgos de reviews previos en el contexto y reportar solo los nuevos o no resueltos.','Correr el review una única vez.','Borrar los comentarios viejos a mano.'],
+a:1,e:'Pasando los hallazgos de reviews anteriores en el contexto, Claude reporta solo issues nuevos o no resueltos, evitando comentarios duplicados en el PR.',ex:'Al revisar de nuevo un PR, no repitas los comentarios de ayer. Le pasás lo ya dicho para que marque SOLO lo nuevo. Como no volver a señalar un error que el alumno ya corrigió: solo lo que falta.'},
+
+{d:3,sc:'Claude Code for Continuous Integration',q:'La generación de tests en CI crea tests que duplican los que ya existen. ¿Qué hacés?',
+o:['Borrar los tests viejos.','Proveer los archivos de test existentes en el contexto para que la generación evite duplicados.','Generar siempre desde cero.','Bajar la temperatura.'],
+a:1,e:'Incluir los archivos de test existentes en el contexto permite que la generación de tests evite duplicar cobertura ya presente.',ex:'El generador crea tests que ya existían. Le mostrás los que ya hay para que no duplique. Como darle al profe nuevo la lista de ejercicios ya cubiertos para que no repita clase.'},
+
+/* ---- D4 · conceptos faltantes ---- */
+{d:4,sc:'Claude Code for Continuous Integration',q:'Querés que el review clasifique la severidad de forma consistente entre corridas. ¿Enfoque más efectivo?',
+o:['Pedir "usá tu criterio".','Definir criterios de severidad explícitos con ejemplos de código concretos por nivel.','Solo nombrar tres niveles sin definirlos.','Un score numérico autorreportado por el modelo.'],
+a:1,e:'La severidad consistente sale de criterios explícitos con ejemplos de código concretos por nivel, no de instrucciones vagas ni de scores autorreportados.',ex:'Para que clasifique gravedad igual siempre, le das ejemplos concretos de qué es "grave", "medio" y "leve". Como una rúbrica de examen con ejemplos por nota, no un "ponele lo que te parezca".'},
+
+{d:4,q:'¿Qué ventaja tienen los ejemplos few-shot bien elegidos frente a solo enumerar casos en el prompt?',
+o:['Ocupan menos tokens.','Permiten generalizar a patrones nuevos, en vez de matchear solo los casos pre-especificados.','Eliminan la necesidad de schema.','Bajan la latencia.'],
+a:1,e:'Los few-shot bien construidos permiten al modelo generalizar a patrones no vistos, en vez de limitarse a los casos que enumeraste explícitamente.',ex:'Con 3-4 ejemplos bien puestos, el agente resuelve variantes que NUNCA escribiste, no solo copia los casos dados. Como un vendedor que con pocos ejemplos ya maneja objeciones nuevas que no ensayaste.'},
+
+{d:4,sc:'Claude Code for Continuous Integration',q:'Querés que cada hallazgo del review salga con un formato fijo (ubicación, issue, severidad, fix sugerido). ¿Cómo lo lográs más confiablemente?',
+o:['Describir el formato en prosa detallada.','Incluir ejemplos few-shot que demuestren el formato de output deseado.','Un enum en el schema.','Subir <code>max_tokens</code>.'],
+a:1,e:'Incluir ejemplos que muestren el formato deseado (ubicación, issue, severidad, fix) es más efectivo que describirlo en prosa para lograr output consistente.',ex:'Querés que cada hallazgo salga con formato fijo (dónde, qué, gravedad, cómo arreglar). Le mostrás ejemplos con ese formato en vez de describirlo. Enseñás con la plantilla llena, no explicando la plantilla.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Tu extractor recibe documentos de tipo desconocido y a veces devuelve texto en vez de structured output. ¿Qué configurás para garantizar la extracción?',
+o:['<code>tool_choice: "auto"</code>','<code>tool_choice: "any"</code> para garantizar que siempre se llame una tool de extracción.','Forzar una tool específica.','Bajar la temperatura.'],
+a:1,e:'Con tipo de documento desconocido, <code>tool_choice: "any"</code> garantiza structured output al obligar a llamar alguna tool de extracción en vez de devolver texto libre.',ex:'Llegan documentos de tipo desconocido y a veces responde con texto en vez de datos. <code>"any"</code> lo obliga a usar la herramienta de extracción sí o sí. "No me chamuyes, extraé".'},
+
+{d:4,sc:'Structured Data Extraction',q:'Tu schema estricto acepta fechas, pero llegan en formatos mezclados y querés que salgan normalizadas. ¿Qué agregás además del schema?',
+o:['Nada; el schema estricto normaliza solo.','Reglas de normalización de formato en el prompt, junto al output schema estricto.','Un segundo modelo de post-proceso.','Solo más ejemplos.'],
+a:1,e:'El schema estricto garantiza la forma pero no normaliza contenido. Hay que incluir reglas de normalización de formato en el prompt junto al schema.',ex:'El formulario acepta fechas pero llegan en formatos mezclados. Además del formulario, le das la regla "convertí todas a este formato". La estructura no ordena el contenido; la regla sí.'},
+
+{d:4,sc:'Claude Code for Continuous Integration',q:'Querés analizar después qué construcciones de código disparan tus hallazgos, para depurar false positives. ¿Qué agregás al output?',
+o:['Un timestamp.','Un campo <code>detected_pattern</code> que registre qué construcción disparó el hallazgo.','Nada; se revisa a mano.','El texto completo del archivo.'],
+a:1,e:'Un campo <code>detected_pattern</code> registra qué construcción disparó cada hallazgo, habilitando el análisis posterior de patrones de false positive.',ex:'Para depurar después qué dispara los falsos avisos, guardás en cada hallazgo QUÉ lo gatilló. Como anotar en cada queja "qué la causó", para después ver el patrón y atacar la raíz.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Querés que la extracción flaguee automáticamente cuando hay datos inconsistentes entre sí en el documento. ¿Diseño de autocorrección?',
+o:['Reintentar hasta que los datos sean consistentes.','Extraer un booleano <code>conflict_detected</code> que marque los datos inconsistentes.','Ignorar el conflicto.','Escalar siempre a un humano.'],
+a:1,e:'Un booleano <code>conflict_detected</code> permite que la extracción marque datos inconsistentes para revisión, en lugar de esconder el conflicto o reintentar sin sentido.',ex:'Que la extracción marque sola cuando dos datos del documento se contradicen. Como una alarma que salta si la suma de las cuotas no da el total. No lo esconde: lo flaguea para revisar.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Tenés un SLA de 30 horas y la Batch API procesa hasta 24 horas. ¿Cómo garantizás cumplirlo?',
+o:['Enviar un solo batch por día.','Calcular la frecuencia de envío según el SLA: ej. ventanas de ~4 horas para dejar margen sobre las 24h de procesamiento.','Usar la API sincrónica para todo.','No se puede cumplir.'],
+a:1,e:'Se calcula la frecuencia de submission a partir del SLA: con procesamiento de hasta 24h y SLA de 30h, enviar en ventanas de ~4h deja margen para garantizar el cumplimiento.',ex:'Prometés entregar en 30h y el proceso tarda hasta 24h. Mandás en tandas cada ~4h para tener margen. Pura logística: como planear los despachos para llegar siempre a horario.'},
+
+{d:4,sc:'Structured Data Extraction',q:'Vas a procesar 10.000 documentos por batch. ¿Qué hacés antes de mandar el volumen completo?',
+o:['Mandar todo y corregir sobre la marcha.','Refinar el prompt sobre una muestra representativa antes de procesar el volumen grande.','Confiar en que el schema alcance.','Subir <code>max_tokens</code>.'],
+a:1,e:'Conviene refinar el prompt sobre una muestra antes de batch-procesar grandes volúmenes, para no gastar en 10.000 docs con un prompt sin ajustar.',ex:'Antes de procesar 10.000 documentos, probás con 20 y ajustás el prompt. Si sale mal, perdiste 20, no 10.000. Como testear la promo con un grupo chico antes de lanzarla a toda tu base.'},
+
+{d:4,sc:'Code Generation con Claude Code',q:'Querés rutear los hallazgos de un review según qué tan seguro está el modelo de cada uno, dentro de una pasada de verificación. ¿Enfoque?',
+o:['Confiar en todos los hallazgos por igual.','Correr pasadas de verificación donde el modelo autorreporta confianza por hallazgo, para un ruteo calibrado.','Descartar los hallazgos dudosos.','Revisar todo a mano.'],
+a:1,e:'En pasadas de verificación el modelo autorreporta confianza por hallazgo, lo que habilita un ruteo calibrado (ej. mandar los de baja confianza a revisión adicional).',ex:'En una pasada de control, el modelo marca qué tan seguro está de cada hallazgo y con eso ruteás (los dudosos a revisar). Ojo: esto es DENTRO de un review; para decidir escalar el caso de un cliente, la confianza autorreportada NO sirve.'},
+
+/* ---- D5 · conceptos faltantes ---- */
+{d:5,q:'¿Por qué es importante pasar el historial de conversación completo en cada request siguiente a la API?',
+o:['Para gastar más tokens a propósito.','Porque el modelo no tiene memoria entre requests: sin el historial completo pierde el contexto de los turnos previos.','Porque lo exige el protocolo MCP.','No es realmente importante.'],
+a:1,e:'El modelo no retiene estado entre llamadas. Hay que pasar el historial completo en cada request para que razone con el contexto de los turnos previos.',ex:'Claude no se acuerda de nada entre mensajes por sí solo: cada vez le mandás toda la charla previa. Como un empleado con amnesia al que le das el contexto completo cada vez. Por eso se pasa el historial entero.'},
+
+{d:5,sc:'Customer Support Resolution Agent',q:'En una sesión con varios issues abiertos a la vez, el agente los mezcla. ¿Qué hacés?',
+o:['Resumir todo junto en un solo bloque.','Extraer los datos de cada issue a una capa de contexto estructurada y separada.','Cerrar todos los issues menos uno.','Subir el context window.'],
+a:1,e:'Para sesiones multi-issue conviene extraer los datos de cada issue a una capa de contexto estructurada y separada, para que no se mezclen.',ex:'Un cliente con 3 reclamos abiertos a la vez y el agente los mezcla. Separás los datos de cada reclamo en su propia ficha. Como tener una carpeta por caso, no todo apilado en una.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Un agente downstream tiene poco presupuesto de contexto y el upstream le manda contenido verboso que lo satura. ¿Fix?',
+o:['Darle siempre más contexto al downstream.','Modificar el agente upstream para que devuelva datos estructurados en vez de contenido verboso.','Eliminar el agente downstream.','Resumir dentro del downstream.'],
+a:1,e:'Cuando el downstream tiene presupuesto limitado, se modifica el upstream para que emita datos estructurados (no contenido verboso), reduciendo la carga aguas abajo.',ex:'El que pasa la info manda un textazo y satura al que la recibe (que tiene poco espacio). Hacés que el de arriba mande datos ordenados y cortos. Como pasar un resumen en viñetas en vez de un audio de 10 minutos.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Un subagent sufre una falla transitoria (un timeout puntual). ¿Qué debería hacer antes de molestar al coordinator?',
+o:['Propagar el error de inmediato.','Implementar recuperación local para la falla transitoria y propagar al coordinator solo lo que no puede resolver, con los resultados parciales.','Terminar todo el workflow.','Ignorar la falla en silencio.'],
+a:1,e:'Los subagents deberían recuperar localmente las fallas transitorias y propagar al coordinator solo lo que no pueden resolver, junto con los resultados parciales.',ex:'Si a un profe se le cae un problema chico y temporal, que lo resuelva él antes de molestar al director. Solo sube lo que de verdad no puede resolver, con lo que sí logró. No escala cada tropiezo.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'La síntesis final se apoya en cobertura despareja: algunos hallazgos bien soportados, otros son huecos. ¿Cómo estructurás el output?',
+o:['Presentar todo como igual de sólido.','Anotar la cobertura: distinguir explícitamente hallazgos bien soportados de los gaps.','Omitir los hallazgos débiles.','Mostrar solo los bien soportados.'],
+a:1,e:'El output de síntesis debe llevar anotaciones de cobertura que distingan hallazgos bien soportados de gaps, para no presentar todo como igualmente sólido.',ex:'El informe final marca qué partes están bien respaldadas y cuáles quedaron flojas. Como un balance que aclara "estos números son firmes, estos son estimados". No mezcla todo como si fuera igual de sólido.'},
+
+{d:5,sc:'Developer Productivity con Claude',q:'En una exploración grande querés que el agente principal mantenga la coordinación de alto nivel sin ahogarse en output de detalle. ¿Qué hacés?',
+o:['Que el agente principal haga todo el detalle.','Spawnear subagents para investigar preguntas específicas mientras el principal preserva la coordinación de alto nivel.','Subir el context window.','Correr todo en plan mode.'],
+a:1,e:'Se delega la investigación de detalle a subagents (que aíslan el output verboso) mientras el agente principal preserva la coordinación de alto nivel.',ex:'En una exploración grande, vos (el principal) coordinás desde arriba y mandás a otros a meterse en el detalle. Como el dueño que no barre el local: dirige y delega la tarea fina.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Antes de lanzar subagents para la siguiente fase, ¿qué conviene hacer con los hallazgos de la fase actual?',
+o:['Nada; ya están en el historial.','Resumir los hallazgos clave e inyectar ese resumen en el contexto inicial de los subagents.','Pasar todo el historial crudo.','Borrarlos para ahorrar tokens.'],
+a:1,e:'Se resumen los hallazgos clave antes de spawnear subagents y se inyecta ese resumen en su contexto inicial, ya que no heredan el historial automáticamente.',ex:'Antes de mandar al próximo equipo, les dejás un resumen de lo hecho en su consigna (porque arrancan en cero). Como pasarle al turno siguiente una nota con lo que quedó, no que adivinen.'},
+
+{d:5,sc:'Developer Productivity con Claude',q:'Querés que un pipeline multi-agente se recupere de un crash sin rehacer todo el trabajo. ¿Diseño?',
+o:['Reiniciar desde cero siempre.','Cada agente exporta su estado estructurado y el coordinator carga un manifest al resumir.','Guardar todo el estado dentro del prompt.','No es posible recuperarse de un crash.'],
+a:1,e:'Para recuperación ante crash, cada agente exporta estado estructurado y el coordinator carga un manifest al resumir, evitando rehacer el trabajo ya completado.',ex:'Si el proceso se cae, cada parte dejó su estado guardado y el coordinador lo levanta sin rehacer todo. Como tener respaldo de cada etapa: si se corta la luz, no arrancás de cero.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Tu reporte de investigación mezcla hallazgos sólidos con otros disputados sin distinguirlos. ¿Cómo lo estructurás?',
+o:['Todo en una lista plana.','Secciones explícitas que distingan hallazgos bien establecidos de los disputados.','Solo los hallazgos establecidos.','Ordenados por longitud.'],
+a:1,e:'El reporte debe tener secciones que distingan hallazgos bien establecidos de los contestados, para que el lector sepa qué tan firme es cada afirmación.',ex:'El reporte separa "esto es sólido y confirmado" de "esto está en discusión". Como una recomendación de inversión que separa datos duros de apuestas. El lector sabe qué tan firme es cada cosa.'},
+
+{d:5,sc:'Multi-Agent Research System',q:'Tu reporte incluye datos financieros, noticias y hallazgos técnicos. ¿Cómo los renderizás?',
+o:['Todo como prosa corrida.','Según el tipo: datos financieros como tablas, noticias como prosa, hallazgos técnicos como listas estructuradas.','Todo como tablas.','Todo como listas con viñetas.'],
+a:1,e:'Cada tipo de contenido se renderiza apropiadamente: financiero como tablas, noticias como prosa, técnico como listas estructuradas.',ex:'Números financieros → tabla. Noticias → texto corrido. Datos técnicos → lista. Cada cosa en el formato que se lee mejor. Como no meter tu balance en un párrafo ni tu carta de presentación en una planilla.'},
+];
+
+/* ============================================================
+   ESTADO Y PERSISTENCIA
+   ============================================================ */
+const STORE_KEY = 'cca_progress_v1';
+let progress = {};      // { index: {correct:bool} }
+let memFallback = false;
+
+async function loadProgress(){
+  try{
+    const r = await window.storage.get(STORE_KEY);
+    progress = r && r.value ? JSON.parse(r.value) : {};
+  }catch(e){ progress = {}; }
+}
+async function saveProgress(){
+  if(memFallback) return;
+  try{
+    await window.storage.set(STORE_KEY, JSON.stringify(progress));
+  }catch(e){ memFallback = true; }
+}
+
+/* ============================================================
+   SESIÓN DE ESTUDIO
+   ============================================================ */
+let session = { list:[], pos:0, mode:'domain', title:'', examAnswers:{} };
+
+function idxOf(qObj){ return BANK.indexOf(qObj); }
+
+function startDomain(d){
+  const list = BANK.map((q,i)=>({q,i})).filter(x=>x.q.d===d);
+  session = { list, pos:0, mode:'domain', title:'Dominio '+d+' · '+DOMAINS[d].name, examAnswers:{} };
+  showStudy();
+}
+function startExam(){
+  // proporcional a los pesos, ~60 preguntas
+  const target = 60;
+  let picked = [];
+  for(const d of [1,2,3,4,5]){
+    const pool = BANK.map((q,i)=>({q,i})).filter(x=>x.q.d===d);
+    const n = Math.min(pool.length, Math.round(target*DOMAINS[d].weight/100));
+    picked = picked.concat(shuffle(pool).slice(0,n));
+  }
+  picked = shuffle(picked);
+  session = { list:picked, pos:0, mode:'exam', title:'Simulacro de examen', examAnswers:{} };
+  showStudy();
+}
+function startReview(){
+  const wrong = BANK.map((q,i)=>({q,i})).filter(x=>progress[x.i] && progress[x.i].correct===false);
+  if(wrong.length===0){ alert('No tenés preguntas falladas pendientes. Bien ahí. Practicá un dominio o hacé un simulacro.'); return; }
+  session = { list:shuffle(wrong), pos:0, mode:'review', title:'Repaso · preguntas que fallé', examAnswers:{} };
+  showStudy();
+}
+function reviewExamFails(){
+  const wrong = Object.keys(session.examAnswers).filter(k=>session.examAnswers[k]===false).map(k=>({q:BANK[k],i:parseInt(k)}));
+  if(wrong.length===0){ alert('No fallaste ninguna en este simulacro.'); return; }
+  session = { list:shuffle(wrong), pos:0, mode:'review', title:'Repaso · falladas del simulacro', examAnswers:{} };
+  showStudy();
+}
+
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function showHome(){
+  document.getElementById('home').style.display='block';
+  document.getElementById('study').style.display='none';
+  document.getElementById('results').style.display='none';
+  renderDiag();
+  updateTopStats();
+  window.scrollTo(0,0);
+}
+function showStudy(){
+  document.getElementById('home').style.display='none';
+  document.getElementById('study').style.display='block';
+  document.getElementById('results').style.display='none';
+  document.getElementById('study-title').textContent = session.title;
+  renderQ();
+  window.scrollTo(0,0);
+}
+function goHome(){ showHome(); }
+
+let revealed = false, chosen = null;
+
+function renderQ(){
+  const {q,i} = session.list[session.pos];
+  chosen = null; revealed = false;
+  document.getElementById('study-count').textContent = (session.pos+1)+' / '+session.list.length;
+  document.getElementById('study-prog').style.width = ((session.pos)/session.list.length*100)+'%';
+
+  const scHtml = q.sc ? '<div class="sc"><b>Escenario</b>'+q.sc+'</div>' : '';
+  const keys = ['A','B','C','D'];
+  let optsHtml = '<div class="opts">';
+  q.o.forEach((opt,k)=>{
+    optsHtml += '<button class="opt" data-k="'+k+'" onclick="choose('+k+')">'+
+      '<span class="key">'+keys[k]+'</span>'+
+      '<span class="opt-text">'+opt+'</span>'+
+      '<span class="ico"></span></button>';
+  });
+  optsHtml += '</div>';
+
+  const prevAns = session.mode==='exam' ? undefined : progress[i];
+  const tag = q.sc ? '' : '<span class="badge tag">Conceptual</span>';
+
+  document.getElementById('q-mount').innerHTML =
+    '<div class="card">'+
+      '<div class="q-top"><span class="badge dom">Dominio '+q.d+'</span>'+tag+'</div>'+
+      scHtml+
+      '<div class="q-text">'+q.q+'</div>'+
+      optsHtml+
+      '<div class="reveal-row">'+
+        '<button class="btn-reveal" id="btn-reveal" onclick="revealAnswer()">Ver respuesta y explicación</button>'+
+        (q.ex ? '<button class="btn-example" id="btn-example" onclick="showExample()">No lo entiendo — aterrizámelo</button>' : '')+
+        '<span class="verdict" id="verdict"></span>'+
+      '</div>'+
+      (q.ex ? '<div class="example" id="example"><h4>Aterrizado a tu mundo</h4>'+q.ex+'</div>' : '')+
+      '<div class="exp" id="exp"><h4>Por qué</h4>'+q.e+'</div>'+
+    '</div>';
+
+  document.getElementById('btn-prev').disabled = session.pos===0;
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = (session.pos===session.list.length-1)
+     ? (session.mode==='exam' ? 'Ver resultado →' : 'Terminar →')
+     : 'Siguiente →';
+}
+
+function choose(k){
+  if(revealed) return;
+  const {q,i} = session.list[session.pos];
+  chosen = k;
+  const correct = (k===q.a);
+  lockAndMark();
+  // guardar
+  if(session.mode==='exam'){ session.examAnswers[i]=correct; }
+  progress[i] = {correct};
+  saveProgress();
+  updateTopStats();
+}
+
+function revealAnswer(){
+  lockAndMark();
+  // si no eligió, no cuenta como acierto/error para stats
+}
+
+function showExample(){
+  const ex = document.getElementById('example');
+  if(ex) ex.classList.add('show');
+  const b = document.getElementById('btn-example');
+  if(b) b.style.display='none';
+}
+
+function lockAndMark(){
+  if(revealed) return;
+  revealed = true;
+  const {q} = session.list[session.pos];
+  document.querySelectorAll('.opt').forEach(btn=>{
+    const k = parseInt(btn.dataset.k);
+    btn.classList.add('locked');
+    btn.querySelector('.ico').textContent='';
+    if(k===q.a){ btn.classList.add('correct'); btn.querySelector('.ico').textContent='✓'; }
+    if(chosen!==null && k===chosen && chosen!==q.a){ btn.classList.add('wrong'); btn.querySelector('.ico').textContent='✕'; }
+  });
+  const v = document.getElementById('verdict');
+  if(chosen!==null){
+    if(chosen===q.a){ v.textContent='Correcto'; v.className='verdict ok'; }
+    else { v.textContent='Incorrecto · la correcta es '+['A','B','C','D'][q.a]; v.className='verdict no'; }
+  } else {
+    v.textContent='Correcta: '+['A','B','C','D'][q.a]; v.className='verdict';
+  }
+  document.getElementById('exp').classList.add('show');
+  document.getElementById('btn-reveal').style.display='none';
+}
+
+function nextQ(){
+  if(session.pos < session.list.length-1){ session.pos++; renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+  else {
+    if(session.mode==='exam'){ showResults(); }
+    else { showHome(); }
+  }
+}
+function prevQ(){
+  if(session.pos>0){ session.pos--; renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+}
+
+/* ============================================================
+   RESULTADOS DEL SIMULACRO
+   ============================================================ */
+function showResults(){
+  document.getElementById('home').style.display='none';
+  document.getElementById('study').style.display='none';
+  document.getElementById('results').style.display='block';
+
+  const answered = Object.keys(session.examAnswers);
+  const total = session.list.length;
+  const correct = answered.filter(k=>session.examAnswers[k]===true).length;
+  const pct = total ? Math.round(correct/total*100) : 0;
+  const pass = pct>=72;
+
+  const scoreEl = document.getElementById('res-score');
+  scoreEl.textContent = pct+'%';
+  scoreEl.className = 'res-score '+(pass?'pass':'fail');
+  document.getElementById('res-label').textContent =
+    correct+' de '+total+' correctas'+(answered.length<total ? ' · '+(total-answered.length)+' sin contestar (cuentan como incorrectas)' : '');
+  document.getElementById('res-note').innerHTML = pass
+    ? 'Estás en zona de aprobado. El examen real usa scoring escalado (100–1000, mínimo <b>720</b>); este % es una referencia honesta, no el score oficial. Sostené este nivel en varios simulacros antes de rendir.'
+    : 'Todavía no. Apuntá a <b>72%+</b> sostenido. El examen usa scoring escalado (mínimo 720); mirá abajo qué dominios te están bajando el promedio y practicalos.';
+
+  // desglose por dominio en este simulacro
+  const byDom = {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]};
+  session.list.forEach(({q,i})=>{
+    const ans = session.examAnswers[i];
+    if(ans!==undefined){ byDom[q.d][1]++; if(ans) byDom[q.d][0]++; }
+    else { byDom[q.d][1]++; }
+  });
+  let html='';
+  for(const d of [1,2,3,4,5]){
+    const [c,t]=byDom[d];
+    const p = t? Math.round(c/t*100):0;
+    const col = p>=80?'var(--green)':(p>=60?'var(--amber)':'var(--red)');
+    html += '<div class="res-item">'+
+      '<span class="nm">D'+d+' · '+DOMAINS[d].name+'</span>'+
+      '<span class="track"><i style="width:'+p+'%;background:'+col+'"></i></span>'+
+      '<span class="pct">'+c+'/'+t+'</span></div>';
+  }
+  document.getElementById('res-break').innerHTML = html;
+  window.scrollTo(0,0);
+}
+
+/* ============================================================
+   DIAGNÓSTICO / STATS
+   ============================================================ */
+function domStats(d){
+  const items = BANK.map((q,i)=>({q,i})).filter(x=>x.q.d===d);
+  let ans=0, cor=0;
+  items.forEach(x=>{ if(progress[x.i]){ ans++; if(progress[x.i].correct) cor++; } });
+  return { total:items.length, ans, cor, pct: ans? Math.round(cor/ans*100):null };
+}
+function renderDiag(){
+  let html='';
+  for(const d of [1,2,3,4,5]){
+    const s = domStats(d);
+    const pct = s.pct;
+    const col = pct===null?'var(--border)':(pct>=80?'var(--green)':(pct>=60?'var(--amber)':'var(--red)'));
+    const w = pct===null?0:pct;
+    const label = pct===null? 'sin practicar' : pct+'% ('+s.cor+'/'+s.ans+')';
+    html += '<div class="diag-row" tabindex="0" role="button" onclick="startDomain('+d+')" onkeydown="if(event.key===\'Enter\')startDomain('+d+')">'+
+      '<div class="diag-head">'+
+        '<span class="diag-num">D'+d+'</span>'+
+        '<span class="diag-name">'+DOMAINS[d].name+'</span>'+
+        '<span class="diag-weight">'+DOMAINS[d].weight+'%</span>'+
+        '<span class="diag-score">'+label+'</span>'+
+        '<span class="diag-arrow">›</span>'+
+      '</div>'+
+      '<div class="diag-track"><div class="diag-fill" style="width:'+w+'%;background:'+col+'"></div></div>'+
+    '</div>';
+  }
+  document.getElementById('diag').innerHTML = html;
+}
+function updateTopStats(){
+  const total = BANK.length;
+  const ans = Object.keys(progress).length;
+  const cor = Object.values(progress).filter(x=>x.correct).length;
+  document.getElementById('st-ans').textContent = ans;
+  document.getElementById('st-total').textContent = total;
+  document.getElementById('st-acc').textContent = ans? Math.round(cor/ans*100)+'%' : '–';
+  document.getElementById('st-bar').style.width = (ans/total*100)+'%';
+  const fails = Object.values(progress).filter(x=>x.correct===false).length;
+  const fn = document.getElementById('fail-n'); if(fn) fn.textContent = fails;
+}
+
+async function resetAll(){
+  if(!confirm('¿Borrar todo tu progreso guardado? Esto no se puede deshacer.')) return;
+  progress = {};
+  try{ await window.storage.delete(STORE_KEY); }catch(e){}
+  showHome();
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(async function init(){
+  document.getElementById('m-total').textContent = BANK.length;
+  document.getElementById('foot-total').textContent = BANK.length;
+  // n del simulacro (aprox proporcional)
+  document.getElementById('exam-n').textContent = Math.min(60, BANK.length)+' preguntas';
+  await loadProgress();
+  showHome();
+})();
+</script>
+</body>
+</html>
