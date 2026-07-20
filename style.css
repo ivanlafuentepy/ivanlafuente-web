@@ -1027,33 +1027,6 @@ li.nav-submenu-group:not(:first-child) {
 }
 
 /* ════════════════════════════════════════════
-   IMPULSO IA
-   ════════════════════════════════════════════ */
-.impulso-section {
-  background: var(--bg2);
-}
-
-.impulso-figure {
-  max-width: 720px;
-  margin: 40px auto 0;
-}
-
-.impulso-figure img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 107, 43, 0.2);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  cursor: zoom-in;
-  transition: transform 0.3s ease;
-}
-
-.impulso-figure img:hover {
-  transform: translateY(-4px);
-}
-
-/* ════════════════════════════════════════════
    CTA FINAL
    ════════════════════════════════════════════ */
 .cta-final {
