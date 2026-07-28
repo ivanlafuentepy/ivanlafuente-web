@@ -129,6 +129,11 @@
       font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
       color:var(--text3);
     }
+    a.leccion{text-decoration:none}
+    a.leccion.disponible{color:var(--text)}
+    a.leccion.disponible .circulo{border-color:var(--accent)}
+    a.leccion.disponible .tipo{color:var(--accent-light)}
+    a.leccion.disponible:hover{background:var(--accent-dim)}
 
     /* ── pie ── */
     .sobre{
@@ -167,7 +172,7 @@
       <span class="progreso-txt">0 de 15 lecciones completadas (0%)</span>
       <div class="barra"><div class="barra-fill"></div></div>
     </div>
-    <a class="btn-start" href="#temario">Comenzar</a>
+    <a class="btn-start" href="leccion-01/">Comenzar</a>
   </div>
 </header>
 
@@ -177,7 +182,7 @@
 
     <div class="seccion">
       <div class="seccion-titulo"><span class="seccion-num">01</span> Introducci&oacute;n a la IA</div>
-      <div class="leccion"><span class="circulo"></span> Introducci&oacute;n a la IA <span class="tipo">Pr&oacute;ximamente</span></div>
+      <a class="leccion disponible" href="leccion-01/"><span class="circulo"></span> Introducci&oacute;n a la IA <span class="tipo">10-15 min</span></a>
     </div>
 
     <div class="seccion">

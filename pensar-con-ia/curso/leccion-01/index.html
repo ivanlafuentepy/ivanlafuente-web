@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: Introducción a la IA | ¿Cómo pensar cuando trabajás con IA?</title>
+  <meta name="description" content="Primera lección del curso: qué significa colaborar con la IA de forma efectiva, eficiente, ética y segura, y qué vas a aprender en el camino.">
+  <meta property="og:title" content="Lección 1: Introducción a la IA">
+  <meta property="og:description" content="Primera lección del curso ¿Cómo pensar cuando trabajás con IA?">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ivanlafuente.com/pensar-con-ia/curso/leccion-01/">
+  <link rel="icon" href="../../../assets/icono.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0a0a0f;
+      --bg2:#10101a;
+      --bg-card:#1a1a28;
+      --border:#26263a;
+      --accent:#4f8ef7;
+      --accent-light:#7dabf9;
+      --accent-dim:#1a2a4a;
+      --orange:#ff6b2b;
+      --green:#25D366;
+      --text:#f0f0f5;
+      --text2:#a0a0b8;
+      --text3:#666680;
+      --radius:16px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+    /* ── nav ── */
+    nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(10,10,15,.85);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      max-width:720px;margin:0 auto;padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .nav-back{
+      color:var(--text2);text-decoration:none;font-size:.9rem;font-weight:500;
+      transition:color .2s;
+    }
+    .nav-back:hover{color:var(--text)}
+    .nav-brand{font-weight:700;font-size:.95rem;color:var(--text)}
+    .nav-brand span{color:var(--accent)}
+
+    /* ── cabecera ── */
+    .lec-head{
+      padding:48px 0 8px;
+    }
+    .miga{
+      font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--accent-light);margin-bottom:10px;
+    }
+    h1{
+      font-size:clamp(1.6rem,4.5vw,2.3rem);
+      font-weight:800;letter-spacing:-.02em;line-height:1.2;
+      margin-bottom:10px;
+    }
+    .tiempo{
+      display:inline-block;
+      background:var(--bg-card);border:1px solid var(--border);
+      color:var(--text2);font-size:.82rem;font-weight:500;
+      padding:6px 14px;border-radius:999px;
+    }
+
+    /* ── bloques ── */
+    section{padding:34px 0 0}
+    h2{
+      font-size:1.25rem;font-weight:700;margin-bottom:14px;
+      display:flex;align-items:center;gap:10px;
+    }
+    h2 .ico{font-size:1.05rem}
+    p{color:var(--text2);font-size:.97rem;margin-bottom:14px}
+    strong{color:var(--text)}
+    em{color:var(--text2)}
+
+    .objetivos{
+      background:var(--bg-card);border:1px solid var(--border);
+      border-radius:var(--radius);padding:22px 24px;
+    }
+    .objetivos p{margin-bottom:10px;font-weight:600;color:var(--text)}
+    .objetivos ul{list-style:none}
+    .objetivos li{
+      position:relative;padding:7px 0 7px 30px;color:var(--text2);font-size:.95rem;
+    }
+    .objetivos li::before{
+      content:"✓";position:absolute;left:4px;color:var(--accent);font-weight:700;
+    }
+
+    .video-box{
+      background:var(--bg2);border:1px dashed rgba(79,142,247,.45);
+      border-radius:var(--radius);padding:38px 24px;text-align:center;
+      margin-bottom:18px;
+    }
+    .video-box .play{
+      width:64px;height:64px;border-radius:50%;
+      background:var(--accent-dim);border:1px solid rgba(79,142,247,.4);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.5rem;margin:0 auto 14px;
+    }
+    .video-box .titulo{font-weight:700;margin-bottom:4px;color:var(--text)}
+    .video-box .dur{color:var(--text3);font-size:.85rem;margin-bottom:0}
+
+    .takeaways{
+      background:linear-gradient(120deg, var(--bg-card) 0%, #1a2236 100%);
+      border:1px solid rgba(79,142,247,.35);
+      border-radius:var(--radius);padding:22px 24px;
+    }
+    .takeaways ul{list-style:none}
+    .takeaways li{
+      position:relative;padding:7px 0 7px 30px;color:var(--text2);font-size:.95rem;
+    }
+    .takeaways li::before{
+      content:"→";position:absolute;left:2px;color:var(--accent-light);font-weight:700;
+    }
+
+    .ejercicio{
+      background:var(--bg-card);border:1px solid var(--border);
+      border-left:3px solid var(--orange);
+      border-radius:var(--radius);padding:22px 24px;
+    }
+    .ejercicio .etiqueta{
+      font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--orange);margin-bottom:8px;
+    }
+    .ejercicio h3{font-size:1.05rem;font-weight:700;margin-bottom:10px}
+    .ejercicio ul{margin:0 0 12px 20px;color:var(--text2);font-size:.95rem}
+    .ejercicio li{margin-bottom:6px}
+
+    .reflexion{
+      background:var(--bg2);border:1px solid var(--border);
+      border-radius:var(--radius);padding:22px 24px;
+    }
+    .reflexion ol{margin:6px 0 0 20px;color:var(--text2);font-size:.95rem}
+    .reflexion li{margin-bottom:10px;padding-left:6px}
+
+    .descarga{
+      display:flex;gap:18px;align-items:center;
+      background:var(--bg-card);border:1px solid var(--border);
+      border-radius:var(--radius);padding:20px 22px;
+      text-decoration:none;transition:border-color .2s, transform .2s;
+    }
+    .descarga:hover{border-color:rgba(79,142,247,.5);transform:translateY(-2px)}
+    .descarga .doc{
+      flex-shrink:0;width:50px;height:50px;border-radius:12px;
+      background:var(--accent-dim);border:1px solid rgba(79,142,247,.35);
+      display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+    }
+    .descarga h3{color:var(--text);font-size:1rem;font-weight:700;margin-bottom:2px}
+    .descarga p{color:var(--text2);font-size:.88rem;margin:0}
+    .descarga .pdf-tag{
+      margin-left:auto;flex-shrink:0;
+      font-size:.72rem;font-weight:700;letter-spacing:.05em;
+      color:var(--accent-light);border:1px solid rgba(79,142,247,.4);
+      padding:4px 10px;border-radius:6px;
+    }
+
+    .licencia{
+      margin-top:34px;padding:18px 22px;
+      background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+      color:var(--text3);font-size:.82rem;line-height:1.7;
+    }
+    .licencia strong{color:var(--text2)}
+    .licencia a{color:var(--accent-light);text-decoration:none}
+
+    /* ── navegación entre lecciones ── */
+    .lec-nav{
+      display:flex;justify-content:space-between;gap:12px;
+      padding:44px 0 64px;
+    }
+    .lec-nav a, .lec-nav span{
+      display:inline-block;
+      padding:13px 22px;border-radius:999px;
+      font-size:.92rem;font-weight:600;text-decoration:none;
+    }
+    .lec-nav .ant{
+      color:var(--text2);border:1px solid var(--border);
+      transition:border-color .2s,color .2s;
+    }
+    .lec-nav .ant:hover{border-color:rgba(79,142,247,.5);color:var(--text)}
+    .lec-nav .sig{
+      color:var(--text3);border:1px solid var(--border);cursor:not-allowed;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:24px 20px;text-align:center;
+      color:var(--text3);font-size:.82rem;
+    }
+    footer a{color:var(--text2);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-back" href="../">&larr; Temario</a>
+    <div class="nav-brand">Cursos <span>IA</span></div>
+  </div>
+</nav>
+
+<header class="lec-head">
+  <div class="wrap">
+    <div class="miga">Secci&oacute;n 01 &middot; Lecci&oacute;n 1 de 15</div>
+    <h1>Introducci&oacute;n a la IA</h1>
+    <span class="tiempo">⏱ Tiempo estimado de este m&oacute;dulo: 10-15 minutos</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="objetivos">
+      <p>Al final de esta lecci&oacute;n vas a poder:</p>
+      <ul>
+        <li>Entender el prop&oacute;sito y la estructura del curso</li>
+        <li>Reconocer por qu&eacute; importa saber trabajar con IA en el mundo de hoy</li>
+        <li>Identificar los componentes clave del camino de aprendizaje que ten&eacute;s por delante</li>
+        <li>Tener expectativas claras de lo que vas a ganar con este curso</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ico">🎬</span> Introducci&oacute;n a la IA</h2>
+    <div class="video-box">
+      <div class="play">▶</div>
+      <p class="titulo">Video: Introducci&oacute;n a la IA</p>
+      <p class="dur">4 minutos &middot; pr&oacute;ximamente</p>
+    </div>
+    <p>
+      &iexcl;Bienvenido! Este video te presenta el foco del curso: desarrollar una
+      <strong>colaboraci&oacute;n real con la IA</strong>, no solo aprender sobre la tecnolog&iacute;a.
+      Ac&aacute; no venimos a juntar tips y trucos que ma&ntilde;ana quedan viejos: venimos a
+      construir un <strong>marco duradero</strong> para trabajar con sistemas de IA.
+    </p>
+    <p>
+      &iquest;Qu&eacute; queremos decir con saber trabajar con IA? Es la capacidad de colaborar
+      con ella de forma <strong>efectiva, eficiente, &eacute;tica y segura</strong>. El curso
+      recorre cada una de las habilidades centrales del marco (las 4D) junto con los
+      conceptos t&eacute;cnicos y pr&aacute;cticos clave.
+    </p>
+    <p>
+      Al terminar el curso vas a tener: un marco para interactuar con la IA de forma
+      reflexiva, confianza para elegir cu&aacute;ndo y c&oacute;mo trabajar con ella,
+      habilidades pr&aacute;cticas de colaboraci&oacute;n, y la capacidad de evaluar y
+      compartir trabajo asistido por IA de manera responsable.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ico">💡</span> Puntos clave</h2>
+    <div class="takeaways">
+      <ul>
+        <li>Este curso se enfoca en la <strong>colaboraci&oacute;n humano&ndash;IA</strong>, no solo en entender la IA como tecnolog&iacute;a</li>
+        <li>Saber trabajar con IA significa interactuar con ella de forma <strong>efectiva, eficiente, &eacute;tica y segura</strong></li>
+        <li>El marco se centra en las <strong>4D</strong>: Delegaci&oacute;n, Descripci&oacute;n, Discernimiento y Diligencia</li>
+        <li>El objetivo es desarrollar <strong>habilidades duraderas</strong> que sigan siendo relevantes mientras la tecnolog&iacute;a evoluciona</li>
+        <li>Colaborar bien con la IA requiere habilidades pr&aacute;cticas <strong>y</strong> un cambio de fondo en c&oacute;mo pensamos el trabajo con ella</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ico">🛠</span> Ejercicios</h2>
+    <div class="ejercicio">
+      <div class="etiqueta">Manos a la obra</div>
+      <h3>Vas a necesitar acceso a un modelo de lenguaje (5-10 min)</h3>
+      <p>
+        A lo largo del curso vas a practicar lo que aprend&eacute;s trabajando directamente
+        con un modelo de lenguaje. Nuestros ejemplos usan <strong>Claude</strong> (el
+        asistente de IA de Anthropic), pero pod&eacute;s trabajar con el modelo que prefieras:
+        los principios y habilidades aplican a cualquier sistema de IA.
+      </p>
+      <p><strong>Empezar es simple y gratis:</strong></p>
+      <ul>
+        <li><strong>Claude:</strong> entr&aacute; a <a href="https://claude.ai" target="_blank" rel="noopener" style="color:var(--accent-light)">claude.ai</a> y cre&aacute; una cuenta gratuita</li>
+        <li>No necesit&aacute;s ninguna suscripci&oacute;n paga para completar las actividades del curso</li>
+        <li>Tambi&eacute;n pod&eacute;s usar otros chatbots de IA si prefer&iacute;s</li>
+      </ul>
+      <p style="margin-bottom:0">
+        &iquest;Nunca usaste Claude? Tranquilo: cada ejercicio trae una gu&iacute;a clara
+        para que arranques sin problemas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ico">🪞</span> Reflexi&oacute;n</h2>
+    <div class="reflexion">
+      <p>Antes de seguir, tomate un momento para pensar en tu propia experiencia con la IA:</p>
+      <ol>
+        <li>&iquest;Qu&eacute; desaf&iacute;os encontraste cuando quisiste usar la IA para lograr algo concreto?</li>
+        <li>&iquest;Qu&eacute; posibilidades de colaboraci&oacute;n con la IA te entusiasman m&aacute;s?</li>
+        <li>&iquest;Qu&eacute; esper&aacute;s llevarte de este curso?</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ico">⏭</span> Qu&eacute; sigue</h2>
+    <p>
+      En la pr&oacute;xima lecci&oacute;n vamos a ver <strong>por qu&eacute; importa saber
+      trabajar con IA</strong> en un mundo tecnol&oacute;gico que cambia tan r&aacute;pido.
+      Vamos a presentar las tres formas principales en que las personas colaboran con la IA
+      (<strong>Automatizaci&oacute;n, Aumento y Agencia</strong>) y las habilidades centrales
+      del marco: las <strong>4D</strong> — Delegaci&oacute;n, Descripci&oacute;n,
+      Discernimiento y Diligencia.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ico">📥</span> Descargas</h2>
+    <a class="descarga" href="../descargas/vocabulario-ia.pdf" download>
+      <div class="doc">📄</div>
+      <div>
+        <h3>Gu&iacute;a de vocabulario de la IA</h3>
+        <p>Una referencia de los t&eacute;rminos clave del curso, en lenguaje simple.
+        No hace falta memorizarla: consultala cada vez que la necesites.</p>
+      </div>
+      <span class="pdf-tag">PDF</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="ico">💬</span> Tu opini&oacute;n sobre el curso</h2>
+    <p>
+      A medida que avances, me encantar&iacute;a saber c&oacute;mo est&aacute;s usando
+      los conceptos del curso en tu vida, tu trabajo o tu negocio — y cualquier
+      comentario que tengas.
+      <a href="https://wa.me/595982790407?text=Hola%20Ivan%2C%20te%20dejo%20mi%20comentario%20sobre%20el%20curso%20de%20IA%3A%20" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:none">Escribime por WhatsApp &rarr;</a>
+    </p>
+
+    <div class="licencia">
+      <strong>Reconocimientos y licencia:</strong> este curso es una adaptaci&oacute;n al
+      espa&ntilde;ol rioplatense de <strong>&ldquo;AI Fluency: Framework &amp; Foundations&rdquo;</strong> —
+      Copyright 2025 Rick Dakan, Joseph Feller y Anthropic, publicado bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>.
+      El curso original est&aacute; basado en el AI Fluency Framework de Dakan y Feller,
+      con el apoyo parcial de la Higher Education Authority de Irlanda a trav&eacute;s del
+      National Forum for the Enhancement of Teaching and Learning.
+      Esta adaptaci&oacute;n de Ivan Lafuente se distribuye bajo la misma licencia.
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="lec-nav">
+    <a class="ant" href="../">&larr; Volver al temario</a>
+    <span class="sig" title="Próximamente">Siguiente lecci&oacute;n &rarr;</span>
+  </div>
+</div>
+
+<footer>
+  <a href="/">ivanlafuente.com</a> &middot; Asunci&oacute;n, Paraguay
+</footer>
+
+</body>
+</html>
