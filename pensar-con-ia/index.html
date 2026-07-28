@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>¿Cómo pensar cuando trabajás con IA? | Ivan Lafuente</title>
-  <meta name="description" content="Curso de fundamentos y estructura de la IA para emprendedores paraguayos. Aprendé a pensar, delegar y trabajar con inteligencia artificial.">
+  <meta name="description" content="Curso de fundamentos y estructura de la IA para emprendedores paraguayos. Aprendé a colaborar con la IA de forma efectiva, eficiente, ética y segura.">
   <meta property="og:title" content="¿Cómo pensar cuando trabajás con IA? — Fundamentos y estructura">
-  <meta property="og:description" content="Curso de fundamentos y estructura de la IA para emprendedores paraguayos.">
+  <meta property="og:description" content="Aprendé a colaborar con la IA de forma efectiva, eficiente, ética y segura. Curso en español para emprendedores paraguayos.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ivanlafuente.com/pensar-con-ia/">
   <link rel="icon" href="../assets/icono.png" type="image/png">
@@ -87,7 +87,11 @@
       margin-bottom:22px;
     }
     .hero-desc{
-      max-width:620px;margin:0 auto;color:var(--text2);font-size:1rem;
+      max-width:640px;margin:0 auto;color:var(--text2);font-size:1.05rem;
+    }
+    .hero-desc strong{color:var(--text)}
+    .hero-audiencia{
+      max-width:640px;margin:14px auto 0;color:var(--text3);font-size:.92rem;
     }
     .hero-meta{
       margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
@@ -98,13 +102,46 @@
       padding:7px 14px;border-radius:999px;
     }
 
-    /* ── temario ── */
-    .temario{padding:48px 0 24px}
-    .temario h2{
-      font-size:1.5rem;font-weight:700;margin-bottom:6px;
+    /* ── secciones ── */
+    section{padding:48px 0 8px}
+    h2{font-size:1.5rem;font-weight:700;margin-bottom:6px}
+    .h2-sub{color:var(--text3);font-size:.92rem;margin-bottom:28px}
+    .prosa p{color:var(--text2);font-size:.98rem;margin-bottom:16px;max-width:720px}
+    .prosa strong{color:var(--text)}
+
+    /* ── marco 4D ── */
+    .grid-4d{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px;
     }
-    .temario .h2-sub{color:var(--text3);font-size:.92rem;margin-bottom:28px}
-    .modulos{display:flex;flex-direction:column;gap:12px}
+    .card-4d{
+      background:var(--bg-card);border:1px solid var(--border);
+      border-radius:var(--radius);padding:22px;
+      transition:border-color .2s, transform .2s;
+    }
+    .card-4d:hover{border-color:rgba(79,142,247,.5);transform:translateY(-3px)}
+    .card-4d .d{
+      font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--accent-light);margin-bottom:6px;
+    }
+    .card-4d h3{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+    .card-4d p{color:var(--text2);font-size:.88rem}
+
+    /* ── qué vas a aprender ── */
+    .lista-check{list-style:none;margin-top:20px;max-width:720px}
+    .lista-check li{
+      position:relative;padding:10px 0 10px 34px;
+      color:var(--text2);font-size:.95rem;
+      border-bottom:1px solid var(--border);
+    }
+    .lista-check li:last-child{border-bottom:none}
+    .lista-check li::before{
+      content:"✓";position:absolute;left:4px;top:9px;
+      color:var(--accent);font-weight:700;
+    }
+    .lista-check strong{color:var(--text)}
+
+    /* ── temario ── */
+    .modulos{display:flex;flex-direction:column;gap:12px;margin-top:24px}
     .mod{
       display:flex;gap:18px;align-items:flex-start;
       background:var(--bg-card);border:1px solid var(--border);
@@ -129,17 +166,32 @@
       padding:2px 8px;border-radius:999px;
     }
 
+    /* ── certificado ── */
+    .cert{
+      display:flex;gap:20px;align-items:center;
+      background:linear-gradient(120deg, var(--bg-card) 0%, #1a2236 100%);
+      border:1px solid rgba(79,142,247,.4);
+      border-radius:var(--radius);padding:26px;margin-top:24px;
+    }
+    .cert-icon{
+      flex-shrink:0;width:56px;height:56px;border-radius:14px;
+      background:var(--accent-dim);border:1px solid rgba(79,142,247,.35);
+      display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+    }
+    .cert h3{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+    .cert p{color:var(--text2);font-size:.92rem}
+
     /* ── nota ── */
     .nota{
-      margin:36px 0 0;padding:16px 20px;
+      margin:44px 0 0;padding:18px 22px;
       background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
-      color:var(--text3);font-size:.85rem;
+      color:var(--text3);font-size:.85rem;line-height:1.7;
     }
-    .nota a{color:var(--accent-light);text-decoration:none}
+    .nota strong{color:var(--text2)}
 
     /* ── cta ── */
     .cta{padding:56px 0 80px;text-align:center}
-    .cta h2{font-size:1.4rem;font-weight:700;margin-bottom:8px}
+    .cta h2{margin-bottom:8px}
     .cta p{color:var(--text2);margin-bottom:26px;font-size:.95rem}
     .btn-wsp{
       display:inline-flex;align-items:center;gap:10px;
@@ -164,9 +216,11 @@
     }
     footer a{color:var(--text2);text-decoration:none}
 
-    @media(max-width:520px){
+    @media(max-width:600px){
+      .grid-4d{grid-template-columns:1fr}
       .mod{gap:14px;padding:16px}
       .mod-num{width:32px;height:32px;font-size:.85rem;border-radius:8px}
+      .cert{flex-direction:column;text-align:center}
     }
   </style>
 </head>
@@ -185,20 +239,90 @@
     <h1>&iquest;C&oacute;mo pensar cuando <span class="grad">trabaj&aacute;s con IA</span>?</h1>
     <p class="hero-sub">Fundamentos y estructura</p>
     <p class="hero-desc">
-      Un curso pr&aacute;ctico para emprendedores y due&ntilde;os de negocio en Paraguay.
-      No es teor&iacute;a: es aprender a delegar, pedir, evaluar y verificar el trabajo
-      de la IA para usarla de forma efectiva, eficiente, &eacute;tica y segura.
+      Aprend&eacute; a colaborar con la IA de forma <strong>efectiva, eficiente,
+      &eacute;tica y segura</strong>.
+    </p>
+    <p class="hero-audiencia">
+      Este curso tiene algo para todos: tanto si reci&eacute;n empez&aacute;s con la IA
+      como si ya la us&aacute;s todos los d&iacute;as en tu negocio.
     </p>
     <div class="hero-meta">
       <span class="meta-chip">12 m&oacute;dulos</span>
+      <span class="meta-chip">A tu ritmo</span>
       <span class="meta-chip">En espa&ntilde;ol</span>
       <span class="meta-chip">Sin experiencia t&eacute;cnica</span>
-      <span class="meta-chip">Ejemplos de negocios reales</span>
+      <span class="meta-chip">Con certificado</span>
     </div>
   </div>
 </header>
 
-<section class="temario">
+<section>
+  <div class="wrap prosa">
+    <h2>Sobre este curso</h2>
+    <p class="h2-sub">Qu&eacute; es y por qu&eacute; existe.</p>
+    <p>
+      La mayor&iacute;a de la gente usa la IA como un buscador: tira una pregunta y
+      acepta lo que sale. Este curso ense&ntilde;a otra cosa: <strong>c&oacute;mo pensar
+      cuando trabaj&aacute;s con IA</strong> — habilidades pr&aacute;cticas para
+      interactuar con ella de forma efectiva, eficiente, &eacute;tica y segura.
+    </p>
+    <p>
+      Todo el curso se estructura alrededor de un marco de <strong>cuatro habilidades</strong>
+      que se aprenden y se practican: delegaci&oacute;n, descripci&oacute;n, discernimiento
+      y diligencia. No hace falta ninguna experiencia t&eacute;cnica previa.
+    </p>
+    <p>
+      Es online, a tu ritmo, con videos y actividades pr&aacute;cticas. Y con ejemplos
+      reales de negocios paraguayos — no teor&iacute;a abstracta.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Las 4 habilidades del marco</h2>
+    <p class="h2-sub">La columna vertebral del curso. Cada una tiene sus propios m&oacute;dulos.</p>
+    <div class="grid-4d">
+      <div class="card-4d">
+        <div class="d">Habilidad 1</div>
+        <h3>Delegaci&oacute;n</h3>
+        <p>Decidir qu&eacute; trabajo hac&eacute;s vos y qu&eacute; trabajo le d&aacute;s a la IA.</p>
+      </div>
+      <div class="card-4d">
+        <div class="d">Habilidad 2</div>
+        <h3>Descripci&oacute;n</h3>
+        <p>Comunicarle a la IA exactamente lo que quer&eacute;s, con contexto y detalle.</p>
+      </div>
+      <div class="card-4d">
+        <div class="d">Habilidad 3</div>
+        <h3>Discernimiento</h3>
+        <p>Evaluar con ojo cr&iacute;tico lo que la IA produce: qu&eacute; sirve y qu&eacute; no.</p>
+      </div>
+      <div class="card-4d">
+        <div class="d">Habilidad 4</div>
+        <h3>Diligencia</h3>
+        <p>Usar la IA con responsabilidad: verificar, transparentar y hacerte cargo del resultado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Qu&eacute; vas a aprender</h2>
+    <p class="h2-sub">Al terminar el curso vas a poder:</p>
+    <ul class="lista-check">
+      <li>Entender <strong>qu&eacute; es la IA generativa</strong>, c&oacute;mo funciona por dentro y por qu&eacute; se comporta como se comporta.</li>
+      <li>Conocer sus <strong>capacidades y limitaciones</strong> reales — qu&eacute; le pod&eacute;s pedir y d&oacute;nde te va a fallar.</li>
+      <li>Aplicar el <strong>marco de las 4 habilidades</strong> en tu trabajo diario con la IA.</li>
+      <li>Escribir <strong>prompts efectivos</strong> con t&eacute;cnicas concretas, no recetas m&aacute;gicas.</li>
+      <li>Montar un <strong>ciclo de trabajo</strong> con la IA: pedir, evaluar, ajustar, repetir.</li>
+      <li>Usar la IA de forma <strong>&eacute;tica y segura</strong> en tu negocio, con clientes reales.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
   <div class="wrap">
     <h2>Temario del curso</h2>
     <p class="h2-sub">Esto es lo que vamos a recorrer, en orden. De lo simple a lo complejo, sin saltar pasos.</p>
@@ -222,14 +346,14 @@
         <div class="mod-num">3</div>
         <div class="mod-body">
           <h3>A fondo: &iquest;qu&eacute; es la IA generativa?<span class="mod-tag">Profundizaci&oacute;n</span></h3>
-          <p>C&oacute;mo funciona por dentro, explicado sin tecnicismos innecesarios.</p>
+          <p>C&oacute;mo funciona por dentro, sus capacidades y sus limitaciones — sin tecnicismos innecesarios.</p>
         </div>
       </div>
       <div class="mod">
         <div class="mod-num">4</div>
         <div class="mod-body">
           <h3>Delegaci&oacute;n</h3>
-          <p>Decidir qu&eacute; tareas conviene darle a la IA, cu&aacute;les no, y por qu&eacute;.</p>
+          <p>Decidir qu&eacute; tareas conviene darle a la IA, cu&aacute;les no, y c&oacute;mo planificar un proyecto con ella.</p>
         </div>
       </div>
       <div class="mod">
@@ -277,8 +401,8 @@
       <div class="mod">
         <div class="mod-num">11</div>
         <div class="mod-body">
-          <h3>Conclusi&oacute;n</h3>
-          <p>Cierre del curso: lo m&aacute;s importante para llevarte y c&oacute;mo seguir.</p>
+          <h3>Conclusi&oacute;n y certificado</h3>
+          <p>Cierre del curso, evaluaci&oacute;n final y tu certificado de finalizaci&oacute;n.</p>
         </div>
       </div>
       <div class="mod">
@@ -289,10 +413,29 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Certificado de finalizaci&oacute;n</h2>
+    <p class="h2-sub">Para que quede constancia de lo que aprendiste.</p>
+    <div class="cert">
+      <div class="cert-icon">🎓</div>
+      <div>
+        <h3>Evaluaci&oacute;n final + certificado</h3>
+        <p>Al terminar el curso ten&eacute;s la oportunidad de rendir una evaluaci&oacute;n final.
+        Si la aprob&aacute;s, recib&iacute;s tu certificado de finalizaci&oacute;n.</p>
+      </div>
+    </div>
 
     <div class="nota">
-      Basado en el marco <strong>AI Fluency</strong> de Anthropic, adaptado al espa&ntilde;ol
-      y a la realidad de los negocios paraguayos por Ivan Lafuente.
+      <strong>Sobre el origen de este curso:</strong> est&aacute; basado en
+      <strong>&ldquo;AI Fluency: Framework &amp; Foundations&rdquo;</strong>, el curso que Anthropic
+      desarroll&oacute; junto a los profesores Joseph Feller (University College Cork) y
+      Rick Dakan (Ringling College). Esta versi&oacute;n en espa&ntilde;ol es una adaptaci&oacute;n
+      de Ivan Lafuente al proceso y a la realidad de los negocios paraguayos, con ejemplos
+      propios de sistemas de IA en producci&oacute;n.
     </div>
   </div>
 </section>
