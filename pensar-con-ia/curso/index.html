@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso: ¿Cómo pensar cuando trabajás con IA? | Ivan Lafuente</title>
+  <meta name="description" content="Temario completo del curso: 15 lecciones para aprender a colaborar con la IA de forma efectiva, eficiente, ética y segura.">
+  <meta property="og:title" content="Curso: ¿Cómo pensar cuando trabajás con IA?">
+  <meta property="og:description" content="15 lecciones para aprender a colaborar con la IA. En español, para emprendedores paraguayos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ivanlafuente.com/pensar-con-ia/curso/">
+  <link rel="icon" href="../../assets/icono.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0a0a0f;
+      --bg2:#10101a;
+      --bg-card:#1a1a28;
+      --border:#26263a;
+      --accent:#4f8ef7;
+      --accent-light:#7dabf9;
+      --accent-dim:#1a2a4a;
+      --orange:#ff6b2b;
+      --green:#25D366;
+      --text:#f0f0f5;
+      --text2:#a0a0b8;
+      --text3:#666680;
+      --radius:16px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+    /* ── nav ── */
+    nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(10,10,15,.85);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      max-width:760px;margin:0 auto;padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .nav-back{
+      color:var(--text2);text-decoration:none;font-size:.9rem;font-weight:500;
+      transition:color .2s;
+    }
+    .nav-back:hover{color:var(--text)}
+    .nav-brand{font-weight:700;font-size:.95rem;color:var(--text)}
+    .nav-brand span{color:var(--accent)}
+
+    /* ── cabecera del curso ── */
+    .curso-head{
+      padding:52px 0 36px;
+      background:
+        radial-gradient(600px 280px at 50% -60px, rgba(79,142,247,.12) 0%, transparent 70%),
+        var(--bg);
+      border-bottom:1px solid var(--border);
+    }
+    .curso-head h1{
+      font-size:clamp(1.5rem,4.5vw,2.2rem);
+      font-weight:800;letter-spacing:-.02em;line-height:1.2;
+      margin-bottom:4px;
+    }
+    .curso-head .sub{color:var(--text2);font-weight:600;margin-bottom:24px}
+
+    .progreso{
+      display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+      margin-bottom:22px;
+    }
+    .progreso-txt{color:var(--text2);font-size:.9rem;font-weight:500}
+    .barra{
+      flex:1;min-width:180px;height:8px;border-radius:999px;
+      background:var(--bg-card);border:1px solid var(--border);
+      overflow:hidden;
+    }
+    .barra-fill{
+      width:0%;height:100%;border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-light));
+      transition:width .4s;
+    }
+    .btn-start{
+      display:inline-block;
+      background:var(--accent);color:#fff;
+      font-weight:700;font-size:.95rem;text-decoration:none;
+      padding:13px 34px;border-radius:999px;
+      transition:transform .2s, background .2s;
+    }
+    .btn-start:hover{background:var(--accent-light);transform:scale(1.03)}
+
+    /* ── temario ── */
+    .curriculum{padding:40px 0 40px}
+    .curriculum h2{
+      font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--text3);margin-bottom:20px;
+    }
+    .seccion{margin-bottom:26px}
+    .seccion-titulo{
+      display:flex;align-items:baseline;gap:10px;
+      font-size:1.05rem;font-weight:700;
+      padding-bottom:10px;margin-bottom:6px;
+      border-bottom:1px solid var(--border);
+    }
+    .seccion-num{
+      color:var(--accent-light);font-size:.8rem;font-weight:700;
+    }
+    .leccion{
+      display:flex;align-items:center;gap:12px;
+      padding:11px 10px;border-radius:10px;
+      color:var(--text2);font-size:.95rem;
+      transition:background .15s, color .15s;
+    }
+    .leccion:hover{background:var(--bg2);color:var(--text)}
+    .leccion .circulo{
+      flex-shrink:0;width:18px;height:18px;border-radius:50%;
+      border:2px solid var(--text3);
+    }
+    .leccion .tipo{
+      margin-left:auto;flex-shrink:0;
+      font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+      color:var(--text3);
+    }
+
+    /* ── pie ── */
+    .sobre{
+      padding:8px 0 64px;
+    }
+    .sobre a{
+      display:inline-flex;align-items:center;gap:8px;
+      color:var(--text2);text-decoration:none;font-size:.92rem;font-weight:500;
+      padding:12px 20px;border:1px solid var(--border);border-radius:999px;
+      transition:border-color .2s, color .2s;
+    }
+    .sobre a:hover{border-color:rgba(79,142,247,.5);color:var(--text)}
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:24px 20px;text-align:center;
+      color:var(--text3);font-size:.82rem;
+    }
+    footer a{color:var(--text2);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-back" href="../">&larr; Volver al curso</a>
+    <div class="nav-brand">Cursos <span>IA</span></div>
+  </div>
+</nav>
+
+<header class="curso-head">
+  <div class="wrap">
+    <h1>&iquest;C&oacute;mo pensar cuando trabaj&aacute;s con IA?</h1>
+    <p class="sub">Fundamentos y estructura</p>
+    <div class="progreso">
+      <span class="progreso-txt">0 de 15 lecciones completadas (0%)</span>
+      <div class="barra"><div class="barra-fill"></div></div>
+    </div>
+    <a class="btn-start" href="#temario">Comenzar</a>
+  </div>
+</header>
+
+<section class="curriculum" id="temario">
+  <div class="wrap">
+    <h2>Temario</h2>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">01</span> Introducci&oacute;n a la IA</div>
+      <div class="leccion"><span class="circulo"></span> Introducci&oacute;n a la IA <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">02</span> Fundamentos y estructura de la IA</div>
+      <div class="leccion"><span class="circulo"></span> &iquest;Por qu&eacute; necesitamos un marco para trabajar con IA? <span class="tipo">Pr&oacute;ximamente</span></div>
+      <div class="leccion"><span class="circulo"></span> El marco 4D <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">03</span> A fondo 1: &iquest;qu&eacute; es la IA generativa?</div>
+      <div class="leccion"><span class="circulo"></span> Fundamentos de la IA generativa <span class="tipo">Pr&oacute;ximamente</span></div>
+      <div class="leccion"><span class="circulo"></span> Capacidades y limitaciones <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">04</span> Delegaci&oacute;n</div>
+      <div class="leccion"><span class="circulo"></span> Delegaci&oacute;n en detalle <span class="tipo">Pr&oacute;ximamente</span></div>
+      <div class="leccion"><span class="circulo"></span> Planificaci&oacute;n de proyectos y delegaci&oacute;n <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">05</span> Descripci&oacute;n</div>
+      <div class="leccion"><span class="circulo"></span> Descripci&oacute;n en detalle <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">06</span> A fondo 2: t&eacute;cnicas efectivas de prompting</div>
+      <div class="leccion"><span class="circulo"></span> T&eacute;cnicas efectivas de prompting <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">07</span> Discernimiento</div>
+      <div class="leccion"><span class="circulo"></span> Discernimiento en detalle <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">08</span> El ciclo descripci&oacute;n&ndash;discernimiento</div>
+      <div class="leccion"><span class="circulo"></span> El ciclo descripci&oacute;n&ndash;discernimiento <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">09</span> Diligencia</div>
+      <div class="leccion"><span class="circulo"></span> Diligencia en detalle <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo"><span class="seccion-num">10</span> Conclusi&oacute;n y certificado</div>
+      <div class="leccion"><span class="circulo"></span> Conclusi&oacute;n <span class="tipo">Pr&oacute;ximamente</span></div>
+      <div class="leccion"><span class="circulo"></span> Certificado de finalizaci&oacute;n <span class="tipo">Pr&oacute;ximamente</span></div>
+      <div class="leccion"><span class="circulo"></span> Actividades adicionales <span class="tipo">Pr&oacute;ximamente</span></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="sobre">
+  <div class="wrap">
+    <a href="../">&larr; Sobre este curso</a>
+  </div>
+</div>
+
+<footer>
+  <a href="/">ivanlafuente.com</a> &middot; Asunci&oacute;n, Paraguay
+</footer>
+
+</body>
+</html>
