@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 9: Técnicas efectivas de prompting | ¿Cómo pensar cuando trabajás con IA?</title>
+  <meta name="description" content="Lección 9 del curso ¿Cómo pensar cuando trabajás con IA? — Técnicas efectivas de prompting">
+  <meta property="og:title" content="Lección 9: Técnicas efectivas de prompting">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ivanlafuente.com/pensar-con-ia/curso/leccion-09/">
+  <link rel="icon" href="../../../assets/icono.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0a0a0f;
+      --bg2:#10101a;
+      --bg-card:#1a1a28;
+      --border:#26263a;
+      --accent:#4f8ef7;
+      --accent-light:#7dabf9;
+      --accent-dim:#1a2a4a;
+      --orange:#ff6b2b;
+      --text:#f0f0f5;
+      --text2:#a0a0b8;
+      --text3:#666680;
+      --radius:16px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+    nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(10,10,15,.85);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      max-width:720px;margin:0 auto;padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .nav-back{
+      color:var(--text2);text-decoration:none;font-size:.9rem;font-weight:500;
+      transition:color .2s;
+    }
+    .nav-back:hover{color:var(--text)}
+    .nav-brand{font-weight:700;font-size:.95rem;color:var(--text)}
+    .nav-brand span{color:var(--accent)}
+    .lec-head{padding:48px 0 8px}
+    .miga{
+      font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--accent-light);margin-bottom:10px;
+    }
+    h1{
+      font-size:clamp(1.6rem,4.5vw,2.3rem);
+      font-weight:800;letter-spacing:-.02em;line-height:1.2;
+      margin-bottom:10px;
+    }
+    .estado{
+      display:inline-block;
+      background:rgba(255,107,43,.1);border:1px solid rgba(255,107,43,.35);
+      color:var(--orange);font-size:.78rem;font-weight:600;
+      letter-spacing:.06em;text-transform:uppercase;
+      padding:6px 14px;border-radius:999px;
+    }
+    section{padding:34px 0 0}
+    p{color:var(--text2);font-size:.97rem;margin-bottom:14px}
+    strong{color:var(--text)}
+    .preparacion{
+      background:var(--bg-card);border:1px dashed rgba(255,107,43,.4);
+      border-radius:var(--radius);padding:26px;
+    }
+    .preparacion h2{font-size:1.1rem;font-weight:700;margin-bottom:10px}
+    .preparacion p:last-child{margin-bottom:0}
+    .licencia{
+      margin-top:34px;padding:18px 22px;
+      background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+      color:var(--text3);font-size:.82rem;line-height:1.7;
+    }
+    .licencia strong{color:var(--text2)}
+    .licencia a{color:var(--accent-light);text-decoration:none}
+    .lec-nav{
+      display:flex;justify-content:space-between;gap:12px;
+      padding:44px 0 64px;
+    }
+    .lec-nav a{
+      display:inline-block;
+      padding:13px 22px;border-radius:999px;
+      font-size:.92rem;font-weight:600;text-decoration:none;
+      color:var(--text2);border:1px solid var(--border);
+      transition:border-color .2s,color .2s;
+    }
+    .lec-nav a:hover{border-color:rgba(79,142,247,.5);color:var(--text)}
+    footer{
+      border-top:1px solid var(--border);
+      padding:24px 20px;text-align:center;
+      color:var(--text3);font-size:.82rem;
+    }
+    footer a{color:var(--text2);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-back" href="../">&larr; Temario</a>
+    <div class="nav-brand">Cursos <span>IA</span></div>
+  </div>
+</nav>
+
+<header class="lec-head">
+  <div class="wrap">
+    <div class="miga">Sección 06 · Lección 9 de 15</div>
+    <h1>Técnicas efectivas de prompting</h1>
+    <span class="estado">En preparación</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="preparacion">
+      <h2>De qué va a tratar esta lección</h2>
+      <p>Técnicas concretas para pedir mejor: cadena de pensamiento, aprendizaje con ejemplos, roles y formato de salida.</p>
+      <p>Ivan está adaptando el contenido de esta lección a su historia y a la realidad
+      de los negocios paraguayos. Pronto vas a encontrar acá el video, los puntos clave,
+      los ejercicios y la reflexión.</p>
+    </div>
+
+    <div class="licencia">
+      <strong>Reconocimientos y licencia:</strong> este curso es una adaptación al
+      español rioplatense de <strong>"AI Fluency: Framework &amp; Foundations"</strong> —
+      Copyright 2025 Rick Dakan, Joseph Feller y Anthropic, publicado bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>.
+      Esta adaptación de Ivan Lafuente se distribuye bajo la misma licencia.
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="lec-nav">
+    <a href="../leccion-08/">&larr; Lección 8</a>
+    <a href="../leccion-10/">Lección 10 &rarr;</a>
+  </div>
+</div>
+
+<footer>
+  <a href="/">ivanlafuente.com</a> &middot; Asunción, Paraguay
+</footer>
+
+</body>
+</html>
